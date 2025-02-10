@@ -1,9 +1,9 @@
 
   </div>
 </div>
-<script>
+<script> 
   const rowsPerPage = 10;
-  let currentPage = 1;
+  let currentPage = 1; 
   
   // Function to render the table based on the current page
   function renderTable() {
