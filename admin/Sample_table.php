@@ -2,7 +2,7 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Users</h1>
+        <h1 class="h2">Placed Orders</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <a type="button" class="btn btn-sm btn-outline-secondary" href="add_customer">Add Customer</a>
@@ -17,12 +17,11 @@
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
-               <th scope="col">User ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Contact</th>
-        <th scope="col">Email</th>
-        <th scope="col">Type</th>
-        <th scope="col">Verified</th>
+        <th scope="col">Hardware Id</th>
+        <th scope="col">Customer Id</th>
+        <th scope="col">Quantity Placed</th>
+        <th scope="col">Order No.</th>
+        <th scope="col">Order Date</th>
 		<th scope="col"></th>
             </tr>
           </thead>

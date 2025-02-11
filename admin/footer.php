@@ -8,7 +8,7 @@
   // Function to render the table based on the current page
   function renderTable() {
     const table = document.querySelector('#dataTable tbody');
-    const rows = Array.from(table.querySelectorAll('tr'));
+    const rows = Array.fr om(table.querySelectorAll('tr'));
     
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
