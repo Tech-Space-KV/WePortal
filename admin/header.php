@@ -19,6 +19,7 @@
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -95,6 +96,54 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+
+
+
+
+/* Ensure body has no unwanted spacing */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* Navbar */
+/* .navbar {
+    height: 55px !important; /* Ensure consistent navbar height 
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+} */
+
+
+/* Sidebar: Fixed & Starts Right Below Navbar */
+/* .sidebar {
+    position: fixed;
+    top: 56px; /* Push it exactly below the navbar 
+    left: 0;
+    width: 250px; /* Adjust width as needed 
+    height: calc(100vh - 55px) !important; /* Fill remaining screen space 
+    overflow-y: auto; /* Allow scrolling if content is long 
+    padding: 0;
+    margin: 0;
+} */
+
+/* Fix any spacing issues inside the sidebar */
+.offcanvas-md {
+    height: 100% !important;
+    padding: 0;
+    margin: 0;
+}
+
+/* Ensure Main Content is Properly Aligned */
+.main-content {
+    margin-left: 250px !important; /* Matches sidebar width */
+    padding-top: 55px !important; /* Matches navbar height */
+}
+
+
     </style>
 
     
@@ -231,8 +280,10 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary" style="min-height: 100vh; height: auto;">
-      <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+
+       <!-- Sidebar -->
+       <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed vh-100" style="min-height: 100vh; height: auto;">
+       <div class="offcanvas-md offcanvas-end bg-body-tertiary vh-100 overflow-auto pe-3" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="scrollbar-width: none;">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="sidebarMenuLabel">PseudoTeam</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
