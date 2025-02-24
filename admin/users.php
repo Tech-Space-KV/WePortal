@@ -18,6 +18,7 @@
           <thead>
             <tr>
                <th scope="col">User ID</th>
+        <th scope="col">Category</th>
         <th scope="col">Name</th>
         <th scope="col">Contact</th>
         <th scope="col">Email</th>

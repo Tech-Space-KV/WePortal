@@ -94,6 +94,108 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+
+/* Ensure the entire background is white */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: white !important; /* Full white background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-signin {
+  width: auto !important; /* Allow it to expand */
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important; /* Ensure it is centered */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+/* Styling the login box as a square */
+.login-box {
+  width: 600px !important; /* Make it a square */
+  height: 500px !important; /* Same as width to keep it square */
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.9); /* Almost white, blends with background */
+  border-radius: 10px; /* Slight rounded edges */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content inside */
+  align-items: center; /* Align items inside */
+}
+
+/* Reduce the size of form elements to fit in the square */
+.login-box img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.login-box h1 {
+  font-size: 18px;
+  text-align: center;
+}
+
+.form-floating {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  width: 100%;
+}
+/* Responsive adjustments for tablets */
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%; /* Adjust width for smaller screens */
+    height: auto; /* Allow height to adjust */
+    padding: 20px; /* Reduce padding */
+  }
+}
+
+/* Ensure the form adjusts when resizing the window */
+@media (max-width: 1024px) {
+  .login-box {
+    width: 80%;
+    height: auto; /* Adjust height automatically */
+    padding: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-box {
+    width: 90%;
+    height: auto;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    width: 95% !important; /* Almost full width on small screens */
+    height: auto;
+    padding: 15px;
+    border-radius: 5px; /* Slightly reduce border radius */
+  }
+
+  .login-box img {
+    width: 120px; /* Adjust logo size */
+  }
+
+  .login-box h1 {
+    font-size: 16px; /* Reduce heading size for mobile */
+  }
+}
+
+
     </style>
 
     
@@ -153,30 +255,35 @@
     </div>
 
     
-<main class="form-signin w-100 m-auto">
-  <form>
-    <img class="" src="../images/logo_pt.png" alt="" width="200" height="65">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-
-    <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
-      </label>
-    </div>
-    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-body-secondary">www.pseudoteam.com</p>
-  </form>
-</main>
+    <main class="form-signin">
+      <div class="login-box">
+        <form>
+          <img src="../images/logo_pt.png" alt="Logo" width="200" height="65" class="d-block mx-auto">
+          <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+    
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+    
+          <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Remember me
+            </label>
+          </div>
+    
+          <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+          <p class="mt-4 mb-0 text-center text-body-secondary">www.pseudoteam.com</p>
+        </form>
+      </div>
+    </main>
+    
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
