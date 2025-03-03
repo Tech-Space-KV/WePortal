@@ -1,10 +1,9 @@
 <?php  require('header.php'); ?>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Add Customer</h1>
       </div>
-
+      
   <form action="submit_form.php" method="POST" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="pown_name" class="form-label">User Name</label>
@@ -116,7 +115,7 @@
 
       <div class="mb-3">
         <label for="pown_date_of_registration" class="form-label">Registration Date</label>
-        <input type="date" class="form-control" id="pown_date_of_registration" name="pown_date_of_registration" >
+        <input type="date" class="form-control w-100" id="pown_date_of_registration" name="pown_date_of_registration" >
       </div>
 
       <div class="mb-3">
@@ -134,6 +133,7 @@
  
 <br><br>
     </main>
+ 
 	
 	
 	

@@ -11,12 +11,12 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-
-    
+ 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
     <style>
 
@@ -129,7 +129,6 @@ body, html {
     padding: 0;
     margin: 0;
 } */
-
 /* Fix any spacing issues inside the sidebar */
 .offcanvas-md {
     height: 100% !important;
@@ -143,7 +142,12 @@ body, html {
     padding-top: 55px !important; /* Matches navbar height */
 }
 
-
+  /* Ensure main content does not overlap on small screens */
+  @media (max-width: 768px) {
+            body.offcanvas-open main {
+                margin-left: 100%; /* Adjust to match sidebar width */
+            }
+        } 
     </style>
 
     
@@ -257,36 +261,50 @@ body, html {
 
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+
+  <!-- Brand / Logo -->
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Admin Portal</a>
 
-  <ul class="navbar-nav flex-row d-md-none">
+  <!-- Navbar Right-Side (For Small Screens) -->
+  <ul class="navbar-nav flex-row ms-auto d-md-none">
+    
+    <!-- Search Toggle Button -->
     <li class="nav-item text-nowrap">
-      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+      <button class="nav-link px-3 text-white border-0 bg-transparent" 
+              type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" 
+              aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
         <svg class="bi"><use xlink:href="#search"/></svg>
       </button>
     </li>
+
+    <!-- Sidebar Toggle Button -->
     <li class="nav-item text-nowrap">
-      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <svg class="bi"><use xlink:href="#list"/></svg>
+      <button class="nav-link px-3 text-white border-0 bg-transparent d-md-none" 
+              type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" 
+              aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        ☰
       </button>
     </li>
+
   </ul>
 
-
+  <!-- Search Bar (Collapsible) -->
   <div id="navbarSearch" class="navbar-search w-100 collapse">
     <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
   </div>
+
 </header>
+
 
 <div class="container-fluid">
   <div class="row">
-
-       <!-- Sidebar -->
-       <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed vh-100" style="min-height: 100vh; height: auto;">
-       <div class="offcanvas-md offcanvas-end bg-body-tertiary vh-100 overflow-auto pe-3" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel" style="scrollbar-width: none;">
-        <div class="offcanvas-header">
+<!-- Sidebar -->
+<div class="sidebar border-end col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed vh-100">
+        <div class="offcanvas-md offcanvas-start bg-body-tertiary vh-100 overflow-auto pe-3" tabindex="-1"
+            id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            <div class="offcanvas-header d-md-none">
           <h5 class="offcanvas-title" id="sidebarMenuLabel">PseudoTeam</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+          <button type="button" class="btn-close d-md-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
           <ul class="nav flex-column">
@@ -392,4 +410,25 @@ body, html {
           </ul>
         </div>
       </div>
-    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // This ensures body class changes to move content
+        document.addEventListener('DOMContentLoaded', function () {
+            var sidebar = document.getElementById('sidebarMenu');
+            sidebar.addEventListener('show.bs.offcanvas', function () {
+                document.body.classList.add('offcanvas-open');
+            });
+            sidebar.addEventListener('hidden.bs.offcanvas', function () {
+                document.body.classList.remove('offcanvas-open');
+            });
+        });
+    </script> 
+
+
+
+
+
+  
