@@ -56,27 +56,95 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Form Modal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form id="modalForm">
+
+          <!-- Country Field -->
+          <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="country" required>
+          </div>
+
+          <!-- State Field -->
+          <div class="mb-3">
+            <label for="state" class="form-label">State</label>
+            <input type="text" class="form-control" id="state" name="state" required>
+          </div>
+
+          <!-- City Field -->
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="city" required>
+          </div>
+
+          <!-- Pincode Field -->
+          <div class="mb-3">
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="number" class="form-control" id="pincode" name="pincode" required>
+          </div>
+
+          <!-- Scope of Work (SOW) Field -->
+          <div class="mb-3">
+            <label for="sow" class="form-label">Scope of Work (SOW)</label>
+            <input type="text" class="form-control" id="sow" name="sow" required>
+          </div>
+
+          <!-- ID Field (Hidden) -->
+          <input type="hidden" id="ProjectId" name="ProjectId" value="12345">
+        </form>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  // Focus on input when modal is opened
+  var myModal = document.getElementById('exampleModal');
+  var myInput = document.getElementById('country');
 
-	<script>
-		var myModal = document.getElementById('myModal')
-var myInput = document.getElementById('myInput')
+  myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus();
+  });
 
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
-	
-	</script>
+  // Handle form submission
+  document.getElementById("submitBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get form values
+
+    let country = document.getElementById("country").value;
+    let state = document.getElementById("state").value;
+    let city = document.getElementById("city").value;
+    let pincode = document.getElementById("pincode").value;
+    let sow = document.getElementById("sow").value;
+    let Id = document.getElementById("ProjectId").value;
+
+    // Show alert with form details
+    alert(
+      "Form Details:\n" +
+      "Country: " + country + "\n" +
+      "State: " + state + "\n" +
+      "City: " + city + "\n" +
+      "Pincode: " + pincode + "\n" +
+      "Scope of Work (SOW): " + sow + "\n" +
+      "Project ID (Hidden): " + Id 
+    );
+
+    // Close modal after submission
+    var modalElement = new bootstrap.Modal(document.getElementById('exampleModal'));
+    modalElement.hide();
+
+    // Reset form after submission
+    document.getElementById("modalForm").reset();
+  });
+</script>
+
 	
 	<?php  require('footer.php'); ?>

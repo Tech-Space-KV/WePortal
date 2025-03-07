@@ -327,7 +327,7 @@ body, html {
               </a>
             </li>
 			<li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="table-orders">
                 <svg class="bi"><use xlink:href="#puzzle"/></svg>
                 Placed Orders
               </a>
@@ -339,7 +339,7 @@ body, html {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="reports">
                 <svg class="bi"><use xlink:href="#graph-up"/></svg>
                 Reports
               </a>
@@ -355,13 +355,13 @@ body, html {
           </h6>
           <ul class="nav flex-column mb-auto">
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="table-notification">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                  Notifications <span class="badge bg-danger">4</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="table-inventory">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                 H/W Orders <span class="badge bg-danger">4</span><span class="badge bg-primary">4</span>
               </a>
@@ -379,7 +379,7 @@ body, html {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="customerltv">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                 Customer LTV
               </a>

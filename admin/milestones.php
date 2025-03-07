@@ -59,28 +59,88 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Form Modal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form id="modalForm">
+          <!-- Name Field -->
+          <div class="mb-3">
+            <label for="name" class="form-label"> Milestone Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+
+          <!--Description Field -->
+          <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description" required>
+          </div>
+
+          <!-- Start Date Field -->
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+          </div>
+
+          <!-- End Date Field -->
+          <div class="mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+          </div>
+
+          <!-- Status Field -->
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <input type="text" class="form-control" id="status" name="status" required>
+          </div>
+
+          <!-- Hidden ID Field -->
+          <input type="hidden" id="ScopeId" name="ScopeId" value="12345">
+        </form>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
       </div>
     </div>
   </div>
 </div>
 
 
-	<script>
-		var myModal = document.getElementById('myModal')
-var myInput = document.getElementById('myInput')
 
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
-	
-	</script>
+
+<script>
+  // Focus on input when modal is opened
+  var myModal = document.getElementById('exampleModal');
+  var myInput = document.getElementById('name');
+
+  myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus();
+  });
+
+  // Handle form submission
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    // Get form values
+    let name = document.getElementById("name").value;
+    let description = document.getElementById("Description").value;
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+    let status = document.getElementById("status").value;
+    let scopeId = document.getElementById("ScopeId").value;
+
+    // Show alert with form details
+    alert(
+      "Form Details:\n" +
+      "Milestone Name: " + name + "\n" +
+      "Description: " + description +"\n"+
+      "Start Date: " + startDate + "\n" +
+      "End Date: " + endDate + "\n" +
+      "Status: " + status + "\n" +
+      "Scope ID (Hidden): " + scopeId
+    );
+  });
+</script>
+
 	
 	
 	

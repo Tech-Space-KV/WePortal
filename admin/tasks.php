@@ -47,10 +47,7 @@
 	  
 	  </div>
     </main>
-	
-	
-	
-	
+
 	
 <!-- Button trigger modal -->
 
@@ -59,28 +56,87 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Form Modal</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form id="modalForm">
+          <!-- Title Field -->
+          <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" required>
+          </div>
+
+          <!--Description Field -->
+          <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description" required>
+          </div>
+
+          <!-- Start Date Field -->
+          <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" required>
+          </div>
+
+          <!-- End Date Field -->
+          <div class="mb-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" required>
+          </div>
+
+          <!-- ID Field -->
+          <div class="mb-3">
+            <label for="SPId" class="form-label">Service Provider ID</label>
+            <input type="text" class="form-control" id="SPId" name="SPId" required>
+          </div>
+
+          <!-- Hidden ID Field -->
+          <input type="hidden" id="PlannerId" name="PlannerId" value="12345">
+        </form>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
       </div>
     </div>
   </div>
 </div>
 
 
-	<script>
-		var myModal = document.getElementById('myModal')
-var myInput = document.getElementById('myInput')
 
-myModal.addEventListener('shown.bs.modal', function () {
-  myInput.focus()
-})
-	
-	</script>
+
+<script>
+  // Focus on input when modal is opened
+  var myModal = document.getElementById('exampleModal');
+  var myInput = document.getElementById('name');
+
+  myModal.addEventListener('shown.bs.modal', function () {
+    myInput.focus();
+  });
+
+  // Handle form submission
+  document.getElementById("submitBtn").addEventListener("click", function () {
+    // Get form values
+    let title = document.getElementById("Title").value;
+    let description = document.getElementById("Description").value;
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+    let id = document.getElementById("SPId").value;
+    let plannerId = document.getElementById("PlannerId").value;
+
+    // Show alert with form details
+    alert(
+      "Form Details:\n" +
+      "Title: " + title + "\n" +
+      "Description: " + description +"\n"+
+      "Start Date: " + startDate + "\n" +
+      "End Date: " + endDate + "\n" +
+      "Service Provider ID: " + id + "\n" +
+      "Planner ID (Hidden): " + plannerId
+    );
+  });
+</script>
 	
 	
 	
