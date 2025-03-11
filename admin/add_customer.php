@@ -4,7 +4,7 @@
         <h1 class="h2">Add Customer</h1>
       </div>
       
-  <form action="submit_form.php" method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="pown_name" class="form-label">User Name</label>
         <input type="text" class="form-control" id="pown_name" name="pown_name" required>
@@ -130,6 +130,69 @@
 
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
+
+
+    <script>
+      // Handle form submission
+      document.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form submission 
+    // Get form values
+    let name = document.getElementById("pown_name").value;
+    let userType = document.getElementById("pown_user_type").value;
+    let country = document.getElementById("pown_country").value;
+    let state = document.getElementById("pown_state").value;
+    let address = document.getElementById("pown_address").value;
+    let pincode = document.getElementById("pown_pincode").value;
+    let contact = document.getElementById("pown_contact").value;
+    let email = document.getElementById("pown_email").value;
+    let about = document.getElementById("pown_about").value;
+    let organisation = document.getElementById("pown_organisation_name").value;
+    let cin = document.getElementById("pown_cin").value;
+    let gst = document.getElementById("pown_gstpin").value;
+    let aadhaar = document.getElementById("pown_adhaar").value;
+    let verified = document.getElementById("pown_verified").value;
+    let password = document.getElementById("pown_password").value;
+    let loginFlag = document.getElementById("pown_login_flag").value;
+    let registrationDate = document.getElementById("pown_date_of_registration").value;
+
+
+    
+    // Get file names
+    let aadhaarFile = document.getElementById("pown_adhaarfile").files[0]?.name || "No file selected";
+    let profilePicture = document.getElementById("pown_dp").files[0]?.name || "No file selected";
+
+
+    // Show alert with form details
+    alert(
+      "Form Details:\n" +
+      "User Name: " + name + "\n" +
+      "User Type: " + userType + "\n" +
+      "Country: " + country + "\n" +
+      "State: " + state + "\n" +
+      "Address: " + address + "\n" +
+      "Pincode: " + pincode + "\n" +
+      "Contact: " + contact + "\n" +
+      "Email: " + email + "\n" +
+      "About: " + about + "\n" +
+      "Organisation Name: " + organisation + "\n" +
+      "CIN: " + cin + "\n" +
+      "GST Number: " + gst + "\n" +
+      "Aadhaar: " + aadhaar + "\n" +
+      "Aadhaar File: " + aadhaarFile + "\n" +
+      "Profile Picture: " + profilePicture+"\n"+
+      "Verified: " + verified + "\n" +
+      "Password: " + password + "\n" +
+      "Login Flag: " + loginFlag + "\n" +
+      "Registration Date: " + registrationDate
+    );
+
+    // Submit the form after the alert
+    event.target.submit();
+});
+
+    </script>
+
+
  
 <br><br>
     </main>

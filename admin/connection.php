@@ -1,7 +1,7 @@
 <?php
 $server = "192.168.1.110";  // Change this if your database is hosted elsewhere
 $user = "nimisha";         // Your MySQL username
-$password = "Root@0000";         // Your MySQL password (leave blank if no password)
+$password = "Root@0000";   // Your MySQL password (leave blank if no password)
 $db = "pseudoteam";  // Your database name
 
 // Create connection
