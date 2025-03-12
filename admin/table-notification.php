@@ -31,6 +31,7 @@ $result = $conn->query($sql);
             <tr>
                <th scope="col">Notification</th>
         <th scope="col">Date/Time</th>
+        <th scope="col">Read/Unread</th>
         <th scope="col">Action</th>
 		<th scope="col"></th>
             </tr>
@@ -40,7 +41,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
       $btnClass = ($row['ntfn_readflag'] == 1) ? 'btn-outline-warning' : 'btn-outline-success';
-      $btnText = ($row['ntfn_readflag'] == 1) ? 'Mark as Unread' : 'Mark as Read';
+      $btnText = ($row['ntfn_readflag'] == 1) ? 'Unread' : 'Read';
 
       echo "<tr>
               <td>{$row['ntfn_notification']}</td>
