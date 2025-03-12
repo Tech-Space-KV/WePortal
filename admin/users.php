@@ -1,5 +1,23 @@
 <?php  require('header.php'); ?>
 
+<?php
+// Include database connection
+include 'connection.php';
+
+// SQL Query to fetch data from both tables 
+// Not taken username as the column is not present in both the tables
+ $sql = "SELECT pown_id as user_id,'Partner' as title,pown_name as name,pown_user_type as user_type,pown_contact as contact,pown_email as email
+        FROM 	project_owners 
+         UNION
+         SELECT sprov_id as user_id,'Partner' as title,sprov_name as name,sprov_user_type as user_type,sprov_contact as contact,sprov_email as email
+         FROM service_providers";
+
+
+$result = $conn->query($sql);
+
+?>
+
+
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -18,29 +36,39 @@
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
-               <th scope="col">User ID</th>
-        <th scope="col">Category</th>
+               <th scope="col">User ID</th> 
+  <!-- Category,title,username and verified has been removed,I have also changed the linking from milestones to view-customers-->   
         <th scope="col">Name</th>
         <th scope="col">Contact</th>
         <th scope="col">Email</th>
         <th scope="col">Type</th>
-        <th scope="col">Verified</th>
 		<th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-		  <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-			  <td></td>
-			  <td>
-				<a class="btn btn-sm btn-primary ms-2" href="milestones">expand</a>
-			  </td>
-            </tr>
-	 </tbody>
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Correcting the typo "Inidividual" -> "Individual"
+            $formPage = ($row['user_type'] === 'Inidividual') ? 'user-details.php' : 'service-provider-details.php';
+
+            echo "<tr>
+                    <td>{$row['user_id']}</td>
+                    <td>{$row['name']}</td>
+                    <td>{$row['contact']}</td>
+                    <td>{$row['email']}</td>
+                    <td>{$row['user_type']}</td>
+                    <td>
+                        <a href='{$formPage}?id={$row['user_id']}' class='btn btn-sm btn-primary ms-2'>Expand</a>
+                    </td>
+                  </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='8'>No records found</td></tr>";
+    }
+    ?>
+</tbody>
+
         </table>
       
 	  <nav aria-label="Page navigation">
@@ -53,6 +81,9 @@
 	  
     </main>
 	
+
+
+
 	
 	
 	<?php  require('footer.php'); ?>
