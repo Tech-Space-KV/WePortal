@@ -14,11 +14,11 @@
 
 		 <div class="mb-3">
             <label for="title" class="form-label">Select Customer</label>
-            <select type="text" class="form-control" name="customer">
-				<option value="" selected disabled>-- Select --</option>
-				<option value="" >Customer Name || Customer ID || Customer Email</option>
-				
-			</select>
+
+            <select class="form-control" id="mySelect" name="customer">
+                <option value="">None</option>
+            </select>
+
         </div>
 
         <div class="mb-3">
@@ -42,7 +42,7 @@
             <div class="col-md-4 mb-3">
                 <label for="projectIs" class="form-label">Project is</label>
                 <select class="form-select" id="projectIs" name="projectIs">
-                    <option selected>--Select type--</option>
+                    <option selected value="">--Select type--</option>
                     <option value="New">New</option>
                     <option value="On Going">On Going</option>
                 </select>
@@ -50,15 +50,15 @@
             <div class="col-md-4 mb-3">
                 <label for="projectType" class="form-label">Project type</label>
                 <select class="form-select" id="projectType" name="projectType">
-                    <option selected>--Select type--</option>
+                    <option selected value="">--Select type--</option>
                     <option value="On Remote">On Remote</option>
                     <option value="On Site">On Site</option>
                 </select>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="projectCategory" class="form-label">Project Category</label>
-                <select class="form-select" id="projectCategory" name="projectCategory">
-                    <option selected>--Select category--</option>
+                <select class="form-select" id="projectCategory" name="projectCategory" required>
+                    <option selected value="">--Select category--</option>
                     <option value="Pre Sales Support">Pre Sales Support</option>
                     <option value="Implementation">Implementation</option>
                     <option value="Post Sales Support">Post Sales Support</option>
@@ -73,8 +73,8 @@
 
             <div class="d-flex">
                 <div class="me-2" style="flex: 0.3;">
-                    <select class="form-select" id="budget" name="currency">
-                        <option selected disabled> -- Currency --</option>
+                <select class="form-select" id="budget" name="currency" >
+                        <option selected value=""> -- Currency --</option>
                         <option value="INR">INR</option>
                         <option value="GBP">GBP</option>
                         <option value="USD">USD</option>
@@ -143,11 +143,78 @@
             <input type="text" class="form-control" id="title"name="coupon" placeholder="Add your coupon or promocode here">
         </div>
 
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" name="upload_btn" class="btn btn-primary" onClick="insert_data()" >Upload</button>
+        <button type="submit" name="save_btn" class="btn btn-success" onClick="save_data()">Save</button>
 
     </form>
 
 <br><br>
     </main>
 	
+
+
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the current URL
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Check if projectid exists in the URL
+    if (urlParams.has("projectid")) {
+
+        document.querySelector("button[name='upload_btn']").style.display = "none";
+        document.querySelector("button[name='save_btn']").style.display = "block";
+
+        const projectId = urlParams.get("projectid");
+
+        // Fetch project details from the PHP script
+        fetch(`php-functions/get_project_details.php?projectid=${projectId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector("select[name='customer']").value = data.customer;
+                    document.querySelector("input[name='title']").value = data.title;
+                    document.querySelector("textarea[name='description']").value = data.description;
+                    document.querySelector("select[name='projectIs']").value = data.projectIs;
+                    document.querySelector("select[name='projectType']").value = data.projectType;
+                    document.querySelector("select[name='projectCategory']").value = data.projectCategory;
+                    document.querySelector("select[name='currency']").value = data.currency;
+                    document.querySelector("input[name='budgetAmount']").value = data.budgetAmount;
+                    document.querySelector("input[name='startDate']").value = data.startDate;
+                    document.querySelector("input[name='endDate']").value = data.endDate;
+                    document.querySelector("input[name='contactName']").value = data.contactName;
+                    document.querySelector("input[name='contactEmail']").value = data.contactEmail;
+                    document.querySelector("input[name='contactNumber']").value = data.contactNumber;
+                    document.querySelector("input[name='notificationEmail']").value = data.notificationEmail;
+                    document.querySelector("input[name='coupon']").value = data.coupon;
+                }
+            })
+            .catch(error => console.error("Error fetching project details:", error));
+    }
+    else{
+        
+        document.querySelector("button[name='upload_btn']").style.display = "block";
+        document.querySelector("button[name='save_btn']").style.display = "none";
+    }
+});
+</script>
+
+<script>
+ $(document).ready(function () {
+    // Initialize Select2 with tagging enabled
+    $('#mySelect').select2({
+        tags: true,   // Allows typing new values
+        placeholder: "Select or type your own option",
+        allowClear: true
+    });
+
+    // Ensure AJAX runs when selecting or typing a new value
+    $("#mySelect").on("change", function () {
+        sendInputValue();
+    });
+});
+</script>
+
+
+
 	<?php  require('footer.php'); ?>

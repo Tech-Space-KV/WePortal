@@ -14,6 +14,7 @@
  
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
