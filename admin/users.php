@@ -1,23 +1,5 @@
 <?php  require('header.php'); ?>
 
-<?php
-// Include database connection
-include 'connection.php';
-
-// SQL Query to fetch data from both tables 
-// Not taken username as the column is not present in both the tables
- $sql = "SELECT pown_id as user_id,'Partner' as title,pown_name as name,pown_user_type as user_type,pown_contact as contact,pown_email as email
-        FROM 	project_owners 
-         UNION
-         SELECT sprov_id as user_id,'Partner' as title,sprov_name as name,sprov_user_type as user_type,sprov_contact as contact,sprov_email as email
-         FROM service_providers";
-
-
-$result = $conn->query($sql);
-
-?>
-
-
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -38,35 +20,51 @@ $result = $conn->query($sql);
             <tr>
                <th scope="col">User ID</th> 
   <!-- Category,title,username and verified has been removed,I have also changed the linking from milestones to view-customers-->   
+        <th scope="col">Category</th>
+        <th scope="col">Username</th>
         <th scope="col">Name</th>
+        <th scope="col">Type</th>
         <th scope="col">Contact</th>
         <th scope="col">Email</th>
-        <th scope="col">Type</th>
-		<th scope="col"></th>
+        <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-    <?php
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            // Correcting the typo "Inidividual" -> "Individual"
-            $formPage = ($row['user_type'] === 'Inidividual') ? 'user-details.php' : 'service-provider-details.php';
-
-            echo "<tr>
-                    <td>{$row['user_id']}</td>
-                    <td>{$row['name']}</td>
-                    <td>{$row['contact']}</td>
-                    <td>{$row['email']}</td>
-                    <td>{$row['user_type']}</td>
-                    <td>
-                        <a href='{$formPage}?id={$row['user_id']}' class='btn btn-sm btn-primary ms-2'>Expand</a>
-                    </td>
-                  </tr>";
-        }
-    } else {
-        echo "<tr><td colspan='8'>No records found</td></tr>";
-    }
-    ?>
+          <?php
+              $query="SELECT `sprov_id` as user_id, 'Partner' as title , `sprov_username` as username, `sprov_name` as name, `sprov_user_type` as type, `sprov_contact` as contact, `sprov_email` as email FROM `service_providers` UNION SELECT `pown_id`, 'Customer', `pown_username`, `pown_name`, `pown_user_type`, `pown_contact`, `pown_email` FROM `project_owners`" ;
+							$result=mysqli_query($con,$query);
+							while( $row=mysqli_fetch_assoc($result))
+							{
+							    ?>
+							    <tr id="row-<?php echo $row['user_id']; ?>">
+							       
+							        <td>
+							            <?php echo $row['title'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['username'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['name'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['type'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['contact'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['email'] ; ?>
+							        </td>
+							        <td>
+							            <button class="btn btn-sm btn-outline-primary" onclick="deletepo(<?php echo $row['pur_id'] ; ?>)">View</button> 
+							        </td>
+							    </tr>
+							    <?php
+							    
+							}
+        
+        ?>
 </tbody>
 
         </table>

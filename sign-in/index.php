@@ -257,17 +257,17 @@ body, html {
     
     <main class="form-signin">
       <div class="login-box">
-        <form>
+        <form method="POST" action="../methods/process-sign-in">
           <img src="../images/logo_pt.png" alt="Logo" width="200" height="65" class="d-block mx-auto">
           <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
     
           <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
           </div>
           
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
           </div>
     
@@ -278,7 +278,7 @@ body, html {
             </label>
           </div>
     
-          <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+          <button class="btn btn-primary w-100 py-2" name="sign-in-btn" type="submit">Sign in</button>
           <p class="mt-4 mb-0 text-center text-body-secondary">www.pseudoteam.com</p>
         </form>
       </div>

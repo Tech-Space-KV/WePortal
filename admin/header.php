@@ -1,3 +1,5 @@
+<?php require('session-management.php'); ?>
+<?php require('../required/db-connection/connection.php'); ?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="../assets/js/color-modes.js"></script>
