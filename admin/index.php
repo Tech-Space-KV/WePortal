@@ -24,138 +24,61 @@
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
+              <th scope="col">Proj. ID.</th>
+              <th scope="col">Title</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Customer ID</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>text</td>
-              <td>random</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>placeholder</td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>placeholder</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>irrelevant</td>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>text</td>
-              <td>placeholder</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>visual</td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>random</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>text</td>
-            </tr>
-          </tbody>
+          <?php
+              $query="SELECT `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list` WHERE plist_status = 'NO SP Assigned'  order by 1 desc " ;
+							$result=mysqli_query($con,$query);
+							while( $row=mysqli_fetch_assoc($result))
+							{
+							    ?>
+							    <tr id="row-<?php echo $row['plist_id']; ?>">
+							       
+                  <td>
+							            <?php echo $row['plist_projectid'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_title'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_startdate'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_enddate'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_status'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_customer_id'] ; ?>
+							        </td>
+							        <td>
+                        <a class="btn btn-sm btn-outline-primary" href="purchase-form-view.php?pid=<?php echo $row['pur_id'] ; ?>">View</a>
+							        </td>
+							    </tr>
+							    <?php
+							    
+							}
+        
+        ?>
+	 </tbody>
         </table>
-		
-		  
+      
 	  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" id="pagination">
       <!-- Page numbers will go here -->
     </ul>
   </nav>
-  
-  
-      </div>
+	  
+	  </div>
     </main>
 
 

@@ -16,30 +16,52 @@
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
-               <th scope="col">Proj. ID.</th>
-        <th scope="col">Title</th>
-        <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
-        <th scope="col">Status</th>
-        <th scope="col"></th>
-		<th scope="col"></th>
+              <th scope="col">Proj. ID.</th>
+              <th scope="col">Title</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Customer ID</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-		  <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-			  <td></td>
-			  <td>
-        <div class="d-flex ">
-					<a class="btn btn-sm btn-primary" href="view-project">view</a>
-          <a class="btn btn-sm btn-primary ms-2" href="locations">expand</a>
-</div>
-			  </td>
-            </tr>
+          <?php
+              $query="SELECT `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`" ;
+							$result=mysqli_query($con,$query);
+							while( $row=mysqli_fetch_assoc($result))
+							{
+							    ?>
+							    <tr id="row-<?php echo $row['plist_id']; ?>">
+							       
+                  <td>
+							            <?php echo $row['plist_projectid'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_title'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_startdate'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_enddate'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_status'] ; ?>
+							        </td>
+							        <td>
+							            <?php echo $row['plist_customer_id'] ; ?>
+							        </td>
+							        <td>
+                      <a class="btn btn-sm btn-primary" href="view-project">view</a>
+                      <a class="btn btn-sm btn-primary ms-2" href="locations">expand</a>
+							        </td>
+							    </tr>
+							    <?php
+							    
+							}
+        
+        ?>
 	 </tbody>
         </table>
       
