@@ -24,7 +24,7 @@ try {
     $contactEmail = $_POST['contactEmail'] ?? null;
     $contactNumber = $_POST['contactNumber'] ?? null;
     $notificationEmail = $_POST['notificationEmail'] ?? null;
-    $coupon = $_POST['coupon'] ?? null
+    $coupon = $_POST['coupon'] ?? null;
 
 
     if (!$customer || !$title || !$description) {
