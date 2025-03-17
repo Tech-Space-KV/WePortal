@@ -169,7 +169,6 @@
         </div>
 
         <button type="submit" name="upload_btn" class="btn btn-primary" onClick="insert_data()" >Upload</button>
-        <button type="submit" name="save_btn" class="btn btn-success" onClick="save_data()">Save</button>
 
     </form>
 
@@ -179,50 +178,7 @@
 
 
 
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Get the current URL
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Check if projectid exists in the URL
-    if (urlParams.has("projectid")) {
 
-        document.querySelector("button[name='upload_btn']").style.display = "none";
-        document.querySelector("button[name='save_btn']").style.display = "block";
-
-        const projectId = urlParams.get("projectid");
-
-        // Fetch project details from the PHP script
-        fetch(`php-functions/get_project_details.php?projectid=${projectId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.querySelector("select[name='customer']").value = data.customer;
-                    document.querySelector("input[name='title']").value = data.title;
-                    document.querySelector("textarea[name='description']").value = data.description;
-                    document.querySelector("select[name='projectIs']").value = data.projectIs;
-                    document.querySelector("select[name='projectType']").value = data.projectType;
-                    document.querySelector("select[name='projectCategory']").value = data.projectCategory;
-                    document.querySelector("select[name='currency']").value = data.currency;
-                    document.querySelector("input[name='budgetAmount']").value = data.budgetAmount;
-                    document.querySelector("input[name='startDate']").value = data.startDate;
-                    document.querySelector("input[name='endDate']").value = data.endDate;
-                    document.querySelector("input[name='contactName']").value = data.contactName;
-                    document.querySelector("input[name='contactEmail']").value = data.contactEmail;
-                    document.querySelector("input[name='contactNumber']").value = data.contactNumber;
-                    document.querySelector("input[name='notificationEmail']").value = data.notificationEmail;
-                    document.querySelector("input[name='coupon']").value = data.coupon;
-                }
-            })
-            .catch(error => console.error("Error fetching project details:", error));
-    }
-    else{
-        
-        document.querySelector("button[name='upload_btn']").style.display = "block";
-        document.querySelector("button[name='save_btn']").style.display = "none";
-    }
-});
-</script>
 
 <script>
  $(document).ready(function () {
