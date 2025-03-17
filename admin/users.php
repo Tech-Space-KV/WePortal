@@ -41,30 +41,30 @@
           </thead>
           <tbody>
           <?php
-              $query="SELECT `pown_id` as user_id, 'Customer' as title , `pown_username` as username, `pown_name` as name, `pown_user_type` as type, `pown_contact` as contact, `pown_email` as email FROM `project_owners`" ;
-							$result=mysqli_query($con,$query);
-							while( $row=mysqli_fetch_assoc($result))
+              $query_cust="SELECT `pown_id` as user_id, 'Customer' as title , `pown_username` as username, `pown_name` as name, `pown_user_type` as type, `pown_contact` as contact, `pown_email` as email FROM `project_owners`" ;
+							$result_cust=mysqli_query($con,$query_cust);
+							while( $row_cust=mysqli_fetch_assoc($result_cust))
 							{
 							    ?>
-							    <tr id="row-<?php echo $row['user_id']; ?>">
+							    <tr id="row-<?php echo $row_cust['user_id']; ?>">
 							       
 							        <td>
-							            <?php echo $row['title'] ; ?>
+							            <?php echo $row_cust['title'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['username'] ; ?>
+							            <?php echo $row_cust['username'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['name'] ; ?>
+							            <?php echo $row_cust['name'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['type'] ; ?>
+							            <?php echo $row_cust['type'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['contact'] ; ?>
+							            <?php echo $row_cust['contact'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['email'] ; ?>
+							            <?php echo $row_cust['email'] ; ?>
 							        </td>
 							        <td>
                       <a class="btn btn-sm btn-outline-primary" href="purchase-form-view.php?pid=<?php echo $row['pur_id'] ; ?>">View</a>
@@ -108,30 +108,30 @@
           </thead>
           <tbody>
           <?php
-              $query="SELECT `sprov_id` as user_id, 'Partner' as title , `sprov_username` as username, `sprov_name` as name, `sprov_user_type` as type, `sprov_contact` as contact, `sprov_email` as email FROM `service_providers` " ;
-							$result=mysqli_query($con,$query);
-							while( $row=mysqli_fetch_assoc($result))
+              $query_sp="SELECT `sprov_id` as user_id, 'Partner' as title , `sprov_username` as username, `sprov_name` as name, `sprov_user_type` as type, `sprov_contact` as contact, `sprov_email` as email FROM `service_providers` " ;
+							$result_sp=mysqli_query($con,$query_sp);
+							while( $row_sp=mysqli_fetch_assoc($result_sp))
 							{
 							    ?>
-							    <tr id="row-<?php echo $row['user_id']; ?>">
+							    <tr id="row-<?php echo $row_sp['user_id']; ?>">
 							       
 							        <td>
-							            <?php echo $row['title'] ; ?>
+							            <?php echo $row_sp['title'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['username'] ; ?>
+							            <?php echo $row_sp['username'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['name'] ; ?>
+							            <?php echo $row_sp['name'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['type'] ; ?>
+							            <?php echo $row_sp['type'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['contact'] ; ?>
+							            <?php echo $row_sp['contact'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['email'] ; ?>
+							            <?php echo $row_sp['email'] ; ?>
 							        </td>
 							        <td>
                         <a class="btn btn-sm btn-outline-primary" href="purchase-form-view.php?pid=<?php echo $row['pur_id'] ; ?>">View</a>

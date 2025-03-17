@@ -9,6 +9,12 @@
 
     
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
+<div class="alert alert-primary mt-2" role="alert" style="display:none">
+  A simple primary alert—check it out!
+</div>
+<div class="alert alert-danger mt-2" role="alert" style="display:none">
+  A simple danger alert—check it out!
+</div>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Upload Project</h1>
       </div>
@@ -21,23 +27,34 @@
         </h5>
 
 		 <div class="mb-3">
-            <label for="title" class="form-label">Select Customer</label>
+            <label for="customer" class="form-label">Select Customer</label>
 
-            <select class="form-control" id="mySelect" name="customer">
-                <option value="">None</option>
+            <select class="form-control" id="mySelect" name="customer" required>
+                
+                <option selected value="none" disabled>-- Select a customer --</option>
+
+                <?php
+                    $query1="SELECT `pown_id` as user_id, `pown_username` as username, `pown_name` as name, `pown_user_type` as type, `pown_contact` as contact, `pown_email` as email FROM `project_owners`";
+							$result1=mysqli_query($con,$query1);
+							while( $row=mysqli_fetch_assoc($result1))
+							{
+							    ?>
+                        <option value="<?php echo $row['username'] ; ?>"><?php echo $row['username'] ; ?></option>
+                        <?php } ?>
+            
             </select>
 
         </div>
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Project title" name="title">
+            <input type="text" class="form-control" id="title" placeholder="Project title" name="title" required>
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <!-- <input type="textarea" class="form-control" id="description" placeholder="About project"> -->
-            <textarea id="description" name="description" class="form-control"
+            <textarea id="description" name="description" class="form-control" required
                 placeholder="Enter your description here"></textarea>
         </div>
 
@@ -49,7 +66,7 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="projectIs" class="form-label">Project is</label>
-                <select class="form-select" id="projectIs" name="projectIs">
+                <select class="form-select" id="projectIs" name="projectIs" required>
                     <option selected value="">--Select type--</option>
                     <option value="New">New</option>
                     <option value="On Going">On Going</option>
@@ -57,7 +74,7 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="projectType" class="form-label">Project type</label>
-                <select class="form-select" id="projectType" name="projectType">
+                <select class="form-select" id="projectType" name="projectType" required>
                     <option selected value="">--Select type--</option>
                     <option value="On Remote">On Remote</option>
                     <option value="On Site">On Site</option>
@@ -102,12 +119,12 @@
 
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="startDate" class="form-label">Start date</label>
+                <label for="startDate" class="form-label" required>Start date</label>
                 <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date">
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="endDate" class="form-label">End date</label>
+                <label for="endDate" class="form-label" required>End date</label>
                 <input type="date" class="form-control" id="endDate" name="endDate" placeholder="End date">
             </div>
         </div>
@@ -119,17 +136,17 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="title" name="contactName" placeholder="Name of the authorised person">
+            <input type="text" class="form-control" id="title" name="contactName" placeholder="Name of the authorised person" required>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="title" name="contactEmail" placeholder="Email of the authorised person">
+            <input type="email" class="form-control" id="title" name="contactEmail" placeholder="Email of the authorised person" required>
         </div>
 
         <div class="mb-3">
             <label for="contact" class="form-label">Contact</label>
-            <input type="text" class="form-control" id="title" name="contactNumber" placeholder="Contact no. of authorised person">
+            <input type="text" class="form-control" id="title" name="contactNumber" placeholder="Contact no. of authorised person" required>
         </div>
 
         <h5 class="mt-4 mb-4 text-pseudo">
@@ -266,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("coupon", coupon);
 
         // Send data using fetch()
-        fetch("php-functions/function_upload_project.php", {
+        fetch("php-functions/function-upload-project.php", {
             method: "POST",
             body: formData
         })
