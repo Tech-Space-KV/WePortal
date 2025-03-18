@@ -73,7 +73,7 @@
 
       <div class="mb-3">
         <label for="pown_login_flag" class="form-label">Body</label>
-        <select class="form-select" id="pown_login_flag" name="pown_login_flag" required>
+        <select class="form-select" id="pown_login_flag" name="pown_login_flag" required onchange="toggleFields()">
           <option value="Organisation">Organisation</option>
           <option value="Individual">Individual</option>
         </select>
@@ -86,6 +86,68 @@
 
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
+
+    <!-- JavaScript to Toggle Read-Only Fields -->
+<script>
+  function toggleFields() {
+    const userType = document.getElementById("pown_login_flag").value;
+    
+    // Organisation-only fields
+    const organisationFields = ["pown_cin", "pown_gstpin"];
+    const organisationHints = ["cin_hint", "gst_hint"];
+
+    // Individual-only fields
+    const individualFields = ["pown_adhaar", "pown_adhaarfile"];
+    const individualHints = ["aadhaar_hint", "aadhaar_file_hint"];
+    
+    if (userType === "Individual") {
+      // Disable Organisation fields, Enable Individual fields
+      organisationFields.forEach(id => setReadOnly(id, true));
+      individualFields.forEach(id => setReadOnly(id, false));
+
+      // Show only relevant hints
+      organisationHints.forEach(id => document.getElementById(id).style.display = "none");
+      individualHints.forEach(id => document.getElementById(id).style.display = "inline");
+      
+    } else if (userType === "Organisation") {
+      // Disable Individual fields, Enable Organisation fields
+      individualFields.forEach(id => setReadOnly(id, true));
+      organisationFields.forEach(id => setReadOnly(id, false));
+
+      // Show only relevant hints
+      individualHints.forEach(id => document.getElementById(id).style.display = "none");
+      organisationHints.forEach(id => document.getElementById(id).style.display = "inline");
+      
+    } else {
+      // If no selection, disable all
+      organisationFields.concat(individualFields).forEach(id => setReadOnly(id, true));
+      organisationHints.concat(individualHints).forEach(id => document.getElementById(id).style.display = "none");
+    }
+  }
+
+  function setReadOnly(id, isReadOnly) {
+    let field = document.getElementById(id);
+    if (isReadOnly) {
+      field.setAttribute("readonly", true);
+      field.classList.add("readonly-style");
+    } else {
+      field.removeAttribute("readonly");
+      field.classList.remove("readonly-style");
+    }
+  }
+</script>
+
+<!-- CSS to Highlight Read-Only Fields -->
+<style>
+  .readonly-style {
+    background-color: #e9ecef !important;
+    cursor: not-allowed;
+  }
+  .text-muted {
+    display: none;
+  }
+</style>
+
 
     <script>
 
