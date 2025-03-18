@@ -13,6 +13,10 @@
       </div>
 
       <div class="table-responsive small">
+      <div class="pagination" style="float:right;">
+    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+  </div>
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
@@ -64,6 +68,7 @@
         ?>
 	 </tbody>
         </table>
+
       
 	  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" id="pagination">
@@ -74,6 +79,8 @@
 	  </div>
     </main>
 	
+
+
 	
 	
 	<?php  require('footer.php'); ?>

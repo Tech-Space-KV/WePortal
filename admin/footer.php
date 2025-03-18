@@ -1,114 +1,43 @@
 
   </div>
 </div>
-<script> 
-  const rowsPerPage = 10;
-  let currentPage = 1; 
-  
-  // Function to render the table based on the current page
-  function renderTable() {
-    const table = document.querySelector('#dataTable tbody');
-    const rows = Array.fr om(table.querySelectorAll('tr'));
-    
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-    
-    // Hide all rows
-    rows.forEach(row => row.style.display = 'none');
-    
-    // Show only the rows for the current page
-    rows.slice(startIndex, endIndex).forEach(row => row.style.display = 'table-row');
-  }
-  
-  // Function to render pagination controls
-  function renderPagination() {
-    const table = document.querySelector('#dataTable tbody');
-    const rows = Array.from(table.querySelectorAll('tr'));
-    const pageCount = Math.ceil(rows.length / rowsPerPage);
-    
-    const pagination = document.querySelector('#pagination');
-    pagination.innerHTML = '';
 
-    // First button
-    const firstButton = document.createElement('li');
-    firstButton.classList.add('page-item');
-    firstButton.innerHTML = `<a class="page-link" href="#">First</a>`;
-    firstButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      currentPage = 1;
-      renderTable();
-      renderPagination();
-    });
-    pagination.appendChild(firstButton);
 
-    // Previous button
-    const prevButton = document.createElement('li');
-    prevButton.classList.add('page-item');
-    prevButton.innerHTML = `<a class="page-link" href="#">Previous</a>`;
-    prevButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (currentPage > 1) {
-        currentPage--;
-        renderTable();
-        renderPagination();
+<script>
+    const rowsPerPage = 7; // Number of rows per page
+    let currentPage = 1;
+
+    const rows = document.querySelectorAll("#dataTable tbody tr"); // All rows in the table
+    const totalRows = rows.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Function to display the rows for the current page
+    function displayTable() {
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+
+      // Hide all rows
+      rows.forEach(row => row.style.display = 'none');
+      
+      // Show rows for the current page
+      for (let i = start; i < end && i < totalRows; i++) {
+        rows[i].style.display = '';
       }
-    });
-    pagination.appendChild(prevButton);
 
-    // Generate the page buttons
-    for (let i = 1; i <= pageCount; i++) {
-      const li = document.createElement('li');
-      li.classList.add('page-item');
-      if (i === currentPage) {
-        li.classList.add('active');
-      }
-      const a = document.createElement('a');
-      a.classList.add('page-link');
-      a.href = '#';
-      a.textContent = i;
-
-      a.addEventListener('click', function(event) {
-        event.preventDefault();
-        currentPage = i;
-        renderTable();
-        renderPagination();
-      });
-
-      li.appendChild(a);
-      pagination.appendChild(li);
+      // Update pagination buttons
+      document.getElementById("prevBtn").disabled = currentPage === 1;
+      document.getElementById("nextBtn").disabled = currentPage === totalPages;
     }
 
-    // Next button
-    const nextButton = document.createElement('li');
-    nextButton.classList.add('page-item');
-    nextButton.innerHTML = `<a class="page-link" href="#">Next</a>`;
-    nextButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (currentPage < pageCount) {
-        currentPage++;
-        renderTable();
-        renderPagination();
-      }
-    });
-    pagination.appendChild(nextButton);
+    // Function to change the current page
+    function changePage(direction) {
+      currentPage += direction;
+      displayTable();
+    }
 
-    // Last button
-    const lastButton = document.createElement('li');
-    lastButton.classList.add('page-item');
-    lastButton.innerHTML = `<a class="page-link" href="#">Last</a>`;
-    lastButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      currentPage = pageCount;
-      renderTable();
-      renderPagination();
-    });
-    pagination.appendChild(lastButton);
-  }
-  
-  // Initialize the table and pagination
-  renderTable();
-  renderPagination();
-</script>
+    // Initialize the table on page load
+    window.onload = displayTable;
+  </script>
 
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 

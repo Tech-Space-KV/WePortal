@@ -1,4 +1,4 @@
-<?php  require('header.php'); ?>
+<?php require('header.php'); ?>
 
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
@@ -186,4 +186,4 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 	
 	
-	<?php  require('footer.php'); ?>
+<?php require('footer.php'); ?>

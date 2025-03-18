@@ -9,17 +9,19 @@
 
     
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
-<div class="alert alert-primary mt-2" role="alert" style="display:none">
-  A simple primary alert—check it out!
-</div>
-<div class="alert alert-danger mt-2" role="alert" style="display:none">
-  A simple danger alert—check it out!
-</div>
+
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Upload Project</h1>
       </div>
+        
+        <!-- <div class="alert alert-primary mt-2" role="alert" id="successbox">
+            Perfect! Project uploaded successfully.
+        </div>
+        <div class="alert alert-danger mt-2" role="alert" id="failbox">
+            Error: Project upload failed.
+        </div> -->
 
-      <form action="save_data.php" method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data">
 
 
         <h5 class="mt-4 mb-4 text-pseudo">
@@ -178,8 +180,6 @@
 
 
 
-
-
 <script>
  $(document).ready(function () {
     // Initialize Select2 with tagging enabled
@@ -199,66 +199,81 @@
 
 <script>
     function insert_data() {
-        let form = document.querySelector("form");
+    let form = document.querySelector("form");
 
-        // Store each form field value in a separate variable
-        let customer = document.getElementById("mySelect").value;
-        let title = document.getElementById("title").value;
-        let description = document.getElementById("description").value;
-        let sow = document.getElementById("sow").files[0]; // File input
-        let projectIs = document.getElementById("projectIs").value;
-        let projectType = document.getElementById("projectType").value;
-        let projectCategory = document.getElementById("projectCategory").value;
-        let currency = document.getElementById("budget").value;
-        let budgetAmount = document.getElementById("budgetAmount").value;
-        let startDate = document.getElementById("startDate").value;
-        let endDate = document.getElementById("endDate").value;
-        let contactName = document.getElementsByName("contactName")[0].value;
-        let contactEmail = document.getElementsByName("contactEmail")[0].value;
-        let contactNumber = document.getElementsByName("contactNumber")[0].value;
-        let notificationEmail = document.getElementsByName("notificationEmail")[0].value;
-        let coupon = document.getElementsByName("coupon")[0].value;
+    // Store each form field value in variables
+    let customer = document.getElementById("mySelect").value;
+    let title = document.getElementById("title").value;
+    let description = document.getElementById("description").value;
+    let sow = document.getElementById("sow").files[0]; // File input
+    let projectIs = document.getElementById("projectIs").value;
+    let projectType = document.getElementById("projectType").value;
+    let projectCategory = document.getElementById("projectCategory").value;
+    let currency = document.getElementById("budget").value;
+    let budgetAmount = document.getElementById("budgetAmount").value;
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+    let contactName = document.getElementsByName("contactName")[0].value;
+    let contactEmail = document.getElementsByName("contactEmail")[0].value;
+    let contactNumber = document.getElementsByName("contactNumber")[0].value;
+    let notificationEmail = document.getElementsByName("notificationEmail")[0].value;
+    let coupon = document.getElementsByName("coupon")[0].value;
 
-        // Create FormData object to send via POST
-        let formData = new FormData();
-        formData.append("customer", customer);
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("sow", sow);
-        formData.append("projectIs", projectIs);
-        formData.append("projectType", projectType);
-        formData.append("projectCategory", projectCategory);
-        formData.append("currency", currency);
-        formData.append("budgetAmount", budgetAmount);
-        formData.append("startDate", startDate);
-        formData.append("endDate", endDate);
-        formData.append("contactName", contactName);
-        formData.append("contactEmail", contactEmail);
-        formData.append("contactNumber", contactNumber);
-        formData.append("notificationEmail", notificationEmail);
-        formData.append("coupon", coupon);
-
-        // Send data using fetch()
-        fetch("php-functions/function-upload-project.php", {
-            method: "POST",
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            alert("Project uploaded successfully!"); // Success message
-            console.log(data); // Log server response
-        })
-        .catch(error => {
-            alert("Error uploading project.");
-            console.error("Error:", error);
-        });
+    // Validate required fields
+    if (!customer || !title || !description) {
+        alert("Customer, Title, and Description are required!");
+        return;
     }
 
-   
+    // Create FormData object
+    let formData = new FormData();
+    formData.append("customer", customer);
+    formData.append("title", title);
+    formData.append("description", description);
+    if (sow) {
+        formData.append("sow", sow);
+    }
+    formData.append("projectIs", projectIs);
+    formData.append("projectType", projectType);
+    formData.append("projectCategory", projectCategory);
+    formData.append("currency", currency);
+    formData.append("budgetAmount", budgetAmount);
+    formData.append("startDate", startDate);
+    formData.append("endDate", endDate);
+    formData.append("contactName", contactName);
+    formData.append("contactEmail", contactEmail);
+    formData.append("contactNumber", contactNumber);
+    formData.append("notificationEmail", notificationEmail);
+    formData.append("coupon", coupon);
+
+    // Send data using fetch()
+    fetch("php-functions/function-upload-project.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Expect JSON response
+    .then(data => {
+        if (data.status === "success") {
+            alert(data.message); // Display success message
+            // location.reload(); // Refresh page after successful submission
+            // document.getElementById("successbox").style.display = "block";
+            // document.getElementById("failbox").style.display = "none";
+            // document.getElementById("successbox").textContent = "Project uploaded.";
+        } else {
+            alert("Error: " + data.message); // Display error message
+            // document.getElementById("successbox").style.display = "none";
+            // document.getElementById("failbox").style.display = "block";
+            // document.getElementById("failbox").textContent = "Error: Project upload failed.";
+        }
+        console.log(data); // Log full response
+    })
+    .catch(error => {
+        alert("Error uploading project. Please try again.");
+        console.error("Error:", error);
+    });
+}
+
 </script>
-
-
-
 
 
 
