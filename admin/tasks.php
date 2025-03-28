@@ -159,8 +159,8 @@
 
           <br>
           <div class="bg-light">
-            <p class="text-primary" id="pmt-done" style="display:none;"><i>Payment request has already been raised</p>
-            <p class="text-danger" id="pmt-not-done" style="display:none;"><i>Payment request not raised yet</p>
+            <p class="text-primary" id="pmt-done" style="display:none;"><i>Payment request has already been raised</i></p>
+            <p class="text-danger" id="pmt-not-done" style="display:none;"><i>Payment request not raised yet</i></p>
           </div>
           
           <div class="mb-3">
@@ -173,13 +173,18 @@
           <!-- Hidden ID Field -->
           <input type="hidden" id="pplnr_id" name="pplnr_id" value="<?php echo $milestone_id; ?>">
           <input type="hidden" id="pptasks_id" name="pptasks_id" value="">
+          <hr>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary" id="insert_operation">Submit</button>
+            <button type="submit" class="btn btn-success" id="save_operation">Save</button>
+            <button type="submit" class="btn btn-danger" id="delete_operation">Delete</button>
+          </div>
+
+
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="location.reload()" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="insert_operation">Submit</button>
-        <button type="submit" class="btn btn-success" id="save_operation">Save</button>
-        <button type="submit" class="btn btn-danger" id="delete_operation">Delete</button>
       </div>
     </div>
   </div>
@@ -192,7 +197,7 @@
   // Focus on input when modal is opened
   var myModal = document.getElementById('exampleModal');
   var myInput = document.getElementById('country');
-
+  var alertnm;
 
   function openviewmodal(stringdata){
     myModal.addEventListener('shown.bs.modal', function () {
@@ -206,17 +211,19 @@
               .then(response => response.json())
               .then(data => {
                   if (!data.error) {
-                      document.getElementById("pplnr_id").value = data.pplnr_scope_id;
+                      document.getElementById("pplnr_id").value = data.pptasks_planner_id;
                       document.getElementById("name").value = data.pptasks_task_title;
                       document.getElementById("description").value = data.pptasks_description;
                       document.getElementById("startDate").value = convertToDate(data.pptasks_start_date);
                       document.getElementById("endDate").value = convertToDate(data.pptasks_end_date);
-                      document.getElementById("spi_id").value = data.pptasks_sp_id;
+                      document.getElementById("sp_id").value = data.pptasks_sp_id;
                       document.getElementById("doc").value = data.pptasks_date_of_completion;
                       document.getElementById("sp_status").value = data.pptasks_sp_status;
                       document.getElementById("mngr_status").value = data.pptasks_pt_status;
                       document.getElementById("payment").value = data.pptasks_payment;
                       document.getElementById("pptasks_id").value = stringdata;
+                      
+                      console.log(data.pptasks_pt_status);
 
                       var pptasks_invoice_raised_flag = data.pptasks_invoice_raised_flag;
 
@@ -232,7 +239,7 @@
                       }
                       else{
                         document.getElementById("pmt-done").style.display = 'none';
-                        document.getElementById("pmt-not-done").style.display = 'none';
+                        document.getElementById("pmt-not-done").style.display = 'block';
                       }
 
 
@@ -245,6 +252,7 @@
                   }
               })
               .catch(error => console.error("Error fetching data:", error));
+
       }
   }
 
@@ -348,10 +356,10 @@ document.getElementById("delete_operation").addEventListener("click", function (
     event.preventDefault(); // Prevent default form submission
 
     let formData = new FormData();
-    formData.append("pscope_id", document.getElementById("pscope_id").value);
+    formData.append("pptasks_id", document.getElementById("pptasks_id").value);
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
 
-    fetch("php-functions/function-milestone-delete.php", {
+    fetch("php-functions/function-tasks-delete.php", {
         method: "POST",
         body: formData
     })

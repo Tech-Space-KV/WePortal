@@ -2,14 +2,16 @@
 require('../session-management.php');
 require('../../required/db-connection/connection.php');
 
-if (1) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        $pptasks_id = 8;
+        // Collect form data
+        $pplnr_id = $_POST['pplnr_id'];
+        $pptasks_id = $_POST['pptasks_id'];
 
         // Fetch data from project_scope table
-        $query = "SELECT * FROM project_planner_tasks WHERE pptasks_id = ?";
+        $query = "DELETE FROM project_planner_tasks WHERE pptasks_id = ? AND pptasks_planner_id = ?";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("i", $pptasks_id);
+        $stmt->bind_param("ii", $pptasks_id, $pplnr_id);
         $stmt->execute();
         $result = $stmt->get_result();
     

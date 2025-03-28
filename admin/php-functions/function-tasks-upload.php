@@ -17,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $payment = $_POST['payment'];
 
         // Prepare SQL query
-        $sql = " INSERT INTO `project_planner_tasks`(`pptasks_task_title`, `pptasks_description`, `pptasks_start_date`, `pptasks_end_date`, `pptasks_sp_id`, `pptasks_date_of_completion`, `pptasks_sp_status`, `pptasks_pt_status`, `pptasks_payment`, `pptasks_planner_id`,`created_at`,`updated_at`, `pptasks_sp_status`) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), 'Not Started' )";
+        $sql = " INSERT INTO `project_planner_tasks`(`pptasks_task_title`, `pptasks_description`, `pptasks_start_date`, `pptasks_end_date`, `pptasks_sp_id`, `pptasks_date_of_completion`, `pptasks_sp_status`, `pptasks_pt_status`, `pptasks_payment`, `pptasks_planner_id`,`created_at`,`updated_at`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s') )";
 
         $stmt = $con->prepare($sql);
         $stmt->bind_param("ssssssssdi", $name, $description, $startDate, $endDate, $sp_id, $doc, $sp_status, $mngr_status, $payment, $pplnr_id);
