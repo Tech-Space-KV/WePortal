@@ -14,8 +14,8 @@ try {
     $projectCategory = $_POST['projectCategory'] ?? null;
     $currency = $_POST['currency'] ?? null;
     $budgetAmount = $_POST['budgetAmount'] ?? null;
-    $startDate = $_POST['startDate'] ?? null;
-    $endDate = $_POST['endDate'] ?? null;
+    $startDate = date("d-m-Y", strtotime($_POST['startDate'])) ?? null;
+    $endDate = date("d-m-Y", strtotime($_POST['endDate'])) ?? null;
     $contactName = $_POST['contactName'] ?? null;
     $contactEmail = $_POST['contactEmail'] ?? null;
     $contactNumber = $_POST['contactNumber'] ?? null;
@@ -53,7 +53,7 @@ try {
 
     // Bind Parameters
     $stmt->bind_param(
-        "sssssssssssssssssss", 
+        "issssssssssssssssss", 
         $customer, $status, $checkrcv, $projectid, $title, $description, $sowData, $projectIs, $projectType, 
         $projectCategory, $currency, $budgetAmount, $startDate, $endDate, 
         $contactName, $contactEmail, $contactNumber, $notificationEmail, $coupon

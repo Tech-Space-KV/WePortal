@@ -33,7 +33,7 @@
 
             <select class="form-control" id="mySelect" name="customer" required>
                 
-                <option selected value="none" disabled>-- Select a customer --</option>
+                <option selected value="none" disabled>-- Username (Full name) (user id) --</option>
 
                 <?php
                     $query1="SELECT `pown_id` as user_id, `pown_username` as username, `pown_name` as name, `pown_user_type` as type, `pown_contact` as contact, `pown_email` as email FROM `project_owners`";
@@ -41,7 +41,7 @@
 							while( $row=mysqli_fetch_assoc($result1))
 							{
 							    ?>
-                        <option value="<?php echo $row['username'] ; ?>"><?php echo $row['username'] ; ?></option>
+                        <option value="<?php echo $row['user_id'] ; ?>"><?php echo $row['username']." (".$row['name'].")"." (".$row['user_id'].")" ; ?></option>
                         <?php } ?>
             
             </select>

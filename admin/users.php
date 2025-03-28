@@ -79,11 +79,6 @@
 
         </table>
       
-	  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center" id="pagination">
-      <!-- Page numbers will go here -->
-    </ul>
-  </nav>
 	  
 	  </div>
 
@@ -146,13 +141,19 @@
 
         </table>
       
+	  
+	  </div>
+
+      <div class="pagination" style="float:right;" hidden>
+    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+  </div>
+      
 	  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" id="pagination">
       <!-- Page numbers will go here -->
     </ul>
   </nav>
-	  
-	  </div>
 	  
     </main>
 	

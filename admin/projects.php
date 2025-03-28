@@ -13,10 +13,6 @@
       </div>
 
       <div class="table-responsive small">
-      <div class="pagination" style="float:right;">
-    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
-    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
-  </div>
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
@@ -31,12 +27,15 @@
           </thead>
           <tbody>
           <?php
-              $query="SELECT `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`" ;
+              $query="SELECT `project_owners`.`pown_name`, `project_owners`.`pown_id`, `project_owners`.`pown_username`, `project_owners`.`pown_user_type`,  `project_owners`.`pown_organisation_name`, 
+              `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`
+              JOIN `project_owners` ON `pown_id` = `plist_customer_id`" ;
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
 							{
 							    ?>
-							    <tr id="row-<?php echo $row['plist_id']; ?>">
+							    <tr id="<?php echo $row['plist_id'] ;?>" 
+                      title="<?php echo $row['pown_id'].'\n'.$row['pown_username'].'<br>'.$row['pown_name'].'<br>'.$row['pown_user_type'].'<br>'.$row['pown_organisation_name'] ;?>">
 							       
                   <td>
 							            <?php echo $row['plist_projectid'] ; ?>
@@ -54,11 +53,11 @@
 							            <?php echo $row['plist_status'] ; ?>
 							        </td>
 							        <td>
-							            <?php echo $row['plist_customer_id'] ; ?>
+							            <?php echo $row['pown_name'] ; ?>
 							        </td>
 							        <td>
                       <a class="btn btn-sm btn-primary" href="view-project">view</a>
-                      <a class="btn btn-sm btn-primary ms-2" href="locations">expand</a>
+                      <a class="btn btn-sm btn-primary ms-2" href="locations?proj-id=<?php echo $row['plist_id'] ;?>">expand</a>
 							        </td>
 							    </tr>
 							    <?php
@@ -68,7 +67,10 @@
         ?>
 	 </tbody>
         </table>
-
+        <div class="pagination" style="float:right;" hidden>
+    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+  </div>
       
 	  <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" id="pagination">
