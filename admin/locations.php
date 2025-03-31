@@ -1,5 +1,12 @@
 <?php  require('header.php'); ?>
 <?php $project_id= $_GET['proj-id']; ?>
+<?php 
+if (isset($_GET['search'])) {
+  $search = $_GET['search']; // Get the value
+} else {
+  $search='';
+}
+?>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Project Scope/Locations</h1>
@@ -14,7 +21,7 @@
       <center>
         <input type="text" class="w-50 mx-auto mb-4" id="tableSearch" placeholder="Search..." onkeyup="searchTable()" />
       </center>
-      
+
       <div class="table-responsive small">
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
@@ -29,7 +36,7 @@
           </thead>
           <tbody>
           <?php
-              $query="SELECT * FROM `project_scope` WHERE pscope_project_id = $project_id " ;
+              $query="SELECT * FROM `project_scope` WHERE pscope_project_id = $project_id AND pscope_id like '%$search%'" ;
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
 							{

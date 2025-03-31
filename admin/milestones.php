@@ -1,4 +1,11 @@
 <?php  require('header.php'); ?>
+<?php 
+if (isset($_GET['search'])) {
+  $search = $_GET['search']; // Get the value
+} else {
+  $search='';
+}
+?>
 <?php $location_id= $_GET['loc-id']; ?>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -29,7 +36,7 @@
           </thead>
           <tbody>
           <?php
-              $query="SELECT * FROM `project_planner` WHERE pplnr_scope_id = $location_id" ;
+              $query="SELECT * FROM `project_planner` WHERE pplnr_scope_id = $location_id AND `pplnr_id` like '%$search%'" ;
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
 							{

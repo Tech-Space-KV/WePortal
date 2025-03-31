@@ -1,4 +1,11 @@
 <?php  require('header.php'); ?>
+<?php 
+if (isset($_GET['search'])) {
+  $search = $_GET['search']; // Get the value
+} else {
+  $search='';
+}
+?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -33,7 +40,8 @@
           <?php
               $query="SELECT `project_owners`.`pown_name`, `project_owners`.`pown_id`, `project_owners`.`pown_username`, `project_owners`.`pown_user_type`,  `project_owners`.`pown_organisation_name`, 
               `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`
-              JOIN `project_owners` ON `pown_id` = `plist_customer_id`" ;
+              JOIN `project_owners` ON `pown_id` = `plist_customer_id`
+              WHERE `plist_id` like '%$search%' ";
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
 							{
