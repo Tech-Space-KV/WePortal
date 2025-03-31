@@ -23,12 +23,7 @@ try {
     $coupon = $_POST['coupon'] ?? null;
     $status = 'No SP Assigned';
     $projectid = "Pseudo-".date("Y")."-".date("mdHis")."";
-    $checkrcv='False';
-
-    if(!empty($notificationEmail))
-    {
-        $checkrcv='True';
-    }
+    $checkrcv = !empty($notificationEmail) ? 'True' : 'False';
 
     // Validate required fields
     if (!$customer || !$title || !$description) {

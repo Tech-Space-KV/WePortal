@@ -1,72 +1,83 @@
 <?php
-require('../session-management.php'); 
-require('../../required/db-connection/connection.php'); 
+require('../session-management.php');
+require('../../required/db-connection/connection.php');
 
 header('Content-Type: application/json');
 
-try {
-    // Collect form data and handle null values
-    $customer = $_POST['customer'] ?? null;
-    $title = $_POST['title'] ?? null;
-    $description = $_POST['description'] ?? null;
-    $projectIs = $_POST['projectIs'] ?? null;
-    $projectType = $_POST['projectType'] ?? null;
-    $projectCategory = $_POST['projectCategory'] ?? null;
-    $currency = $_POST['currency'] ?? null;
-    $budgetAmount = $_POST['budgetAmount'] ?? null;
-    $startDate = date("d-m-Y", strtotime($_POST['startDate'])) ?? null;
-    $endDate = date("d-m-Y", strtotime($_POST['endDate'])) ?? null;
-    $contactName = $_POST['contactName'] ?? null;
-    $contactEmail = $_POST['contactEmail'] ?? null;
-    $contactNumber = $_POST['contactNumber'] ?? null;
-    $notificationEmail = $_POST['notificationEmail'] ?? null;
-    $coupon = $_POST['coupon'] ?? null;
-    $status = 'No SP Assigned';
-    $projectid = "Pseudo-".date("Y")."-".date("mdHis")."";
-    $checkrcv='False';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   
+        // Sanitize & Validate Inputs
+        $customer = intval($_POST['customer']);
+        $title = trim($_POST['title']);
+        $description = trim($_POST['description']);
+        $projectIs = trim($_POST['projectIs']);
+        $projectType = trim($_POST['projectType']);
+        $projectCategory = trim($_POST['projectCategory']);
+        $currency = trim($_POST['currency']);
+        $budgetAmount = floatval($_POST['budgetAmount']);
+        $startDate = trim($_POST['startDate']);
+        $endDate = trim($_POST['endDate']);
+        $contactName = trim($_POST['contactName']);
+        $contactEmail = trim($_POST['contactEmail']);
+        $contactNumber = trim($_POST['contactNumber']);
+        $notificationEmail = trim($_POST['notificationEmail']);
+        $coupon = trim($_POST['coupon']);
+        $finalPrice = floatval($_POST['finalPrice']);
+        $pstatus = trim($_POST['pstatus']);
+        $projectStatus = trim($_POST['projectStatus']);
+        $statusDescription = trim($_POST['statusDescription']);
+        $mngrId = intval($_POST['mngrId']);
+        $plistId = intval($_POST['plistId']);
 
-    if(!empty($notificationEmail))
-    {
-        $checkrcv='True';
-    }
+        // Prepare SQL Statement
+        $query = "UPDATE project_list SET 
+            plist_customer_id=?, plist_title=?, plist_description=?, plist_ongnew=?, plist_type=?, 
+            plist_category=?, plist_currency=?, plist_budget=?, plist_startdate=?, plist_enddate=?, 
+            plist_name=?, plist_email=?, plist_contact=?, plist_customeremail=?, plist_coupon=?, 
+            plist_final_price=?, plist_status=?, plist_project_status=?, plist_project_status_description=?, 
+            plist_pt_mngr_id=? WHERE plist_id=?";
 
-    // Validate required fields
-    if (!$customer || !$title || !$description) {
-        throw new Exception("Missing required fields.");
-    }
+        $stmt = mysqli_prepare($con, $query);
+        if ($stmt) {
+            mysqli_stmt_bind_param(
+                $stmt,
+                "issssssssssssssdssssi",
+                $customer,
+                $title,
+                $description,
+                $projectIs,
+                $projectType,
+                $projectCategory,
+                $currency,
+                $budgetAmount,
+                $startDate,
+                $endDate,
+                $contactName,
+                $contactEmail,
+                $contactNumber,
+                $notificationEmail,
+                $coupon,
+                $finalPrice,
+                $pstatus,
+                $projectStatus,
+                $statusDescription,
+                $mngrId,
+                $plistId
+            );
 
-    // Handle file upload (Scope of Work - SOW)
-    $sowData = null;
-    if (!empty($_FILES["sow"]["tmp_name"])) {
-        $sowData = file_get_contents($_FILES["sow"]["tmp_name"]); // Convert file to binary (BLOB)
-    }
+            if (mysqli_stmt_execute($stmt)) {
+                echo json_encode(["status" => "success", "message" => "Project updated successfully"]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Update failed: " . mysqli_stmt_error($stmt)]);
+            }
 
-    // Prepare SQL Query
-    $sql = "INSERT INTO project_list 
-        (plist_customer_id, plist_status, plist_checkrcv, plist_projectid, plist_title, plist_description, plist_sow, plist_ongnew, plist_type, plist_category, plist_currency, plist_budget, plist_startdate, plist_enddate, plist_name, plist_email, plist_contact, plist_customeremail, plist_coupon, created_at, updated_at, plist_project_status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), 'Live')";
-
-    $stmt = $con->prepare($sql);
-    if (!$stmt) {
-        throw new Exception("Database query preparation failed: " . $con->error);
-    }
-
-    // Bind Parameters
-    $stmt->bind_param(
-        "issssssssssssssssss", 
-        $customer, $status, $checkrcv, $projectid, $title, $description, $sowData, $projectIs, $projectType, 
-        $projectCategory, $currency, $budgetAmount, $startDate, $endDate, 
-        $contactName, $contactEmail, $contactNumber, $notificationEmail, $coupon
-    );
-
-    if (!$stmt->execute()) {
-        throw new Exception("Failed to upload project: " . $stmt->error);
-    }
-
-    echo json_encode(["status" => "success", "message" => "Project uploaded successfully!"]);
-    $stmt->close();
-
-} catch (Exception $e) {
-    echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+            mysqli_stmt_close($stmt);
+        } else {
+            echo json_encode(["status" => "error", "message" => "SQL Error: " . mysqli_error($con)]);
+        }
+    
+} else {
+    echo json_encode(["status" => "error", "message" => "Invalid request"]);
 }
-?>
+
+mysqli_close($con);
