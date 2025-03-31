@@ -43,8 +43,8 @@ try {
 
     // Prepare SQL Query
     $sql = "INSERT INTO project_list 
-        (plist_customer_id, plist_status, plist_checkrcv, plist_projectid, plist_title, plist_description, plist_sow, plist_ongnew, plist_type, plist_category, plist_currency, plist_budget, plist_startdate, plist_enddate, plist_name, plist_email, plist_contact, plist_customeremail, plist_coupon, created_at, updated_at) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        (plist_customer_id, plist_status, plist_checkrcv, plist_projectid, plist_title, plist_description, plist_sow, plist_ongnew, plist_type, plist_category, plist_currency, plist_budget, plist_startdate, plist_enddate, plist_name, plist_email, plist_contact, plist_customeremail, plist_coupon, created_at, updated_at, plist_project_status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), 'Live')";
 
     $stmt = $con->prepare($sql);
     if (!$stmt) {

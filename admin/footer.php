@@ -90,6 +90,29 @@
 </script>
 
 
+<script>
+function searchTable() {
+    let input = document.getElementById("tableSearch").value.toLowerCase();
+    let table = document.getElementById("dataTable");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+        let cells = rows[i].getElementsByTagName("td");
+        let rowContainsSearchTerm = false;
+
+        for (let cell of cells) {
+            if (cell.innerText.toLowerCase().includes(input)) {
+                rowContainsSearchTerm = true;
+                break;
+            }
+        }
+
+        rows[i].style.display = rowContainsSearchTerm ? "" : "none";
+    }
+}
+</script>
+
+
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>

@@ -29,7 +29,6 @@
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Status</th>
-              <th scope="col">Customer ID</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -57,9 +56,7 @@
 							        <td>
 							            <?php echo $row['plist_status'] ; ?>
 							        </td>
-							        <td>
-							            <?php echo $row['plist_customer_id'] ; ?>
-							        </td>
+							        
 							        <td>
                         <a class="btn btn-sm btn-outline-primary" href="purchase-form-view.php?pid=<?php echo $row['pur_id'] ; ?>">View</a>
 							        </td>

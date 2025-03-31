@@ -11,6 +11,12 @@
         </div>
       </div>
 
+      
+      <center>
+        <input type="text" class="w-50 mx-auto mb-4" id="tableSearch" placeholder="Search..." onkeyup="searchTable()" />
+      </center>
+      
+      
       <div class="table-responsive small">
         <table class="table table-striped table-sm" id="dataTable">
           <thead>

@@ -12,6 +12,10 @@
         </div>
       </div>
 
+      <center>
+        <input type="text" class="w-50 mx-auto mb-4" id="tableSearch" placeholder="Search..." onkeyup="searchTable()" />
+      </center>
+
       <div class="table-responsive small">
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
@@ -56,8 +60,9 @@
 							            <?php echo $row['pown_name'] ; ?>
 							        </td>
 							        <td>
-                      <a class="btn btn-sm btn-primary" href="view-project">view</a>
-                      <a class="btn btn-sm btn-primary ms-2" href="locations?proj-id=<?php echo $row['plist_id'] ;?>">expand</a>
+                      <a class="btn btn-sm btn-primary" href="project-view?project_key=<?php echo $row['plist_id'] ;?>">view</a>
+                      <a class="btn btn-sm btn-primary" href="project-tree?project_key=<?php echo $row['plist_id'] ;?>">timeline</a>
+                      <a class="btn btn-sm btn-primary" href="locations?proj-id=<?php echo $row['plist_id'] ;?>">expand</a>
 							        </td>
 							    </tr>
 							    <?php
