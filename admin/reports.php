@@ -90,7 +90,7 @@
 
     <!-- Cards Section -->
     <div class="card-container">
-        <a href="no_sp_assigned.html" class="text-decoration-none">
+        <a href="projects?status=No SP Assigned" class="text-decoration-none">
             <div class="card text-white" style="background-color: grey;">
                 <div class="card-body">
                     <h5 class="card-title">No SP Assigned</h5>
@@ -98,7 +98,7 @@
             </div>
         </a>
 
-        <a href="in_progress.html" class="text-decoration-none">
+        <a href="projects?status=In Progress" class="text-decoration-none">
             <div class="card text-white" style="background-color: blue;">
                 <div class="card-body">
                     <h5 class="card-title">In Progress</h5>
@@ -106,7 +106,7 @@
             </div>
         </a>
 
-        <a href="delivered.html" class="text-decoration-none">
+        <a href="projects?status=Delivered" class="text-decoration-none">
             <div class="card text-white" style="background-color: green;">
                 <div class="card-body">
                     <h5 class="card-title">Delivered</h5>
@@ -114,7 +114,7 @@
             </div>
         </a>
 
-        <a href="overdue.html" class="text-decoration-none">
+        <a href="projects?status=Overdue" class="text-decoration-none">
             <div class="card text-white" style="background-color: rgb(235, 205, 9);">
                 <div class="card-body">
                     <h5 class="card-title">Overdue</h5>
@@ -122,7 +122,7 @@
             </div>
         </a>
 
-        <a href="cancelled.html" class="text-decoration-none">
+        <a href="projects?status=Cancelled" class="text-decoration-none">
             <div class="card text-white" style="background-color: red;">
                 <div class="card-body">
                     <h5 class="card-title">Cancelled</h5>
