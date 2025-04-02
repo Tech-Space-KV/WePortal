@@ -17,7 +17,7 @@
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
             <tr>
-               <th scope="col">Serial No.</th>
+               <th scope="col">Serial  No.</th>
         <th scope="col">Identifier</th>
         <th scope="col">Model No.</th>
         <th scope="col">Family</th>
