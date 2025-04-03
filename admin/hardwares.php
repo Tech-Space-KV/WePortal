@@ -55,8 +55,8 @@
               <?php echo $row['hrdws_sp_id']; ?>
             </td>
             <td>
-              <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pscope_id']; ?>')">view</button>
-              <a class="btn btn-sm btn-primary ms-2" href="milestones?loc-id=<?php echo $row['pscope_id']; ?>">expand</a>
+              <!-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pscope_id']; ?>')">view</button> -->
+              <a class="btn btn-sm btn-primary ms-2" href="hardwares-view?hw-id=<?php echo $row['hrdws_id']; ?>">View</a>
             </td>
           </tr>
         <?php
