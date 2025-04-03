@@ -1,76 +1,94 @@
-<?php  require('header.php'); ?>
+<?php require('header.php'); ?>
 
-<?php
-// Include database connection
-include 'connection.php';
-
-// SQL Query to fetch data from both tables 
-// Not taken username as the column is not present in both the tables
- $sql = "SELECT ntfn_id,ntfn_notification,ntfn_date_time,ntfn_readflag
-        FROM 	notifications";
-
-
-$result = $conn->query($sql);
-
-?>
-
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Notification</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-			<button type="button" class="btn btn-sm btn-outline-secondary"> &nbsp;&nbsp; <i class="fa fa-refresh"> &nbsp;&nbsp; </i></button>
-			
-          </div>
-        </div>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Hardware Inventory</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
       </div>
+    </div>
+  </div>
 
-      <div class="table-responsive small">
-        <table class="table table-striped table-sm" id="dataTable">
-          <thead>
-            <tr>
-               <th scope="col">Notification</th>
-        <th scope="col">Date/Time</th>
-        <th scope="col">Read/Unread</th>
-        <th scope="col">Action</th>
-		<th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-                <?php
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-      $btnClass = ($row['ntfn_readflag'] == 1) ? 'btn-outline-warning' : 'btn-outline-success';
-      $btnText = ($row['ntfn_readflag'] == 1) ? 'Unread' : 'Read';
+  <center>
+    <input type="text" class="w-50 mx-auto mb-4" id="tableSearch" placeholder="Search..." onkeyup="searchTable()" />
+  </center>
 
-      echo "<tr>
-              <td>{$row['ntfn_notification']}</td>
-              <td>{$row['ntfn_date_time']}</td>
-              <td class='status' data-id='{$row['ntfn_id']}'>" . (($row['ntfn_readflag'] == 1) ? 'Read' : 'Unread') . "</td>
-              <td>
-                  <button class='btn btn-sm $btnClass toggle-read' data-id='{$row['ntfn_id']}'>{$btnText}</button>
-                  <button class='btn btn-sm btn-outline-primary delete-btn' data-id='{$row['ntfn_id']}'>Delete</button>
-              </td>
-            </tr>";
+  <div class="table-responsive small">
+    <table class="table table-striped table-sm" id="dataTable">
+      <thead>
+        <tr>
+          <!-- Notification, project id, for user id, date time    -->
+          <th scope="col">Notification</th>
+          <th scope="col">Project ID</th>
+          <th scope="col">For User ID</th>
+          <th scope="col">Date Time</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $query = "SELECT * FROM notifications";
+        $result = mysqli_query($con, $query);
+        while ($row = mysqli_fetch_assoc($result)) {
+          $isUnread = ($row['ntfn_readflag'] == 0) ? 'fw-bold' : ''; // Add 'fw-bold' class if unread
+        ?>
+          <tr id="row-<?php echo $row['ntfn_id']; ?>">
+            <td class="<?php echo $isUnread; ?>">
+              <?php echo $row['ntfn_notification']; ?>
+            </td>
+            <td>
+              <?php echo $row['ntfn_project_id']; ?>
+            </td>
+            <td>
+              <?php echo $row['ntfn_forUserId']; ?>
+            </td>
+            <td>
+              <?php echo $row['ntfn_date_time']; ?>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" onclick="markAsRead(<?php echo $row['ntfn_id']; ?>)">Read</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="markAsUnread(<?php echo $row['ntfn_id']; ?>)">Unread</button>
+            </td>
+          </tr>
+        <?php } ?>
+      </tbody>
+
+    </table>
+  </div>
+</main>
+
+<script>
+  function markAsRead(notificationId) {
+    updateNotificationStatus(notificationId, 1);
   }
-} else {
-  echo "<tr><td colspan='4'>No notifications found</td></tr>";
-}
-?>
-            </tbody>
 
-        </table>
-      
-	  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center" id="pagination">
-      <!-- Page numbers will go here -->
-    </ul>
-  </nav>
-	  
-	  </div>
-	  
-    </main>
-	
-	
-	
-	<?php  require('footer.php'); ?>
+  function markAsUnread(notificationId) {
+    updateNotificationStatus(notificationId, 0);
+  }
+
+  function updateNotificationStatus(notificationId, status) {
+    fetch('php-functions/function-update-notification.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `id=${notificationId}&status=${status}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          let row = document.getElementById('row-' + notificationId);
+          if (status === 1) {
+            row.querySelector('td:first-child').classList.remove('fw-bold');
+          } else {
+            row.querySelector('td:first-child').classList.add('fw-bold');
+          }
+        }
+      });
+  }
+</script>
+
+<?php require('footer.php'); ?>
