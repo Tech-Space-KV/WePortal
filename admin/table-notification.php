@@ -30,7 +30,8 @@
       </thead>
       <tbody>
         <?php
-        $query = "SELECT * FROM notifications";
+        $query = "SELECT * FROM notifications WHERE LOWER(ntfn_type) = 'pt'";
+
         $result = mysqli_query($con, $query);
         while ($row = mysqli_fetch_assoc($result)) {
           $isUnread = ($row['ntfn_readflag'] == 0) ? 'fw-bold' : ''; // Add 'fw-bold' class if unread
