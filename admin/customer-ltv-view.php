@@ -1,7 +1,10 @@
 <?php require('header.php'); ?>
 <?php
-// Fetch all transactions
-$query = "SELECT plist_final_price, plist_delivered_on FROM project_list";
+$custId = isset($_GET['cust-id']) ? (int)$_GET['cust-id'] : 0;
+
+$query = "SELECT plist_final_price, plist_delivered_on 
+          FROM project_list 
+          WHERE plist_customer_id = $custId";
 $result = mysqli_query($con, $query);
 
 $yearlyData = [];
@@ -11,8 +14,8 @@ $rowCount = 0;
 $monthlyRevenueByYear = [];
 
 $currentYear = date("Y");
+$currentFY = "";
 
-// Loop through data
 while ($row = mysqli_fetch_assoc($result)) {
     $price = $row['plist_final_price'];
     $date = $row['plist_delivered_on'];
@@ -24,10 +27,14 @@ while ($row = mysqli_fetch_assoc($result)) {
     $fy = ($month < 4) ? $year - 1 : $year;
     $financialYear = $fy . "-" . ($fy + 1);
 
-    if (!isset($monthlyRevenueByYear[$year])) {
-        $monthlyRevenueByYear[$year] = array_fill(1, 12, 0);
+    if (!isset($monthlyRevenueByYear[$financialYear])) {
+        $monthlyRevenueByYear[$financialYear] = array_fill(1, 12, 0);
     }
-    $monthlyRevenueByYear[$year][$month] += $price;
+    $monthlyRevenueByYear[$financialYear][$month] += $price;
+
+    if ($financialYear == (($currentYear - 1) . "-" . $currentYear) || $financialYear == ($currentYear . "-" . ($currentYear + 1))) {
+        $currentFY = $financialYear;
+    }
 
     if ($year == $currentYear) {
         $totalThisYear += $price;
@@ -44,7 +51,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $ltv = $rowCount ? round($totalPrice / $rowCount, 2) : 0;
 
-// Top 5 customers
 $topCustomers = [];
 $topQuery = "SELECT pown_name AS name, SUM(plist_final_price) AS total 
              FROM project_list 
@@ -112,7 +118,7 @@ while ($row = mysqli_fetch_assoc($topResult)) {
                             $years = array_keys($monthlyRevenueByYear);
                             rsort($years);
                             foreach ($years as $y) {
-                                echo "<option value='$y'" . ($y == $currentYear ? " selected" : "") . ">$y</option>";
+                                echo "<option value='$y'" . ($y == $currentFY ? " selected" : "") . ">$y</option>";
                             }
                             ?>
                         </select>
@@ -138,6 +144,10 @@ const yearlyLabels = <?php echo json_encode(array_keys($yearlyData)); ?>;
 const yearlyValues = <?php echo json_encode(array_values($yearlyData)); ?>;
 const reversedLabels = [...yearlyLabels].reverse();
 const reversedValues = [...yearlyValues].reverse();
+const defaultFY = "<?php echo $currentFY; ?>";
+const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const monthlyRevenueByYear = <?php echo json_encode($monthlyRevenueByYear); ?>;
+const ctx = document.getElementById("monthlyTrendChart").getContext("2d");
 
 new Chart(document.getElementById("barChart"), {
     type: 'bar',
@@ -195,17 +205,13 @@ new Chart(document.getElementById("pieChart"), {
     }
 });
 
-const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const monthlyRevenueByYear = <?php echo json_encode($monthlyRevenueByYear); ?>;
-const ctx = document.getElementById("monthlyTrendChart").getContext("2d");
-
 let monthlyTrendChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: monthlyLabels,
         datasets: [{
             label: 'Monthly Revenue',
-            data: monthlyRevenueByYear[<?php echo $currentYear; ?>],
+            data: Object.values(monthlyRevenueByYear[defaultFY] || Array(12).fill(0)),
             borderColor: 'rgba(255, 99, 132, 1)',
             tension: 0.3,
             fill: false
@@ -228,7 +234,7 @@ let monthlyTrendChart = new Chart(ctx, {
 
 document.getElementById("yearSelect").addEventListener("change", function () {
     const selectedYear = this.value;
-    const newData = monthlyRevenueByYear[selectedYear];
+    const newData = monthlyRevenueByYear[selectedYear] || Array(12).fill(0);
     monthlyTrendChart.data.datasets[0].data = Object.values(newData);
     monthlyTrendChart.update();
 });

@@ -68,7 +68,8 @@
                             <?php echo $row_cust['email']; ?>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-primary" href="customer-ltv-view.php?cust-id=<?php echo $row['pown_id']; ?>">View</a>
+                        <a class="btn btn-sm btn-outline-primary" href="customer-ltv-view.php?cust-id=<?php echo $row_cust['user_id']; ?>">View</a>
+
                         </td>
                     </tr>
                 <?php
