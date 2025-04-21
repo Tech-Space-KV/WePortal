@@ -23,12 +23,23 @@
         </div> -->
 
     <?php
-    $query = "SELECT `project_owners`.`pown_name`, `project_owners`.`pown_id`, `project_owners`.`pown_username`,
-                `weusers`.`id` AS mgr_user_id, `weusers`.`username` AS mgr_username, `weusers`.`email` AS mgr_email,
-                `project_list`.* FROM `project_list`
-              JOIN `project_owners` ON `pown_id` = `plist_customer_id`
-              JOIN `weusers` ON `weusers`.`id` = `plist_pt_mngr_id`
-              WHERE plist_id = $project_key ";
+    $query = "SELECT 
+                    `project_owners`.`pown_name`, 
+                    `project_owners`.`pown_id`, 
+                    `project_owners`.`pown_username`,
+                    `weusers`.`id` AS mgr_user_id, 
+                    `weusers`.`username` AS mgr_username, 
+                    `weusers`.`email` AS mgr_email,
+                    `project_list`.* 
+                FROM 
+                    `project_list`
+                JOIN 
+                    `project_owners` ON `pown_id` = `plist_customer_id`
+                LEFT JOIN 
+                    `weusers` ON `weusers`.`id` = `plist_pt_mngr_id`
+                WHERE 
+                    `plist_id` = $project_key;
+                ";
     $result = mysqli_query($con, $query);
     while ($row = mysqli_fetch_assoc($result)) {
 
