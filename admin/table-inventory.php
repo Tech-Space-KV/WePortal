@@ -30,18 +30,18 @@
             <tbody>
                 <?php
                 $query_cust = "
-                SELECT 
+                    SELECT 
                     ordplcd_order_no AS order_no, 
-                    SUM(ordplcd_qty_placed) AS number_of_items, 
+                    COUNT(*) AS number_of_items,  -- Counts number of rows (each item placed)
                     GROUP_CONCAT(DISTINCT ordplcd_status) AS status, 
                     MIN(ordplcd_order_date) AS order_date 
-                FROM orders_placed 
-                GROUP BY ordplcd_order_no
-                HAVING 
+                    FROM orders_placed 
+                    GROUP BY ordplcd_order_no
+                    HAVING 
                     SUM(CASE WHEN LOWER(ordplcd_status) = 'pending' THEN 1 ELSE 0 END) > 0
-                ORDER BY ordplcd_order_date DESC
-            ";
-            
+                    ORDER BY ordplcd_order_date DESC;
+                ";
+
 
                 $result_cust = mysqli_query($con, $query_cust);
                 while ($row_cust = mysqli_fetch_assoc($result_cust)) {
@@ -52,7 +52,7 @@
                         <td><?php echo $row_cust['status']; ?></td>
                         <td><?php echo $row_cust['order_date']; ?></td>
                         <td>
-                        <a href="table-inventory-details.php?order_no=<?php echo $row_cust['order_no']; ?>" class="btn btn-sm btn-primary">View</a>
+                            <a href="table-inventory-details.php?order_no=<?php echo $row_cust['order_no']; ?>" class="btn btn-sm btn-primary">View</a>
                         </td>
                     </tr>
                 <?php
