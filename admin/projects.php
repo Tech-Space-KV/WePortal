@@ -57,7 +57,7 @@ if (isset($_GET['status'])) {
                   <td>
 							            <?php echo $row['plist_projectid'] ; ?>
 							        </td>
-							        <td>
+							        <td class="limited-td">
 							            <?php echo $row['plist_title'] ; ?>
 							        </td>
 							        <td>

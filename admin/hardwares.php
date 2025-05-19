@@ -36,22 +36,22 @@
         ?>
           <tr id="">
 
-            <td>
+            <td class="limited-td">
               <?php echo $row['hrdws_serial_number']; ?>
             </td>
-            <td>
+            <td class="limited-td">
               <?php echo $row['hrdws_hw_identifier']; ?>
             </td>
-            <td>
+            <td class="limited-td">
               <?php echo $row['hrdws_model_number']; ?>
             </td>
             <td>
               <?php echo $row['hrdws_qty']; ?>
             </td>
-            <td>
+            <td class="limited-td">
               <?php echo $row['hrdws_family']; ?>
             </td>
-            <td>
+            <td class="limited-td">
               <?php echo $row['hrdws_sp_id']; ?>
             </td>
             <td>

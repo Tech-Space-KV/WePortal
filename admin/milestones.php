@@ -43,7 +43,7 @@ if (isset($_GET['search'])) {
 							    ?>
 							    <tr id="">
 							       
-                  <td>
+                  <td class="limited-td">
 							            <?php echo $row['pplnr_milestone'] ; ?>
 							        </td>
 							        <td>

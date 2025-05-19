@@ -177,8 +177,8 @@ if (isset($_GET['search'])) {
           
           <div class="mb-3">
             <label for="endDate" class="form-label">Raise Payment Request</label>
-            <button type="submit" class="btn btn-sm btn-outline-primary" id="request_payment">Request Payment</button>
-            <button type="submit" class="btn btn-sm btn-outline-danger" id="request_cancel">Cancel Request</button>
+            <button class="btn btn-sm btn-outline-primary" id="request_payment">Request Payment</button>
+            <button class="btn btn-sm btn-outline-danger" id="request_cancel">Cancel Request</button>
           </div>
 
 
@@ -399,6 +399,85 @@ document.getElementById("delete_operation").addEventListener("click", function (
        document.getElementById("modalForm").reset();
        
 });
+
+
+
+  // Handle payment submission
+  document.getElementById("request_payment").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let formData = new FormData();
+    formData.append("pptasks_id", document.getElementById("pptasks_id").value);
+    formData.append("raise_invoice", 1);
+
+    fetch("php-functions/function-tasks-raise-invoice.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Expecting JSON response
+    .then(data => {
+        if (data.status === "success") {
+          alert("Invoice details updated!", "success");
+          location.reload();
+        } else {
+            alert("Failed to update!", "error");
+            location.reload();
+        }
+    })
+    .catch(error => {
+      alert("Error in request!", "error");
+        console.error("Error:", error);
+        location.reload();
+    });
+
+       // Close modal after submission
+       var modalElement = new bootstrap.Modal(document.getElementById('exampleModal'));
+       modalElement.hide();
+   
+       // Reset form after submission
+       document.getElementById("modalForm").reset();
+       
+});
+
+
+
+  // Handle payment submission
+  document.getElementById("request_cancel").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let formData = new FormData();
+    formData.append("pptasks_id", document.getElementById("pptasks_id").value);
+    formData.append("raise_invoice", 0);
+
+    fetch("php-functions/function-tasks-raise-invoice.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Expecting JSON response
+    .then(data => {
+        if (data.status === "success") {
+          alert("Invoice details updated!", "success");
+          location.reload();
+        } else {
+            alert("Failed to update!", "error");
+            location.reload();
+        }
+    })
+    .catch(error => {
+      alert("Error in request!", "error");
+        console.error("Error:", error);
+        location.reload();
+    });
+
+       // Close modal after submission
+       var modalElement = new bootstrap.Modal(document.getElementById('exampleModal'));
+       modalElement.hide();
+   
+       // Reset form after submission
+       document.getElementById("modalForm").reset();
+       
+});
+
 
 
 

@@ -43,13 +43,13 @@ if (isset($_GET['search'])) {
 							    ?>
 							    <tr id="">
 							       
-                  <td>
+                  <td class="limited-td">
 							            <?php echo $row['pscope_country'] ; ?>
 							        </td>
-							        <td>
+							        <td class="limited-td">
 							            <?php echo $row['pscope_state'] ; ?>
 							        </td>
-							        <td>
+							        <td class="limited-td">
 							            <?php echo $row['pscope_city'] ; ?>
 							        </td>
 							        <td>

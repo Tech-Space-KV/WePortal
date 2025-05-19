@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 WHERE `pptasks_id` = ?";
 
                 $stmt = $con->prepare($sql);
-                $stmt->bind_param("ssssssssds", $name, $description, $startDate, $endDate, 
+                $stmt->bind_param("ssssssssdi", $name, $description, $startDate, $endDate, 
                 $sp_id, $doc, $sp_status, $mngr_status, $payment, $pptasks_id);
 
 
