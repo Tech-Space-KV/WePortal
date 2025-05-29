@@ -24,13 +24,13 @@
           <th scope="col">Model No.</th>
           <th scope="col">Uploaded Qty.</th>
           <th scope="col">Family</th>
-          <th scope="col">Service Partner</th>
+          <th scope="col">(SP ID) Service Partner</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <?php
-        $query = "SELECT * FROM `hardwares` ";
+        $query = "SELECT * FROM `hardwares` join `service_providers` on sprov_id = hrdws_sp_id ";
         $result = mysqli_query($con, $query);
         while ($row = mysqli_fetch_assoc($result)) {
         ?>
@@ -52,7 +52,7 @@
               <?php echo $row['hrdws_family']; ?>
             </td>
             <td class="limited-td">
-              <?php echo $row['hrdws_sp_id']; ?>
+              <?php echo '('.$row['hrdws_sp_id'].') '.$row['sprov_username']; ?>
             </td>
             <td>
               <!-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pscope_id']; ?>')">view</button> -->

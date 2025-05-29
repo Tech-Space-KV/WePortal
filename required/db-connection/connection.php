@@ -1,5 +1,5 @@
 <?php
-   $con=mysqli_connect('localhost','root','','pseudoteam');
+   $con=mysqli_connect('192.168.1.61','root','','pseudoteam');
  
     if(!$con)
     {

@@ -1,10 +1,16 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require('../session-management.php');
 require('../../required/db-connection/connection.php');
 
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        // Collect form data
+        // Collect and format form data
         $pplnr_id = $_POST['pplnr_id'];
         $name = $_POST['name'];
         $description = $_POST['description'];
@@ -16,12 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mngr_status = $_POST['mngr_status'];
         $payment = $_POST['payment'];
 
-        // Prepare SQL query
-        $sql = " INSERT INTO `project_planner_tasks`(`pptasks_task_title`, `pptasks_description`, `pptasks_start_date`, `pptasks_end_date`, `pptasks_sp_id`, `pptasks_date_of_completion`, `pptasks_sp_status`, `pptasks_pt_status`, `pptasks_payment`, `pptasks_planner_id`,`created_at`,`updated_at`) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s') )";
+        // SQL insert statement
+        $sql = "INSERT INTO `project_planner_tasks` 
+                (`pptasks_task_title`, `pptasks_description`, `pptasks_start_date`, `pptasks_end_date`, `pptasks_sp_id`, `pptasks_date_of_completion`, `pptasks_sp_status`, `pptasks_pt_status`, `pptasks_payment`, `pptasks_planner_id`, `created_at`, `updated_at`) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s') , DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s') )";
 
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("ssssssssdi", $name, $description, $startDate, $endDate, $sp_id, $doc, $sp_status, $mngr_status, $payment, $pplnr_id);
+        $stmt->bind_param("ssssisssdi", $name, $description, $startDate, $endDate, $sp_id, $doc, $sp_status, $mngr_status, $payment, $pplnr_id);
 
         if ($stmt->execute()) {
             echo json_encode(["status" => "success", "message" => "Task added successfully!"]);

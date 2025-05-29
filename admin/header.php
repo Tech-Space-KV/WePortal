@@ -303,11 +303,19 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="projects">
+                <a class="nav-link d-flex align-items-center gap-2" href="projects?status=No SP Assigned">
                   <svg class="bi">
                     <use xlink:href="#file-earmark" />
                   </svg>
                   Projects
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="my-projects">
+                  <svg class="bi">
+                    <use xlink:href="#file-earmark" />
+                  </svg>
+                  My Projects
                 </a>
               </li>
               <li class="nav-item">

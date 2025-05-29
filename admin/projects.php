@@ -10,6 +10,7 @@ if (isset($_GET['status'])) {
 } else {
   $status='';
 }
+
 ?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
@@ -43,9 +44,11 @@ if (isset($_GET['status'])) {
           </thead>
           <tbody>
           <?php
-              $query="SELECT `project_owners`.`pown_name`, `project_owners`.`pown_id`, `project_owners`.`pown_username`, `project_owners`.`pown_user_type`,  `project_owners`.`pown_organisation_name`, 
+              $query="SELECT `project_owners`.`pown_name`, `project_owners`.`pown_id`, `project_owners`.`pown_username`, `project_owners`.`pown_user_type`,  `project_owners`.`pown_organisation_name`,
+              `weusers`.`id`, `weusers`.`username`, `weusers`.`email`,  
               `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`
               JOIN `project_owners` ON `pown_id` = `plist_customer_id`
+              LEFT JOIN `weusers` ON `id` = `plist_pt_mngr_id`
               WHERE `plist_id` like '%$search%' AND `plist_status` like '%$status%' ";
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
@@ -69,8 +72,8 @@ if (isset($_GET['status'])) {
 							        <td>
 							            <?php echo $row['plist_status'] ; ?>
 							        </td>
-							        <td>
-							            <?php echo $row['pown_name'] ; ?>
+							        <td title="email">
+							            <?php echo $row['username'] ; ?>
 							        </td>
 							        <td>
                       <a class="btn btn-sm btn-primary" href="project-view?project_key=<?php echo $row['plist_id'] ;?>">view</a>

@@ -148,8 +148,8 @@ if (isset($_GET['search'])) {
 
           <!-- ID Field (Hidden) -->
            
-          <input type="hidden" id="pscope_id" name="pscope_id" value="">
-          <input type="hidden" id="project_id" name="project_id" value="<?php echo $project_id; ?>">
+          <input type="text" id="pscope_id" name="pscope_id" value="">
+          <input type="text" id="project_id" name="project_id" value="<?php echo $project_id; ?>">
         </form>
       </div>
       <div class="modal-footer">

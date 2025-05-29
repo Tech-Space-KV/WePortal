@@ -8,6 +8,7 @@
             <div class="d-flex flex-wrap gap-2">
                 <a type="button" class="btn btn-sm btn-outline-secondary" href="add-customer">Add Customer</a>
                 <a type="button" class="btn btn-sm btn-outline-secondary" href="add-service-partner ">Add Service Partner</a>
+                <a type="button" class="btn btn-sm btn-outline-secondary" href="add-pseudo-user ">Add Pseudo User</a>
                 <button type="button" class="btn btn-sm btn-outline-secondary"> &nbsp;&nbsp; <i class="fa fa-refresh"> &nbsp;&nbsp; </i></button>
 
             </div>
