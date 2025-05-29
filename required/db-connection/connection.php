@@ -3,7 +3,7 @@
  
     if(!$con)
     {
-        die(' Please Check Your Connection'.mysqli_error($con));
+        // die(' Please Check Your Connection'.mysqli_error($con));
     }
 date_default_timezone_set('Asia/Kolkata');
 // $mailusername="notification@pseudoteam.com";

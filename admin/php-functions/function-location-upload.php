@@ -8,7 +8,7 @@ require('../../required/db-connection/connection.php');
 
 header('Content-Type: application/json');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $required_fields = ['project_id', 'country', 'state', 'city', 'pincode', 'address', 'status'];
         foreach ($required_fields as $field) {
@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Sanitize and prepare data
-        $project_id = (int)$_POST['project_id'];
-        $country = trim($_POST['country']);
-        $state = trim($_POST['state']);
-        $city = trim($_POST['city']);
-        $pincode = (int)$_POST['pincode'];
-        $address = trim($_POST['address']);
-        $status = trim($_POST['status']);
+        $project_id = $_POST['project_id'];
+        $country = htmlspecialchars(trim($_POST['country']));
+        $state = htmlspecialchars(trim($_POST['state']));
+        $city = htmlspecialchars(trim($_POST['city']));
+        $pincode = $_POST['pincode'];
+        $address = htmlspecialchars(trim($_POST['address']));
+        $status = htmlspecialchars(trim($_POST['status']));
         $created = date("d-m-Y H:i:s");
         $updated = date("d-m-Y H:i:s");
 
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
 
-        if (!$stmt->bind_param("isssissss", $project_id, $country, $state, $city, $pincode, $address, $status, $created, $updated)) {
+        if (!$stmt->bind_param("issssssss", $project_id, $country, $state, $city, $pincode, $address, $status, $created, $updated)) {
             echo json_encode(["status" => "error", "message" => "Binding parameters failed: " . $stmt->error]);
             exit;
         }

@@ -15,8 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $projectCategory = trim($_POST['projectCategory']);
         $currency = trim($_POST['currency']);
         $budgetAmount = floatval($_POST['budgetAmount']);
-        $startDate = trim($_POST['startDate']);
-        $endDate = trim($_POST['endDate']);
+        $startDate = date("d-m-Y", strtotime($_POST['startDate'])) ?? null;
+        $endDate = date("d-m-Y", strtotime($_POST['endDate'])) ?? null;
         $contactName = trim($_POST['contactName']);
         $contactEmail = trim($_POST['contactEmail']);
         $contactNumber = trim($_POST['contactNumber']);
