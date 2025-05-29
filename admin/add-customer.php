@@ -101,7 +101,7 @@ $hashedPassword = sha1($generatedPassword);
 
     <div class="mb-3">
       <label for="pown_verified" class="form-label">Verified</label>
-      <select class="form-select" id="pown_verified" name="pown_verified" required>
+      <select class="form-select" id="pown_verified" name="pown_verified" >
         <option value="1">True</option>
         <option value="0">False</option>
       </select>
