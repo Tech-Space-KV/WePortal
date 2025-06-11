@@ -21,7 +21,7 @@ $hashedPassword = sha1($generatedPassword);
 
     <div class="mb-3">
       <label for="sprov_username" class="form-label">User Name</label>
-      <input type="text" class="form-control" id="sprov_username" name="sprov_username" required oninput="checkUsername()">
+      <input type="text" class="form-control" id="sprov_username" name="sprov_username" readonly oninput="checkUsername()">
       <span id="username_status"></span>
     </div>
 
@@ -214,7 +214,7 @@ $hashedPassword = sha1($generatedPassword);
     });
   </script>
   
-  <script>
+  <!-- <script>
       function checkUsername() {
           let username = document.getElementById("sprov_username").value;
           let statusIndicator = document.getElementById("username_status");
@@ -243,7 +243,7 @@ $hashedPassword = sha1($generatedPassword);
 
       document.getElementById("sprov_username").addEventListener("input", checkUsername);
     
-  </script>
+  </script> -->
 
   <br><br>
 </main>

@@ -37,6 +37,7 @@ try {
     $pown_adhaarfileData = null;
     $pown_dpData = null;
 
+  
     if (!empty($_FILES["pown_adhaarfile"]["tmp_name"])) {
         $pown_adhaarfileData = file_get_contents($_FILES["pown_adhaarfile"]["tmp_name"]); 
     }
@@ -44,6 +45,22 @@ try {
         $pown_dpData = file_get_contents($_FILES["pown_dp"]["tmp_name"]);
     }
 
+
+    // $sql2 = $con->prepare("INSERT INTO `users` (`name`, `email`, `contact`, `user_type`) VALUES (?, ?, ?, ?)");
+    // $stmt2 = $con->prepare($sql2);
+    // $stmt2->bind_param("ssss", $pown_name, $pown_email, $pown_contact, $pown_user_type);
+
+    // if ($stmt2->execute()) {
+       
+    // } else {
+        
+    // }
+
+
+    mysqli_query($con,"INSERT INTO `users` (`name`, `email`, `contact`, `user_type`) 
+                  VALUES ('$pown_name', '$pown_email', '$pown_contact', '$pown_user_type')");
+
+    
     $sql = "INSERT INTO project_owners (
         pown_username, pown_name, pown_user_type, pown_country, pown_state, 
         pown_address, pown_pincode, pown_contact, pown_email, pown_date_of_registration, 
@@ -56,9 +73,9 @@ try {
     )";
 
     $stmt = $con->prepare($sql);
-    if (!$stmt) {
-        throw new Exception("Database query preparation failed: " . $con->error);
-    }
+    // if (!$stmt) {
+    //     throw new Exception("Database query preparation failed: " . $con->error);
+    // }
 
     // ✅ Bind Parameters (Same structure as referenced file)
     $stmt->bind_param(
@@ -69,6 +86,7 @@ try {
     );
 
     if ($stmt->execute()) {
+
         $response["status"] = "success";
         $response["message"] = "Project owner added successfully!";
         

@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $doc = date("d-m-Y", strtotime($_POST['doc']));
         $mngr_status = trim($_POST['mngr_status']);
         $payment = (float)$_POST['payment'];
-        $created = date("Y-m-d H:i:s");
-        $updated = date("Y-m-d H:i:s");
+        $created = date("d-m-Y H:i:s");
+        $updated = date("d-m-Y H:i:s");
 
         // SQL insert statement
         $sql = "INSERT INTO `project_planner_tasks` 

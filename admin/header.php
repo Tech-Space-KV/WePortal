@@ -367,7 +367,7 @@
                   <svg class="bi">
                     <use xlink:href="#file-earmark-text" />
                   </svg>
-                  Notifications <span class="badge bg-danger">4</span>
+                  Notifications <span class="badge bg-danger ntfn-badge"></span>
                 </a>
               </li>
               <li class="nav-item">
@@ -375,7 +375,7 @@
                   <svg class="bi">
                     <use xlink:href="#file-earmark-text" />
                   </svg>
-                  H/W Orders <span class="badge bg-danger">4</span><span class="badge bg-primary">4</span>
+                  H/W Orders <span class="badge bg-danger hw-badge"></span>
                 </a>
               </li>
               <li class="nav-item">
@@ -450,3 +450,45 @@
           });
         });
       </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function loadHWOrderCount() {
+        $.ajax({
+            url: 'php-functions/function-get-count-hardware-orders.php',
+            type: 'GET',
+            success: function(data) {
+                $('.hw-badge').text(data);
+            },
+            error: function() {
+                $('.hw-badge').text('Error');
+            }
+        });
+    }
+
+    function loadNotificationCount() {
+        $.ajax({
+            url: 'php-functions/function-get-count-notifications.php',
+            type: 'GET',
+            success: function(data) {
+                $('.ntfn-badge').text(data);
+            },
+            error: function() {
+                $('.ntfn-badge').text('Error');
+            }
+        });
+    }
+
+    loadHWOrderCount(); // Initial load
+    loadNotificationCount(); // Initial load
+
+    // Optional: Refresh every 10 seconds
+    setInterval(loadHWOrderCount, 5000);
+    setInterval(loadNotificationCount, 3000);
+});
+</script>
+
+
+

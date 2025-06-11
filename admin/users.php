@@ -32,9 +32,9 @@
                         font-weight: bold;}
                         </style>
 
-                    <a href="users.php?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(P)</a> /
-                    <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(C)</a> /
-                    <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(We)</a>
+                    <a href="users.php?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(ASP)</a> /
+                    <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
+                    <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
                     </th>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>
@@ -96,6 +96,17 @@
                 ?>
             </tbody>
         </table>
+        <div class="pagination" style="float:right;" hidden>
+    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+  </div>
+      
+	  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center" id="pagination">
+      <!-- Page numbers will go here -->
+    </ul>
+  </nav>
+
     </div>
 </main>
 

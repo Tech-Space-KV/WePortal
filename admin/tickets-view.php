@@ -21,25 +21,38 @@
             Error: Project upload failed.
         </div> -->
 
-  <form method="POST" enctype="multipart/form-data">
 
+        <?php
+        $id = $_GET['tckt-id'];
+
+        // Fetch data
+        $sql = "SELECT * FROM tickets WHERE tckt_id = $id";
+        $result = $con->query($sql);
+        
+        if ($result->num_rows === 0) {
+            die("Data not found.");
+        }
+        
+        $row = $result->fetch_assoc();
+        ?>
+  <form method="POST" enctype="multipart/form-data">
 
 
     <div class="mb-3">
       <label for="title" class="form-label">Any Project ID</label>
-      <input type="text" class="form-control" id="title" placeholder="Project id" name="project id" required>
+      <input type="text" class="form-control" id="title" placeholder="Project id" name="project id" required value="<?php echo $row['tckt_project_id']; ?>">
     </div>
 
     <div class="mb-3">
       <label for="title" class="form-label">Ticket Title</label>
-      <input type="text" class="form-control" id="title" placeholder="Project title" name="title" required>
+      <input type="text" class="form-control" id="title" placeholder="Project title" name="title" required value="<?php echo $row['tckt_title']; ?>">
     </div>
 
     <div class="mb-3">
       <label for="description" class="form-label">Ticket Description</label>
       <!-- <input type="textarea" class="form-control" id="description" placeholder="About project"> -->
       <textarea id="description" name="description" class="form-control" required
-        placeholder="Enter your description here"></textarea>
+        placeholder="Enter your description here"><?php echo $row['tckt_description']; ?></textarea>
     </div>
 
     <div class="mb-3">
@@ -51,7 +64,7 @@
       <div class="col-md-4 mb-3">
         <label for="projectIs" class="form-label">Ticket Status</label>
         <select class="form-select" id="projectIs" name="projectIs" required>
-          <option selected value="">--Select type--</option>
+          <option selected value="<?php echo $row['tckt_status']; ?>"><?php echo $row['tckt_status']; ?></option>
           <option value="New">New</option>
           <option value="On Going">On Going</option>
         </select>
@@ -63,7 +76,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="startDate" class="form-label" required>Created on date</label>
-        <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date">
+        <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" value="<?php echo $row['created_at']; ?>">
       </div>
     </div>
 
