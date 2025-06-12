@@ -41,7 +41,7 @@
                     SUM(CASE WHEN LOWER(ordplcd_status) = 'pending' THEN 1 ELSE 0 END) > 0
                     ORDER BY ordplcd_order_date DESC;
                 ";
-
+ 
 
                 $result_cust = mysqli_query($con, $query_cust);
                 while ($row_cust = mysqli_fetch_assoc($result_cust)) {
