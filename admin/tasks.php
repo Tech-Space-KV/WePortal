@@ -338,10 +338,10 @@ document.getElementById("save_operation").addEventListener("click", function (ev
     .then(response => response.json()) // Expecting JSON response
     .then(data => {
         if (data.status === "success") {
-          alert("Milestone saved successfully!", "success");
+          alert("Task saved successfully!", "success");
           location.reload();
         } else {
-            alert("Failed to save milestone!", "error");
+            alert("Failed to save task!", "error");
             location.reload();
         }
     })
@@ -378,10 +378,10 @@ document.getElementById("delete_operation").addEventListener("click", function (
     .then(response => response.json()) // Expecting JSON response
     .then(data => {
         if (data.status === "success") {
-          alert("Milestone deleted successfully!", "success");
+          alert("Task deleted successfully!", "success");
           location.reload();
         } else {
-            alert("Failed to delete milestone!", "error");
+            alert("Failed to delete task!", "error");
             location.reload();
         }
     })

@@ -21,7 +21,8 @@ $hashedPassword = sha1($generatedPassword);
 
     <div class="mb-3">
       <label for="pown_username" class="form-label">User Name</label>
-      <input type="text" class="form-control" id="pown_username" name="pown_username" required oninput="checkUsername()">
+      <!-- <input type="text" class="form-control" id="pown_username" name="pown_username" required oninput="checkUsername()"> -->
+      <input type="text" class="form-control" id="pown_username" name="pown_username">
       <span id="username_status"></span>
     </div>
 
@@ -101,7 +102,7 @@ $hashedPassword = sha1($generatedPassword);
 
     <div class="mb-3">
       <label for="pown_verified" class="form-label">Verified</label>
-      <select class="form-select" id="pown_verified" name="pown_verified" required>
+      <select class="form-select" id="pown_verified" name="pown_verified" >
         <option value="1">True</option>
         <option value="0">False</option>
       </select>

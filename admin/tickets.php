@@ -57,7 +57,7 @@
             </td>
             <td>
               <!-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pscope_id']; ?>')">view</button> -->
-              <a class="btn btn-sm btn-primary ms-2" href="hardwares-view?hw-id=<?php echo $row['hrdws_id']; ?>">View</a>
+              <a class="btn btn-sm btn-primary ms-2" href="tickets-view?tckt-id=<?php echo $row['tckt_id']; ?>">View</a>
             </td>
           </tr>
         <?php
@@ -68,11 +68,16 @@
       </tbody>
     </table>
 
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center" id="pagination">
-        <!-- Page numbers will go here -->
-      </ul>
-    </nav>
+    <div class="pagination" style="float:right;" hidden>
+    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+  </div>
+      
+	  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center" id="pagination">
+      <!-- Page numbers will go here -->
+    </ul>
+  </nav>
 
   </div>
 </main>

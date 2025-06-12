@@ -119,7 +119,7 @@ if (isset($_GET['search'])) {
           <!-- Pincode Field -->
           <div class="mb-3">
             <label for="pincode" class="form-label">Pincode</label>
-            <input type="number" class="form-control" id="pincode" name="pincode" required>
+            <input type="text" class="form-control" id="pincode" name="pincode" required>
           </div>
 
           <div class="mb-3">

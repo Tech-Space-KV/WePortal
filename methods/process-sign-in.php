@@ -22,6 +22,7 @@ if(isset($_POST['sign-in-btn']))
 					    while( $row=mysqli_fetch_assoc($result))
 				        {
 				             $_SESSION['pt-admin-name']=$row['username'];
+							 $_SESSION['pt-admin-id']=$row['id'];
 				             $_SESSION['pt-admin-email']=$row['email'];
 							 $_SESSION['pt-admin-login-flag']='True';
 				             echo "<script>window.location.href = '../admin/index';</script>";

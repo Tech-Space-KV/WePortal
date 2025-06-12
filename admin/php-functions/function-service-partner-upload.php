@@ -44,12 +44,16 @@ try {
         $sprov_dpData = file_get_contents($_FILES["sprov_dp"]["tmp_name"]);
     }
 
+
+    mysqli_query($con,"INSERT INTO `users` (`name`, `email`, `contact`, `user_type`) 
+                  VALUES ('$sprov_name', '$sprov_email', '$sprov_contact', '$sprov_user_type')");
+
     $sql = "INSERT INTO service_providers (
         sprov_username, sprov_name, sprov_user_type, sprov_country, sprov_state, 
         sprov_address, sprov_pincode, sprov_contact, sprov_email, sprov_date_of_registration, 
         sprov_about, sprov_organisation_name, sprov_cin, sprov_gstpin, sprov_adhaar, 
         sprov_body, sprov_password, sprov_login_flag, sprov_adhaarfile, 
-        sprov_profile_completion_flag, sprov_dp, sprov_refered_by, created_at, updated_at, 	sprov_verified_flag
+        sprov_profile_completion_flag, sprov_dp, sprov_refered_by, created_at, updated_at, 	sprov_verified
     ) VALUES (
         ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'),
         ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), DATE_FORMAT(NOW(), '%d-%m-%Y %H:%i:%s'), ?
@@ -70,7 +74,7 @@ try {
 
     if ($stmt->execute()) {
         $response["status"] = "success";
-        $response["message"] = "Project owner added successfully!";
+        $response["message"] = "Service partner added successfully!";
         
     } else {
         throw new Exception("Database Error: " . $stmt->error);
