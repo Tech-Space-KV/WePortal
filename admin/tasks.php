@@ -174,6 +174,11 @@ if (isset($_GET['search'])) {
             <p class="text-primary" id="pmt-done" style="display:none;"><i>Payment request has already been raised</i></p>
             <p class="text-danger" id="pmt-not-done" style="display:none;"><i>Payment request not raised yet</i></p>
           </div>
+
+          <div class="mb-3">
+              <label for="" class="form-label">View Asp's</label>
+              <a href="list-of-asp.php" target="_blank">View</a>
+          </div>
           
           <div class="mb-3">
             <label for="endDate" class="form-label">Raise Payment Request</label>
