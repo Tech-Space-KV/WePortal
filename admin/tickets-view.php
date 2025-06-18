@@ -22,25 +22,25 @@
         </div> -->
 
 
-        <?php
-        $id = $_GET['tckt-id'];
+  <?php
+  $id = $_GET['tckt-id'];
 
-        // Fetch data
-        $sql = "SELECT * FROM tickets WHERE tckt_id = $id";
-        $result = $con->query($sql);
-        
-        if ($result->num_rows === 0) {
-            die("Data not found.");
-        }
-        
-        $row = $result->fetch_assoc();
-        ?>
+  // Fetch data
+  $sql = "SELECT * FROM tickets WHERE tckt_id = $id";
+  $result = $con->query($sql);
+
+  if ($result->num_rows === 0) {
+    die("Data not found.");
+  }
+
+  $row = $result->fetch_assoc();
+  ?>
   <form method="POST" enctype="multipart/form-data">
 
 
     <div class="mb-3">
       <label for="title" class="form-label">Any Project ID</label>
-      <input type="text" class="form-control" id="title" placeholder="Project id" name="project id" required value="<?php echo $row['tckt_project_id']; ?>">
+      <input type="text" class="form-control" id="title" placeholder="Project id" name="project id"  value="<?php echo $row['tckt_project_id']; ?>">
     </div>
 
     <div class="mb-3">
@@ -57,7 +57,7 @@
 
     <div class="mb-3">
       <label for="sow" class="form-label">Any attachment</label>
-      <input type="file" class="form-control" id="sow" placeholder="Scope of work" name="sow">
+      <a class="btn btn-sm btn-outline-primary" onclick="downloadFile(<?php echo $row['tckt_id']; ?>)">View here</a>
     </div>
 
     <div class="row">
@@ -65,8 +65,9 @@
         <label for="projectIs" class="form-label">Ticket Status</label>
         <select class="form-select" id="projectIs" name="projectIs" required>
           <option selected value="<?php echo $row['tckt_status']; ?>"><?php echo $row['tckt_status']; ?></option>
-          <option value="New">New</option>
-          <option value="On Going">On Going</option>
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Close">Close</option>
         </select>
       </div>
 
@@ -75,13 +76,12 @@
 
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label for="startDate" class="form-label" required>Created on date</label>
-        <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" value="<?php echo $row['created_at']; ?>">
+        <label for="startDate" class="form-label" required>Created on date: <?php echo $row['created_at']; ?></label>
       </div>
     </div>
 
 
-    <button type="submit" name="upload_btn" class="btn btn-primary" onClick="insert_data()">Upload</button>
+    <button type="submit" name="upload_btn" class="btn btn-primary" onClick="update_data()">Save</button>
 
   </form>
 
@@ -109,82 +109,36 @@
 
 
 <script>
-  function insert_data() {
-    let form = document.querySelector("form");
+  function update_data() {
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
 
-    // Store each form field value in variables
-    let customer = document.getElementById("mySelect").value;
-    let title = document.getElementById("title").value;
-    let description = document.getElementById("description").value;
-    let sow = document.getElementById("sow").files[0]; // File input
-    let projectIs = document.getElementById("projectIs").value;
-    let projectType = document.getElementById("projectType").value;
-    let projectCategory = document.getElementById("projectCategory").value;
-    let currency = document.getElementById("budget").value;
-    let budgetAmount = document.getElementById("budgetAmount").value;
-    let startDate = document.getElementById("startDate").value;
-    let endDate = document.getElementById("endDate").value;
-    let contactName = document.getElementsByName("contactName")[0].value;
-    let contactEmail = document.getElementsByName("contactEmail")[0].value;
-    let contactNumber = document.getElementsByName("contactNumber")[0].value;
-    let notificationEmail = document.getElementsByName("notificationEmail")[0].value;
-    let coupon = document.getElementsByName("coupon")[0].value;
-
-    // Validate required fields
-    if (!customer || !title || !description) {
-      alert("Customer, Title, and Description are required!");
-      return;
-    }
-
-    // Create FormData object
-    let formData = new FormData();
-    formData.append("customer", customer);
-    formData.append("title", title);
-    formData.append("description", description);
-    if (sow) {
-      formData.append("sow", sow);
-    }
-    formData.append("projectIs", projectIs);
-    formData.append("projectType", projectType);
-    formData.append("projectCategory", projectCategory);
-    formData.append("currency", currency);
-    formData.append("budgetAmount", budgetAmount);
-    formData.append("startDate", startDate);
-    formData.append("endDate", endDate);
-    formData.append("contactName", contactName);
-    formData.append("contactEmail", contactEmail);
-    formData.append("contactNumber", contactNumber);
-    formData.append("notificationEmail", notificationEmail);
-    formData.append("coupon", coupon);
-
-    // Send data using fetch()
-    fetch("php-functions/function-project-upload.php", {
-        method: "POST",
-        body: formData
-      })
-      .then(response => response.json()) // Expect JSON response
-      .then(data => {
-        if (data.status === "success") {
-          alert(data.message); // Display success message
-          // location.reload(); // Refresh page after successful submission
-          // document.getElementById("successbox").style.display = "block";
-          // document.getElementById("failbox").style.display = "none";
-          // document.getElementById("successbox").textContent = "Project uploaded.";
-        } else {
-          alert("Error: " + data.message); // Display error message
-          // document.getElementById("successbox").style.display = "none";
-          // document.getElementById("failbox").style.display = "block";
-          // document.getElementById("failbox").textContent = "Error: Project upload failed.";
-        }
-        console.log(data); // Log full response
-      })
-      .catch(error => {
-        alert("Error uploading project. Please try again.");
-        console.error("Error:", error);
-      });
+    fetch('function-tickets-save.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert("Ticket updated successfully.");
+      } else {
+        alert("Update failed: " + data.message);
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      alert("Something went wrong.");
+    });
   }
 </script>
 
+
+
+<script>
+  function downloadFile(fileId) {
+    window.location.href = `php-functions/function-download-ticket-file.php?id=${fileId}`;
+  }
+</script>
 
 
 <?php require('footer.php'); ?>
