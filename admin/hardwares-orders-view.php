@@ -33,7 +33,7 @@
         //     WHERE h.hrdws_id = ?
         // ");
     
-        $stmt = mysqli_prepare($con, ";
+        $stmt = mysqli_prepare($con, "
         SELECT op.*, h.*, sp.*, po.*
         FROM orders_placed op
         INNER JOIN hardwares h ON op.ordplcd_hw_id = h.hrdws_id
@@ -145,6 +145,34 @@
                         </div>
                     </div>
 
+
+                    <div class="col-md-4">
+                        <div class="border p-3 rounded bg-light">
+                            <div class="mb-2">
+                                <label class="form-label">Buyer ID</label>
+                                <input type="text" class="form-control" value="<?php echo $row['pown_id']; ?>" readonly>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Buyer Name</label>
+                                <input type="text" class="form-control" value="<?php echo $row['pown_name']; ?>" readonly>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Buyer Email</label>
+                                <input type="text" class="form-control" value="<?php echo $row['pown_email']; ?>" readonly>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Buyer Contact</label>
+                                <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly>
+                            </div>
+                            <!-- <div class="text-end">
+                                <a class="btn btn-sm btn-primary"
+                                    href="table-inventory-details.php?order_no=<?php echo urlencode($row['order_no']); ?>">View</a>
+                                <a class="btn btn-sm btn-secondary ms-2"
+                                    href="hardwares-orders-view.php?hw-id=<?php echo urlencode($row['hardware_id']); ?>&order_no=<?php echo urlencode($row['order_no']); ?>">Back</a>
+                            </div> -->
+                        </div>
+                    </div>
+
                     <?php
                 }
             } else {
@@ -154,36 +182,9 @@
         </div>
     </div>
 
-    <div class="pagination" style="float:right;" hidden>
-        <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
-        <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
-    </div>
-
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center" id="pagination">
-            <!-- Page numbers will go here -->
-        </ul>
-    </nav>
+    
 </main>
 
-<script>
-    function searchTable() {
-        const input = document.getElementById("tableSearch").value.toLowerCase();
-        const table = document.getElementById("dataTable");
-        const rows = table.getElementsByTagName("tr");
 
-        for (let i = 1; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName("td");
-            let match = false;
-            for (let j = 0; j < cells.length - 1; j++) {
-                if (cells[j].textContent.toLowerCase().includes(input)) {
-                    match = true;
-                    break;
-                }
-            }
-            rows[i].style.display = match ? "" : "none";
-        }
-    }
-</script>
 
 <?php require('footer.php'); ?>

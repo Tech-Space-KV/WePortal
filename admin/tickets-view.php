@@ -1,144 +1,158 @@
-<?php require('header.php'); ?>
+<?php
+require('header.php');
+require('../required/db-connection/connection.php');   // make sure $con exists
+?>
+
+<!-- jQuery (needed for Select2 and any future AJAX helpers) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Select2 CSS -->
+<!-- Select2 (optional – remove if you’re not using it) -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-
-<!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
-
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">View Ticket</h1>
+    <h1 class="h2">View Ticket</h1>
   </div>
 
-  <!-- <div class="alert alert-primary mt-2" role="alert" id="successbox">
-            Perfect! Project uploaded successfully.
-        </div>
-        <div class="alert alert-danger mt-2" role="alert" id="failbox">
-            Error: Project upload failed.
-        </div> -->
+<?php
+/* --------------------------------------------------------------------------
+   Fetch the ticket we’re viewing
+   -------------------------------------------------------------------------- */
+$id = (int)($_GET['tckt-id'] ?? 0);
 
+$stmt = $con->prepare("SELECT * FROM tickets WHERE tckt_id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows === 0) {
+    die('<div class="alert alert-danger">Ticket not found.</div>');
+}
+$row = $result->fetch_assoc();
+$stmt->close();
+?>
 
-  <?php
-  $id = $_GET['tckt-id'];
+  <form id="ticketForm" enctype="multipart/form-data">
 
-  // Fetch data
-  $sql = "SELECT * FROM tickets WHERE tckt_id = $id";
-  $result = $con->query($sql);
-
-  if ($result->num_rows === 0) {
-    die("Data not found.");
-  }
-
-  $row = $result->fetch_assoc();
-  ?>
-  <form method="POST" enctype="multipart/form-data">
-
+    <!-- Hidden ticket ID so the save script knows which record to update -->
+    <input type="hidden" name="ticket_id" value="<?= htmlspecialchars($row['tckt_id']) ?>">
 
     <div class="mb-3">
-      <label for="title" class="form-label">Any Project ID</label>
-      <input type="text" class="form-control" id="title" placeholder="Project id" name="project id"  value="<?php echo $row['tckt_project_id']; ?>">
+      <label for="project_id" class="form-label">Project ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="project_id"
+        name="project_id"
+        value="<?= htmlspecialchars($row['tckt_project_id']) ?>"
+      >
     </div>
 
     <div class="mb-3">
-      <label for="title" class="form-label">Ticket Title</label>
-      <input type="text" class="form-control" id="title" placeholder="Project title" name="title" required value="<?php echo $row['tckt_title']; ?>">
+      <label for="title" class="form-label">Ticket Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+        value="<?= htmlspecialchars($row['tckt_title']) ?>"
+      >
     </div>
 
     <div class="mb-3">
-      <label for="description" class="form-label">Ticket Description</label>
-      <!-- <input type="textarea" class="form-control" id="description" placeholder="About project"> -->
-      <textarea id="description" name="description" class="form-control" required
-        placeholder="Enter your description here"><?php echo $row['tckt_description']; ?></textarea>
+      <label for="description" class="form-label">Ticket Description</label>
+      <textarea
+        id="description"
+        name="description"
+        class="form-control"
+        rows="5"
+        required
+      ><?= htmlspecialchars($row['tckt_description']) ?></textarea>
     </div>
 
     <div class="mb-3">
-      <label for="sow" class="form-label">Any attachment</label>
-      <a class="btn btn-sm btn-outline-primary" onclick="downloadFile(<?php echo $row['tckt_id']; ?>)">View here</a>
+      <label class="form-label d-block">Attachment</label>
+      <a class="btn btn-sm btn-outline-primary"
+         onclick="downloadFile(<?= (int)$row['tckt_id'] ?>)">View file</a>
     </div>
 
     <div class="row">
       <div class="col-md-4 mb-3">
-        <label for="projectIs" class="form-label">Ticket Status</label>
+        <label for="projectIs" class="form-label">Ticket Status</label>
         <select class="form-select" id="projectIs" name="projectIs" required>
-          <option selected value="<?php echo $row['tckt_status']; ?>"><?php echo $row['tckt_status']; ?></option>
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Close">Close</option>
+          <?php
+            $statuses = ['Open','In Progress','Close'];
+            foreach ($statuses as $s) {
+              $sel = $s === $row['tckt_status'] ? 'selected' : '';
+              echo "<option value=\"$s\" $sel>$s</option>";
+            }
+          ?>
         </select>
       </div>
-
     </div>
-
 
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label for="startDate" class="form-label" required>Created on date: <?php echo $row['created_at']; ?></label>
+        <label class="form-label">Created on: <?= htmlspecialchars($row['created_at']) ?></label>
       </div>
     </div>
 
-
-    <button type="submit" name="upload_btn" class="btn btn-primary" onClick="update_data()">Save</button>
-
+    <!-- NOTE: type="button" prevents default HTML submit -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      onclick="update_data()"
+    >Save</button>
   </form>
 
   <br><br>
 </main>
 
-
-
-
 <script>
-  $(document).ready(function() {
-    // Initialize Select2 with tagging enabled
-    $('#mySelect').select2({
-      tags: true, // Allows typing new values
-      placeholder: "Select or type your own option",
-      allowClear: true
-    });
+/* --------------------------------------------------------------
+   OPTIONAL Select2 init (remove block if not needed)
+-------------------------------------------------------------- */
+$(function () {
+  $('#mySelect').select2({
+    tags: true,
+    placeholder: 'Select or type your own option',
+    allowClear: true
+  }).on('change', sendInputValue);
+});
 
-    // Ensure AJAX runs when selecting or typing a new value
-    $("#mySelect").on("change", function() {
-      sendInputValue();
-    });
+/* --------------------------------------------------------------
+   Save / update ticket via fetch API
+-------------------------------------------------------------- */
+function update_data () {
+  const form   = document.getElementById('ticketForm');
+  const data   = new FormData(form);
+
+  fetch('php-functions/function-tickets-save.php', {
+    method: 'POST',
+    body  : data
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.status === 'success') {
+      alert('Ticket updated successfully.');
+      // Optionally reload or update UI here
+    } else {
+      alert('Update failed: ' + res.message);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert('Something went wrong.');
   });
+}
+
+/* --------------------------------------------------------------
+   File download helper
+-------------------------------------------------------------- */
+function downloadFile (id) {
+  window.location.href = `php-functions/function-download-ticket-file.php?id=${id}`;
+}
 </script>
-
-
-<script>
-  function update_data() {
-    const form = document.querySelector('form');
-    const formData = new FormData(form);
-
-    fetch('function-tickets-save.php', {
-      method: 'POST',
-      body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === 'success') {
-        alert("Ticket updated successfully.");
-      } else {
-        alert("Update failed: " + data.message);
-      }
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      alert("Something went wrong.");
-    });
-  }
-</script>
-
-
-
-<script>
-  function downloadFile(fileId) {
-    window.location.href = `php-functions/function-download-ticket-file.php?id=${fileId}`;
-  }
-</script>
-
 
 <?php require('footer.php'); ?>

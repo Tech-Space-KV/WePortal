@@ -33,7 +33,9 @@ if (isset($_GET['search'])) {
                 <th scope="col">Created On</th>
                 <th scope="col">Service Partner Status</th>
                 <th scope="col">Pseudo-Manager Status</th>
-            </tr>
+                <td></td>
+                <td></td>
+                </tr>
           </thead>
           <tbody>
           <?php
@@ -65,6 +67,9 @@ if (isset($_GET['search'])) {
 							        <td>
                       <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pptasks_id'] ;?>')">view</button>
                       </td>
+                      <td>
+                      <a class="btn btn-sm btn-primary"  href="task-comment?task-id=<?php echo $row['pptasks_id'] ;?>">comments</a>
+                      </td>
 							    </tr>
 							    <?php
 							    
@@ -85,6 +90,7 @@ if (isset($_GET['search'])) {
   </nav>
 	  
 	  </div>
+    
     </main>
 	
 	
@@ -95,7 +101,7 @@ if (isset($_GET['search'])) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Milestone</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

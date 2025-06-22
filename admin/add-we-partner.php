@@ -12,7 +12,7 @@ $hashedPassword = sha1($generatedPassword);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = trim($_POST['id']);
+    
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $role = $_POST['role'];
@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($checkStmt->num_rows > 0) {
         $errors[] = "User ID or Username already exists.";
     } else {
-        $stmt = $con->prepare("INSERT INTO weusers (id, username, password, email, role) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $id, $username, $hashedPassword, $email, $role);
+        $stmt = $con->prepare("INSERT INTO weusers ( username, password, email, role) VALUES  ?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $username, $hashedPassword, $email, $role);
         if ($stmt->execute()) {
             echo "<div class='alert alert-success'> Registration successful!<br>Password: <b>$generatedPassword</b><br><a href='login.php'>Login here</a></div>";
             exit;
@@ -50,10 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endforeach; ?>
 
   <form method="POST">
-    <div class="mb-3">
-      <label for="id" class="form-label">User ID</label>
-      <input type="number" class="form-control" id="id" name="id" required>
-    </div>
 
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
@@ -74,8 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <label for="role" class="form-label">Role</label>
       <select class="form-select" id="role" name="role" required>
         <option value="Manager">Manager</option>
-        <option value="CEO">CEO</option>
-        <option value="IAS">IAS</option>
+        <option value="Viewer">Viewer</option>
       </select>
     </div>
 

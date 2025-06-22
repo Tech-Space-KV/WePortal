@@ -327,7 +327,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="table-orders">
+                <a class="nav-link d-flex align-items-center gap-2" href="placed-orders">
                   <svg class="bi">
                     <use xlink:href="#puzzle" />
                   </svg>
@@ -371,21 +371,14 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="table-inventory">
+                <a class="nav-link d-flex align-items-center gap-2" href="hardware-orders">
                   <svg class="bi">
                     <use xlink:href="#file-earmark-text" />
                   </svg>
                   H/W Orders <span class="badge bg-danger hw-badge"></span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                  <svg class="bi">
-                    <use xlink:href="#file-earmark-text" />
-                  </svg>
-                  Social engagement
-                </a>
-              </li>
+             
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="tickets">
                   <svg class="bi">
@@ -424,7 +417,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="php-functions/function-sign-out">
                   <svg class="bi">
                     <use xlink:href="#door-closed" />
                   </svg>
