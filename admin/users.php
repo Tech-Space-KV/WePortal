@@ -23,18 +23,19 @@
                 <tr>
                     <th scope="col">Category
                         <?php
-                            $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+                        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
                         ?>
 
                         <style>
-                        .anchor-selected {
-                        color: blue;
-                        font-weight: bold;}
+                            .anchor-selected {
+                                color: blue;
+                                font-weight: bold;
+                            }
                         </style>
 
-                    <a href="users.php?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(ASP)</a> /
-                    <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
-                    <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
+                        <a href="users.php?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(ASP)</a> /
+                        <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
+                        <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
                     </th>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>
@@ -86,9 +87,14 @@
                         <td><?php echo $row_cust['email']; ?></td>
                         <td>
                             <?php
-                                $link = ($row_cust['title'] === 'Customer') ? 'view-customers' : 'view-partners';
+                            $link = ($row_cust['title'] === 'Customer') ? 'view-customers' : 'view-partners';
+                            $delink = ($row_cust['title'] === 'Customer')
+                                ? "delcust({$row_cust['user_id']})"
+                                : "delsprov({$row_cust['user_id']})";
+
                             ?>
                             <a class="btn btn-sm btn-outline-primary" href="<?php echo $link; ?>?id=<?php echo $row_cust['user_id']; ?>">View</a>
+                            <a class="btn btn-sm btn-outline-danger" onclick="<?php echo $delink; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php
@@ -97,15 +103,15 @@
             </tbody>
         </table>
         <div class="pagination" style="float:right;" hidden>
-    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
-    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
-  </div>
-      
-	  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center" id="pagination">
-      <!-- Page numbers will go here -->
-    </ul>
-  </nav>
+            <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+            <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+        </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Page numbers will go here -->
+            </ul>
+        </nav>
 
     </div>
 </main>
@@ -134,3 +140,56 @@
             tr[i].style.display = found ? "" : "none";
         }
     }
+</script>
+
+<script>
+    function delcust(id) {
+        if (confirm("Are you sure you want to delete this customer?")) {
+            fetch('php-functions/function-customer-delete.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `id=${id}`
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.trim() === 'success') {
+                        document.getElementById('row-' + id).remove();
+                        alert('Customer deleted successfully.');
+                    } else {
+                        alert('Failed to delete customer. ' + data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the customer.');
+                });
+        }
+    }
+
+    function delsprov(id) {
+        if (confirm("Are you sure you want to delete this service partner?")) {
+            fetch('php-functions/function-service-partner-delete.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `id=${id}`
+                })
+                .then(response => response.text())
+                .then(data => {
+                    if (data.trim() === 'success') {
+                        document.getElementById('row-' + id).remove();
+                        alert('Service Partner deleted successfully.');
+                    } else {
+                        alert('Failed to delete service partner. ' + data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the service partner.');
+                });
+        }
+    }
+</script>
