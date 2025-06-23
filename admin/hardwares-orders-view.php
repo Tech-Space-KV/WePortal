@@ -25,7 +25,7 @@
     $hw_id = intval($hw_id);
     $order_no = htmlspecialchars($order_no);
 
-    if ($hw_id) {
+    if ($hw_id && $order_no) {
         //     $stmt = mysqli_prepare($con, "
         //     SELECT h.*, sp.*
         //     FROM hardwares h
@@ -33,7 +33,7 @@
         //     WHERE h.hrdws_id = ?
         // ");
     
-        $stmt = mysqli_prepare($con, ";
+        $stmt = mysqli_prepare($con, "
         SELECT op.*, h.*, sp.*, po.*
         FROM orders_placed op
         INNER JOIN hardwares h ON op.ordplcd_hw_id = h.hrdws_id
