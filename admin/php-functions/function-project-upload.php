@@ -1,6 +1,9 @@
 <?php
-require('../session-management.php'); 
-require('../../required/db-connection/connection.php'); 
+require('../session-management.php');
+require('../../required/db-connection/connection.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 header('Content-Type: application/json');
 
@@ -22,7 +25,7 @@ try {
     $notificationEmail = $_POST['notificationEmail'] ?? null;
     $coupon = $_POST['coupon'] ?? null;
     $status = 'No SP Assigned';
-    $projectid = "Pseudo-".date("Y")."-".date("mdHis")."";
+    $projectid = "Pseudo-" . date("Y") . "-" . date("mdHis") . "";
     $checkrcv = !empty($notificationEmail) ? 'True' : 'False';
 
     // Validate required fields
@@ -48,20 +51,75 @@ try {
 
     // Bind Parameters
     $stmt->bind_param(
-        "issssssssssssssssss", 
-        $customer, $status, $checkrcv, $projectid, $title, $description, $sowData, $projectIs, $projectType, 
-        $projectCategory, $currency, $budgetAmount, $startDate, $endDate, 
-        $contactName, $contactEmail, $contactNumber, $notificationEmail, $coupon
+        "issssssssssssssssss",
+        $customer,
+        $status,
+        $checkrcv,
+        $projectid,
+        $title,
+        $description,
+        $sowData,
+        $projectIs,
+        $projectType,
+        $projectCategory,
+        $currency,
+        $budgetAmount,
+        $startDate,
+        $endDate,
+        $contactName,
+        $contactEmail,
+        $contactNumber,
+        $notificationEmail,
+        $coupon
     );
-
+ 
     if (!$stmt->execute()) {
         throw new Exception("Failed to upload project: " . $stmt->error);
     }
 
+    require 'PHPMailer/PHPMailer.php';
+    require 'PHPMailer/SMTP.php';
+    require 'PHPMailer/Exception.php';
+    require 'mail/maibody.php'; // your dynamic email body
+
+
+    // Create instance
+    $mail = new PHPMailer(true);
+
+    try {
+        // SMTP Configuration
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';      // e.g. smtp.gmail.com
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'your_email@gmail.com';   // your Gmail
+        $mail->Password   = 'your_app_password';      // use Gmail App Password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        // Recipients
+        $mail->setFrom('your_email@gmail.com', 'Your Name');
+        $mail->addAddress('recipient@example.com', 'Recipient');
+
+        // Mail Content
+        $heading = "New Project Uploaded!";
+        $message = "Your project '".$title."' has been uploaded successfully.\nPlease check the dashboard.";
+        $bodyContent = generateMailBody($heading, $message);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Project Notification';
+        $mail->Body    = $bodyContent;
+        $mail->AltBody = strip_tags($message);
+
+        // Send email
+        $mail->send();
+        echo 'Mail sent successfully!';
+    } catch (Exception $e) {
+        echo "Mail could not be sent. Error: {$mail->ErrorInfo}";
+    }
+
+
     echo json_encode(["status" => "success", "message" => "Project uploaded successfully!"]);
     $stmt->close();
-
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
-?>
