@@ -25,7 +25,7 @@
     $hw_id = intval($hw_id);
     $order_no = htmlspecialchars($order_no);
 
-    if ($hw_id) {
+    if ($hw_id && $order_no) {
         //     $stmt = mysqli_prepare($con, "
         //     SELECT h.*, sp.*
         //     FROM hardwares h
