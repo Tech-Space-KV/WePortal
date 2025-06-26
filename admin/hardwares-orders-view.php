@@ -79,6 +79,12 @@
                                 <input type="text" class="form-control" value="<?php echo $row['hrdws_hw_status']; ?>" readonly>
                             </div>
                             <div class="mb-2">
+                                <label class="form-label">Hardware Location</label>
+                                <input type="text" class="form-control"
+                                    value="<?php echo $row['hrdws_city'] . ', ' . $row['hrdws_state']; ?>" readonly>
+                            </div>
+
+                            <div class="mb-2">
                                 <label class="form-label">Order Date</label>
                                 <input type="text" class="form-control" value="<?php echo $row['order_date']; ?>" readonly>
                             </div>
@@ -109,6 +115,10 @@
                                 <label class="form-label">Supplier Contact</label>
                                 <input type="text" class="form-control" value="<?php echo $row['sprov_contact']; ?>" readonly>
                             </div>
+                            <div class="mb-2">
+                                <label class="form-label">Supplier Location</label>
+                                <input type="text" class="form-control" value="<?php echo $row['sprov_address']; ?>" readonly>
+                            </div>
                             <!-- <div class="text-end">
                                 <a class="btn btn-sm btn-primary"
                                     href="table-inventory-details.php?order_no=<?php echo urlencode($row['order_no']); ?>">View</a>
@@ -136,6 +146,10 @@
                                 <label class="form-label">Buyer Contact</label>
                                 <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly>
                             </div>
+                            <div class="mb-2">
+                                <label class="form-label">Buyer Location</label>
+                                <input type="text" class="form-control" value="<?php echo $row['pown_address']; ?>" readonly>
+                            </div>
                             <!-- <div class="text-end">
                                 <a class="btn btn-sm btn-primary"
                                     href="table-inventory-details.php?order_no=<?php echo urlencode($row['order_no']); ?>">View</a>
@@ -149,21 +163,39 @@
                     <div class="col-md-4">
                         <div class="border p-3 rounded bg-light">
                             <div class="mb-2">
-                                <label class="form-label">Buyer ID</label>
-                                <input type="text" class="form-control" value="<?php echo $row['pown_id']; ?>" readonly>
+                                <label class="form-label">Requested Qty</label>
+                                <input type="text" class="form-control" value="<?php echo $row['ordplcd_qty_placed']; ?>"
+                                    readonly>
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Buyer Name</label>
-                                <input type="text" class="form-control" value="<?php echo $row['pown_name']; ?>" readonly>
+                                <label class="form-label">Amount Calculated</label>
+                                <input type="text" class="form-control" value="<?php echo $row['ordplcd_amt']; ?>" readonly>
                             </div>
-                            <div class="mb-2">
-                                <label class="form-label">Buyer Email</label>
-                                <input type="text" class="form-control" value="<?php echo $row['pown_email']; ?>" readonly>
-                            </div>
-                            <div class="mb-2">
-                                <label class="form-label">Buyer Contact</label>
-                                <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly>
-                            </div>
+                            <form action="php-functions/function-edit-order-details.php?id=<?php echo $row['ordplcd_id']; ?>"
+                                method="post">
+                                <div class="mb-2">
+                                    <label class="form-label">Qty Approved</label>
+                                    <input type="text" class="form-control" name="ordplcd_final_qty"
+                                        value="<?php echo $row['ordplcd_final_qty']; ?>">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Final Amount</label>
+                                    <input type="text" class="form-control" name="ordplcd_final_amount"
+                                        value="<?php echo $row['ordplcd_final_amount']; ?>">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label">Status</label>
+                                    <!-- <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly> -->
+                                    <select name="ordplcd_status" id="">
+                                        <option value="pending" <?php echo ($row['ordplcd_status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                                        <option value="placed" <?php echo ($row['ordplcd_status'] == 'Placed') ? 'selected' : ''; ?>>Placed</option>
+                                        <option value="cancelled" <?php echo ($row['ordplcd_status'] == 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </form>
                             <!-- <div class="text-end">
                                 <a class="btn btn-sm btn-primary"
                                     href="table-inventory-details.php?order_no=<?php echo urlencode($row['order_no']); ?>">View</a>
@@ -182,7 +214,7 @@
         </div>
     </div>
 
-    
+
 </main>
 
 
