@@ -1,6 +1,6 @@
 <?php require('header.php'); ?>
 <?php
-$custId = isset($_GET['cust-id']) ? (int)$_GET['cust-id'] : 0;
+$custId = isset($_GET['cust-id']) ? (int) $_GET['cust-id'] : 0;
 
 $query = "SELECT plist_final_price, plist_delivered_on 
           FROM project_list 
@@ -20,10 +20,11 @@ while ($row = mysqli_fetch_assoc($result)) {
     $price = $row['plist_final_price'];
     $date = $row['plist_delivered_on'];
 
-    if (!$date) continue;
+    if (!$date)
+        continue;
 
     $year = date("Y", strtotime($date));
-    $month = (int)date("n", strtotime($date));
+    $month = (int) date("n", strtotime($date));
     $fy = ($month < 4) ? $year - 1 : $year;
     $financialYear = $fy . "-" . ($fy + 1);
 
@@ -47,6 +48,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     $totalPrice += $price;
     $rowCount++;
+
 }
 
 $ltv = $rowCount ? round($totalPrice / $rowCount, 2) : 0;
@@ -65,7 +67,8 @@ while ($row = mysqli_fetch_assoc($topResult)) {
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-4 border-bottom">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-4 border-bottom">
         <h1 class="h2">Customer Lifetime Value</h1>
     </div>
 
@@ -140,128 +143,128 @@ while ($row = mysqli_fetch_assoc($topResult)) {
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const yearlyLabels = <?php echo json_encode(array_keys($yearlyData)); ?>;
-const yearlyValues = <?php echo json_encode(array_values($yearlyData)); ?>;
-const reversedLabels = [...yearlyLabels].reverse();
-const reversedValues = [...yearlyValues].reverse();
-const defaultFY = "<?php echo $currentFY; ?>";
-const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const monthlyRevenueByYear = <?php echo json_encode($monthlyRevenueByYear); ?>;
-const ctx = document.getElementById("monthlyTrendChart").getContext("2d");
+    const yearlyLabels = <?php echo json_encode(array_keys($yearlyData)); ?>;
+    const yearlyValues = <?php echo json_encode(array_values($yearlyData)); ?>;
+    const reversedLabels = [...yearlyLabels].reverse();
+    const reversedValues = [...yearlyValues].reverse();
+    const defaultFY = "<?php echo $currentFY; ?>";
+    const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthlyRevenueByYear = <?php echo json_encode($monthlyRevenueByYear); ?>;
+    const ctx = document.getElementById("monthlyTrendChart").getContext("2d");
 
-new Chart(document.getElementById("barChart"), {
-    type: 'bar',
-    data: {
-        labels: reversedLabels,
-        datasets: [{
-            label: 'Business per Financial Year',
-            data: reversedValues,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1.5
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return '₹' + value.toLocaleString();
+    new Chart(document.getElementById("barChart"), {
+        type: 'bar',
+        data: {
+            labels: reversedLabels,
+            datasets: [{
+                label: 'Business per Financial Year',
+                data: reversedValues,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) {
+                            return '₹' + value.toLocaleString();
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Amount (₹)'
                     }
-                },
-                title: {
-                    display: true,
-                    text: 'Amount (₹)'
                 }
             }
         }
-    }
-});
+    });
 
-new Chart(document.getElementById("pieChart"), {
-    type: 'pie',
-    data: {
-        labels: reversedLabels,
-        datasets: [{
-            label: 'Business Share',
-            data: reversedValues,
-            backgroundColor: [
-                '#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f',
-                '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ac'
-            ]
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom'
-            }
-        }
-    }
-});
-
-let monthlyTrendChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: monthlyLabels,
-        datasets: [{
-            label: 'Monthly Revenue',
-            data: Object.values(monthlyRevenueByYear[defaultFY] || Array(12).fill(0)),
-            borderColor: 'rgba(255, 99, 132, 1)',
-            tension: 0.3,
-            fill: false
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Revenue (₹)'
+    new Chart(document.getElementById("pieChart"), {
+        type: 'pie',
+        data: {
+            labels: reversedLabels,
+            datasets: [{
+                label: 'Business Share',
+                data: reversedValues,
+                backgroundColor: [
+                    '#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f',
+                    '#edc949', '#af7aa1', '#ff9da7', '#9c755f', '#bab0ac'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
                 }
             }
         }
-    }
-});
+    });
 
-document.getElementById("yearSelect").addEventListener("change", function () {
-    const selectedYear = this.value;
-    const newData = monthlyRevenueByYear[selectedYear] || Array(12).fill(0);
-    monthlyTrendChart.data.datasets[0].data = Object.values(newData);
-    monthlyTrendChart.update();
-});
-
-const topCustomerLabels = <?php echo json_encode(array_keys($topCustomers)); ?>;
-const topCustomerValues = <?php echo json_encode(array_values($topCustomers)); ?>;
-
-new Chart(document.getElementById("topCustomersChart"), {
-    type: 'doughnut',
-    data: {
-        labels: topCustomerLabels,
-        datasets: [{
-            label: 'Top Customers',
-            data: topCustomerValues,
-            backgroundColor: ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f']
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom'
+    let monthlyTrendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: monthlyLabels,
+            datasets: [{
+                label: 'Monthly Revenue',
+                data: Object.values(monthlyRevenueByYear[defaultFY] || Array(12).fill(0)),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                tension: 0.3,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Revenue (₹)'
+                    }
+                }
             }
         }
-    }
-});
+    });
+
+    document.getElementById("yearSelect").addEventListener("change", function () {
+        const selectedYear = this.value;
+        const newData = monthlyRevenueByYear[selectedYear] || Array(12).fill(0);
+        monthlyTrendChart.data.datasets[0].data = Object.values(newData);
+        monthlyTrendChart.update();
+    });
+
+    const topCustomerLabels = <?php echo json_encode(array_keys($topCustomers)); ?>;
+    const topCustomerValues = <?php echo json_encode(array_values($topCustomers)); ?>;
+
+    new Chart(document.getElementById("topCustomersChart"), {
+        type: 'doughnut',
+        data: {
+            labels: topCustomerLabels,
+            datasets: [{
+                label: 'Top Customers',
+                data: topCustomerValues,
+                backgroundColor: ['#4e79a7', '#f28e2b', '#e15759', '#76b7b2', '#59a14f']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
 </script>
 
 <?php require('footer.php'); ?>
