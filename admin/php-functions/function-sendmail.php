@@ -42,7 +42,7 @@ if (empty($heading) || empty($message)) {
 
 
         // Recipients
-        $mail->setFrom('notification@pseudoteam.com');
+        $mail->setFrom('notification@pseudoteam.com', 'PseudoTeam');
         $mail->addAddress('kunalmanocha.1996@gmail.com');
 
         // Mail Content
@@ -82,6 +82,7 @@ function generateMailBody($heading, $message)
       <style>
         body { margin: 0; padding: 0; background-color: #f4f4f4; }
         .container {
+            border: 2px solid #000;
           width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff;
           border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
@@ -109,7 +110,7 @@ function generateMailBody($heading, $message)
           <h1>🌟 ' . htmlspecialchars($heading) . '</h1>
           <p>Hello User,</p>
           <p>' . nl2br(htmlspecialchars($message)) . '</p>
-          <a href="#" class="button">View Project Dashboard</a>
+          <a href="www.pseudoteam.com" style="color:#fff" class="button">View Project Dashboard</a>
         </div>
         <div class="footer">
           © 2025 Pseudoteam. All rights reserved. <br>
