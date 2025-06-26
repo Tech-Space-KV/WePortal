@@ -81,7 +81,7 @@
 
 
   <div class="card-container">
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="users?filter=Customer" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-address-card-o fs-2"></i></h5>
@@ -91,7 +91,7 @@
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="users?filter=Partner" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-briefcase fs-3"></i></h5>
@@ -101,7 +101,7 @@
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="projects" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-file-archive-o fs-3"></i></h5>
@@ -111,7 +111,7 @@
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="my-projects" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-file-o fs-3"></i></h5>
@@ -124,7 +124,7 @@
 
 
   <div class="card-container">
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="hardwares" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-address-card-o fs-2"></i></h5>
@@ -134,17 +134,17 @@
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="hardware-orders" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-briefcase fs-3"></i></h5>
-          <h5 class="card-title">ORDERS PNDG</h5>
+          <h5 class="card-title">ORDERS PEND</h5>
           <p class="card-title" id="ordersPendingCount">0</p>
         </div>
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="placed-orders" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-address-card-o fs-3"></i></h5>
@@ -154,7 +154,7 @@
       </div>
     </a>
 
-    <a href="projects?status=No SP Assigned" class="text-decoration-none">
+    <a href="tickets" class="text-decoration-none">
       <div class="card text-primary border-primary">
         <div class="card-body">
           <h5 class="card-title"><i class="fa fa-bookmark-o fs-3"></i></h5>

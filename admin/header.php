@@ -9,8 +9,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.122.0">
+  <meta name="author" content="">
+  <meta name="generator" content="">
   <title>PseudoTeam - Admin Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -21,6 +21,16 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Basic favicon -->
+  <link rel="icon" href="../favicons/favicon.ico" type="image/x-icon">
+
+  <!-- Optional for PNG -->
+  <link rel="icon" href="../favicons/favicon.png" type="image/png">
+
+  <!-- Optional for SVG -->
+  <link rel="icon" href="../favicons/favicon.svg" type="image/svg+xml">
+
 
 
   <style>
@@ -378,7 +388,7 @@
                   H/W Orders <span class="badge bg-danger hw-badge"></span>
                 </a>
               </li>
-             
+
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="tickets">
                   <svg class="bi">
@@ -413,7 +423,7 @@
                   <svg class="bi">
                     <use xlink:href="#gear-wide-connected" />
                   </svg>
-                  Activity Logs
+                  Admin Users
                 </a>
               </li>
               <li class="nav-item">
@@ -445,43 +455,40 @@
       </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    function loadHWOrderCount() {
-        $.ajax({
-            url: 'php-functions/function-get-count-hardware-orders.php',
-            type: 'GET',
-            success: function(data) {
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          function loadHWOrderCount() {
+            $.ajax({
+              url: 'php-functions/function-get-count-hardware-orders.php',
+              type: 'GET',
+              success: function(data) {
                 $('.hw-badge').text(data);
-            },
-            error: function() {
+              },
+              error: function() {
                 $('.hw-badge').text('Error');
-            }
-        });
-    }
+              }
+            });
+          }
 
-    function loadNotificationCount() {
-        $.ajax({
-            url: 'php-functions/function-get-count-notifications.php',
-            type: 'GET',
-            success: function(data) {
+          function loadNotificationCount() {
+            $.ajax({
+              url: 'php-functions/function-get-count-notifications.php',
+              type: 'GET',
+              success: function(data) {
                 $('.ntfn-badge').text(data);
-            },
-            error: function() {
+              },
+              error: function() {
                 $('.ntfn-badge').text('Error');
-            }
+              }
+            });
+          }
+
+          loadHWOrderCount(); // Initial load
+          loadNotificationCount(); // Initial load
+
+          // Optional: Refresh every 10 seconds
+          setInterval(loadHWOrderCount, 5000);
+          setInterval(loadNotificationCount, 3000);
         });
-    }
-
-    loadHWOrderCount(); // Initial load
-    loadNotificationCount(); // Initial load
-
-    // Optional: Refresh every 10 seconds
-    setInterval(loadHWOrderCount, 5000);
-    setInterval(loadNotificationCount, 3000);
-});
-</script>
-
-
-
+      </script>

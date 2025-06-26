@@ -1,8 +1,8 @@
 <?php
-require('../session-management.php'); 
-require('../../required/db-connection/connection.php'); 
+require('../session-management.php');
+require('../../required/db-connection/connection.php');
 
-header('Content-Type: application/json');
+
 
 try {
     // Collect form data and handle null values
@@ -22,7 +22,7 @@ try {
     $notificationEmail = $_POST['notificationEmail'] ?? null;
     $coupon = $_POST['coupon'] ?? null;
     $status = 'No SP Assigned';
-    $projectid = "Pseudo-".date("Y")."-".date("mdHis")."";
+    $projectid = "Pseudo-" . date("Y") . "-" . date("mdHis") . "";
     $checkrcv = !empty($notificationEmail) ? 'True' : 'False';
 
     // Validate required fields
@@ -48,20 +48,35 @@ try {
 
     // Bind Parameters
     $stmt->bind_param(
-        "issssssssssssssssss", 
-        $customer, $status, $checkrcv, $projectid, $title, $description, $sowData, $projectIs, $projectType, 
-        $projectCategory, $currency, $budgetAmount, $startDate, $endDate, 
-        $contactName, $contactEmail, $contactNumber, $notificationEmail, $coupon
+        "issssssssssssssssss",
+        $customer,
+        $status,
+        $checkrcv,
+        $projectid,
+        $title,
+        $description,
+        $sowData,
+        $projectIs,
+        $projectType,
+        $projectCategory,
+        $currency,
+        $budgetAmount,
+        $startDate,
+        $endDate,
+        $contactName,
+        $contactEmail,
+        $contactNumber,
+        $notificationEmail,
+        $coupon
     );
 
     if (!$stmt->execute()) {
         throw new Exception("Failed to upload project: " . $stmt->error);
     }
 
+
     echo json_encode(["status" => "success", "message" => "Project uploaded successfully!"]);
     $stmt->close();
-
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
-?>

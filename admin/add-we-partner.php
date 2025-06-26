@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($checkStmt->num_rows > 0) {
         $errors[] = "User ID or Username already exists.";
     } else {
-        $stmt = $con->prepare("INSERT INTO weusers ( username, password, email, role) VALUES  ?, ?, ?, ?)");
+        $stmt = $con->prepare("INSERT INTO weusers ( `username`, `password`, `email`, `role`) VALUES ( ?, ?, ?, ?)");
         $stmt->bind_param("ssss", $username, $hashedPassword, $email, $role);
         if ($stmt->execute()) {
             echo "<div class='alert alert-success'> Registration successful!<br>Password: <b>$generatedPassword</b><br><a href='login.php'>Login here</a></div>";

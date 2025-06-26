@@ -30,7 +30,7 @@
       </thead>
       <tbody>
         <?php
-        $query = "SELECT * FROM notifications WHERE LOWER(ntfn_type) = 'pt'";
+        $query = "SELECT * FROM notifications WHERE LOWER(ntfn_type) = 'pt' order by 1 desc";
 
         $result = mysqli_query($con, $query);
         while ($row = mysqli_fetch_assoc($result)) {
