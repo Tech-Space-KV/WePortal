@@ -7,15 +7,17 @@ if (isset($_GET['search'])) {
 }
 if (isset($_GET['status'])) {
   $status = $_GET['status']; // Get the value
+  $statusdisplay = ' - '.$status;
 } else {
   $status='';
+  $statusdisplay = '';
 }
 
 ?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Projects</h1>
+        <h1 class="h2">Projects<?php echo $statusdisplay; ?></h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <a type="button" class="btn btn-sm btn-outline-secondary" href="upload-project">Upload Project</a>
@@ -29,6 +31,11 @@ if (isset($_GET['status'])) {
         <input type="text" class="w-50 mx-auto mb-4" id="tableSearch" placeholder="Search..." onkeyup="searchTable()" />
       </center>
 
+      <center>
+        <a href="projects">View All Projects</a>
+      </center>
+      <br>
+
       <div class="table-responsive small">
         <table class="table table-striped table-sm" id="dataTable">
           <thead>
@@ -38,7 +45,7 @@ if (isset($_GET['status'])) {
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Status</th>
-              <th scope="col">Customer ID</th>
+              <th scope="col">Pseudo Mgr</th>
               <th scope="col"></th>
             </tr>
           </thead>

@@ -8,7 +8,7 @@
                 <a type="button" class="btn btn-sm btn-outline-secondary" href="add-customer">Add Customer</a>
                 <a type="button" class="btn btn-sm btn-outline-secondary" href="add-service-partner">Add Service Partner</a>
                 <a type="button" class="btn btn-sm btn-outline-secondary" href="add-we-partner">We Partner</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='users.php'"><i class="fa fa-refresh"></i></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.href='users'"><i class="fa fa-refresh"></i></button>
             </div>
         </div>
     </div>
@@ -33,9 +33,9 @@
                             }
                         </style>
 
-                        <a href="users.php?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(ASP)</a> /
-                        <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
-                        <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
+                        <a href="users?filter=Partner" class="<?php echo ($filter == 'Partner') ? 'anchor-selected' : ''; ?>">(ASP)</a> /
+                        <a href="users?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
+                        <a href="users" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
                     </th>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>

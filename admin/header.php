@@ -413,7 +413,7 @@
                   <svg class="bi">
                     <use xlink:href="#gear-wide-connected" />
                   </svg>
-                  Activity Logs
+                  Admin Users
                 </a>
               </li>
               <li class="nav-item">

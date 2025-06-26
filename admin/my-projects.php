@@ -37,7 +37,7 @@ if (isset($_GET['status'])) {
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Status</th>
-              <th scope="col">Customer ID</th>
+              <th scope="col">Customer</th>
               <th scope="col"></th>
             </tr>
           </thead>
