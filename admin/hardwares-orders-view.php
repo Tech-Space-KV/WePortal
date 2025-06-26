@@ -187,9 +187,9 @@
                                     <label class="form-label">Status</label>
                                     <!-- <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly> -->
                                     <select name="ordplcd_status" id="" class="form-control">
-                                        <option value="pending" <?php echo ($row['ordplcd_status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                                        <option value="placed" <?php echo ($row['ordplcd_status'] == 'Placed') ? 'selected' : ''; ?>>Placed</option>
-                                        <option value="cancelled" <?php echo ($row['ordplcd_status'] == 'Cancelled') ? 'selected' : ''; ?>>Cancelled</option>
+                                        <option value="Pending" selected="<?php echo ($row['ordplcd_status'] == 'Pending') ? 'selected' : ''; ?>">Pending</option>
+                                        <option value="Placed" selected="<?php echo ($row['ordplcd_status'] == 'Placed') ? 'selected' : ''; ?>">Placed</option>
+                                        <option value="Cancelled" selected="<?php echo ($row['ordplcd_status'] == 'Cancelled') ? 'selected' : ''; ?>">Cancelled</option>
                                     </select>
                                 </div>
                                 <div>
