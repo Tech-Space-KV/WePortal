@@ -202,10 +202,11 @@ if (isset($_GET['search'])) {
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="location.reload()" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" id="insert_operation">Submit</button>
         <button type="submit" class="btn btn-success" id="save_operation">Save</button>
         <button type="submit" class="btn btn-danger" id="delete_operation">Delete</button>
+        <button type="button" class="btn btn-secondary" onclick="location.reload()" data-bs-dismiss="modal">Close</button>
+        
       </div>
     </div>
   </div>
@@ -227,6 +228,11 @@ if (isset($_GET['search'])) {
 
     alert(stringdata);
     if (stringdata != 'nodata') {
+
+       document.getElementById("insert_operation").style.display='none';
+              document.getElementById("save_operation").style.display='block';
+              document.getElementById("delete_operation").style.display='block';
+
       fetch(`php-functions/function-milestone-fetch.php?pplnr_id=${stringdata}`)
         .then(response => response.json())
         .then(data => {
@@ -246,6 +252,12 @@ if (isset($_GET['search'])) {
           }
         })
         .catch(error => console.error("Error fetching data:", error));
+    }
+
+    else{
+       document.getElementById("insert_operation").style.display='block';
+              document.getElementById("save_operation").style.display='none';
+              document.getElementById("delete_operation").style.display='none';
     }
   }
 
