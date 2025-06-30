@@ -206,7 +206,7 @@
             </td>
 
             <td>
-              <a class="btn btn-sm btn-outline-primary" href="purchase-form-view.php?pid=<?php echo $row['pur_id']; ?>">View</a>
+              <a class="btn btn-sm btn-outline-primary" href="project-view?project_key=<?php echo $row['plist_id'] ;?>">View</a>
             </td>
           </tr>
         <?php
