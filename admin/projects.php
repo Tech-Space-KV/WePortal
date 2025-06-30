@@ -12,6 +12,13 @@ if (isset($_GET['status'])) {
   $status='';
   $statusdisplay = '';
 }
+if (isset($_GET['condn'])) {
+  $condn = $_GET['condn']; // Get the value
+  // $statusdisplay = ' - '.$status;
+} else {
+  $condn='';
+  // $statusdisplay = '';
+}
 
 ?>
 
@@ -56,7 +63,7 @@ if (isset($_GET['status'])) {
               `plist_id`, `plist_customer_id`, `plist_projectid`, `plist_title`, `plist_description`, `plist_startdate`, `plist_enddate`, `plist_status` FROM `project_list`
               JOIN `project_owners` ON `pown_id` = `plist_customer_id`
               LEFT JOIN `weusers` ON `id` = `plist_pt_mngr_id`
-              WHERE `plist_id` like '%$search%' AND `plist_status` like '%$status%' ";
+              WHERE `plist_id` like '%$search%' AND `plist_status` like '%$status%' $condn ";
 							$result=mysqli_query($con,$query);
 							while( $row=mysqli_fetch_assoc($result))
 							{
