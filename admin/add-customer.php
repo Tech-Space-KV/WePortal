@@ -202,6 +202,23 @@ $hashedPassword = sha1($generatedPassword);
         .then(data => {
           if (data.status === "success") {
             alert(data.message);
+
+            let mailData = new FormData();
+                    mailData.append("heading", "U have been added");
+                    mailData.append("message", `A new project titled "${title}" has been uploaded.`);
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                        });
+
             window.location.href = "add-customer.php?success=1";
           } else {
             alert("Error: " + data.message);
