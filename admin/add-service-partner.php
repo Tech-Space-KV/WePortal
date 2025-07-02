@@ -1,7 +1,7 @@
 <?php require('header.php');
 function generatePassword($length = 12)
 {
-  return bin2hex(random_bytes($length / 2)); 
+  return bin2hex(random_bytes($length / 2));
 }
 
 $generatedPassword = generatePassword();
@@ -190,7 +190,7 @@ $hashedPassword = sha1($generatedPassword);
   <script>
     document.getElementById("insert_operation").addEventListener("click", function(event) {
       event.preventDefault();
-
+      var mailtoemail = document.getElementById("sprov_email").value;
       let formData = new FormData(document.querySelector("form"));
 
       fetch("php-functions/function-service-partner-upload.php", {
@@ -201,6 +201,40 @@ $hashedPassword = sha1($generatedPassword);
         .then(data => {
           if (data.status === "success") {
             alert(data.message);
+
+            let mailData = new FormData();
+            mailData.append("heading", "You have been registered on PseudoTeam.");
+            mailData.append("message", `We’re excited to have you as part of the [Your Company Name] family.
+
+                        Here’s what you can do next:
+                    🔹 Explore your dashboard
+                    🔹 Upload your first project/task
+                    🔹 Track your progress in real-time
+                    🔹 Reach out for any support – we’re here to help!
+
+                      Your account is all set up, and you’re ready to go
+                            `);
+            mailData.append("mailto", mailtoemail);
+            // mailData.append("mailtocust","");
+            // mailData.append("mailtosp","");
+            mailData.append("link", "www.pseudoteam.com/partner");
+
+
+            fetch("php-functions/function-sendmail.php", {
+                method: "POST",
+                body: mailData
+              })
+              .then(response => response.text()) // Assuming it returns plain text
+              .then(mailResponse => {
+                console.log("Mail Response:", mailResponse);
+                alert(mailResponse);
+                // You may show a success message or do further actions here
+              })
+              .catch(mailError => {
+                console.error("Mail Sending Failed:", mailError);
+                alert(mailError);
+              });
+
             window.location.href = "add-service-partner.php?success=1";
           } else {
             alert("Error: " + data.message);
@@ -213,7 +247,7 @@ $hashedPassword = sha1($generatedPassword);
         });
     });
   </script>
-  
+
   <!-- <script>
       function checkUsername() {
           let username = document.getElementById("sprov_username").value;

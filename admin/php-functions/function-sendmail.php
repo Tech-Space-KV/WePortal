@@ -19,6 +19,8 @@ $heading = isset($_POST['heading']) ? $_POST['heading'] : '';
 $message = isset($_POST['message']) ? $_POST['message'] : '';
 $linkurl = isset($_POST['link']) ? $_POST['link'] : '';
 $sendto = isset($_POST['mailto']) ? $_POST['mailto'] : '';
+// $sendtocust = isset($_POST['mailtocust']) ? $_POST['mailtocust'] : '';
+// $sendtosp = isset($_POST['mailtosp']) ? $_POST['mailtosp'] : '';
 
 if(isset($_POST['mailtocust']))
 {
@@ -31,16 +33,16 @@ if(isset($_POST['mailtocust']))
               }
 }
 
-if(isset($_POST['mailtosp']))
-{
-   $query="SELECT `sprov_email` from `service_providers`
-              WHERE `sprov_id` = ".$_POST['mailtosp']." ";
-							$result=mysqli_query($con,$query);
-							while( $row=mysqli_fetch_assoc($result))
-							{
-                  $sendto = $row['sprov_email'];
-              }
-}
+// if(!empty($sendtosp))
+// {
+//    $query="SELECT `sprov_email` from `service_providers`
+//               WHERE `sprov_id` = ".$_POST['mailtosp']." ";
+// 							$result=mysqli_query($con,$query);
+// 							while( $row=mysqli_fetch_assoc($result))
+// 							{
+//                   $sendto = $row['sprov_email'];
+//               }
+// }
 
 // Validation
 if (empty($heading) || empty($message)) {
@@ -70,10 +72,10 @@ if (empty($heading) || empty($message)) {
         $mail->addAddress($sendto);
 
         // Mail Content
-        $bodyContent = generateMailBody($heading, $message);
+        $bodyContent = generateMailBody($heading, $message, $linkurl);
 
         $mail->isHTML(true);
-        $mail->Subject = 'Project Notification';
+        $mail->Subject = 'PseudoTeam Notification';
         $mail->Body    = $bodyContent;
         $mail->AltBody = strip_tags($message);
 

@@ -191,7 +191,7 @@ $hashedPassword = sha1($generatedPassword);
   <script>
     document.getElementById("insert_operation").addEventListener("click", function(event) {
       event.preventDefault();
-
+      var mailtoemail = document.getElementById("pown_email").value;
       let formData = new FormData(document.querySelector("form"));
 
       fetch("php-functions/function-customer-upload.php", {
@@ -203,8 +203,7 @@ $hashedPassword = sha1($generatedPassword);
           if (data.status === "success") {
             alert(data.message);
 
-            var mailtoemail = document.getElementById("pown_email").value;
-
+            
             let mailData = new FormData();
             mailData.append("heading", "You have been registered on PseudoTeam.");
             mailData.append("message", `We’re excited to have you as part of the [Your Company Name] family.
@@ -218,6 +217,8 @@ $hashedPassword = sha1($generatedPassword);
                       Your account is all set up, and you’re ready to go
                             `);
             mailData.append("mailto", mailtoemail);
+            // mailData.append("mailtocust","");
+            // mailData.append("mailtosp","");
             mailData.append("link", "www.pseudoteam.com");
 
 
@@ -228,10 +229,12 @@ $hashedPassword = sha1($generatedPassword);
               .then(response => response.text()) // Assuming it returns plain text
               .then(mailResponse => {
                 console.log("Mail Response:", mailResponse);
+                alert(mailResponse);
                 // You may show a success message or do further actions here
               })
               .catch(mailError => {
                 console.error("Mail Sending Failed:", mailError);
+                alert(mailError);
               });
 
             window.location.href = "add-customer.php?success=1";
