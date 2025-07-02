@@ -259,9 +259,14 @@
                     // document.getElementById("failbox").style.display = "none";
                     // document.getElementById("successbox").textContent = "Project uploaded.";
 
+                    var mailtoemail = document.getElementById("mySelect").value;
                     let mailData = new FormData();
                     mailData.append("heading", "New Project Uploaded");
                     mailData.append("message", `A new project titled "${title}" has been uploaded.`);
+                    mailData.append("mailto", '');
+                    mailData.append("mailtocustid", mailtoemail);
+                    mailData.append("link", "www.pseudoteam.com");
+        
                     fetch("php-functions/function-sendmail.php", {
                             method: "POST",
                             body: mailData
