@@ -63,7 +63,7 @@ if (empty($heading) || empty($message)) {
         $mail->SMTPAuth = true;
         $mail->Username = 'notification@pseudoteam.com';
         $mail->Password = 'ASDFasdf1234';  // no space
-        $mail->SMTPSecure = 'tls'; // or 'ssl' if needed
+        $mail->SMTPSecure = 'auto'; // or 'ssl' if needed
         $mail->Port = 587; // or 465 for SSL
 
 
