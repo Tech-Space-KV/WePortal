@@ -202,14 +202,14 @@ $hashedPassword = sha1($generatedPassword);
           if (data.status === "success") {
             alert(data.message);
 
-            let mailData = new FormData();
+           let mailData = new FormData();
             mailData.append("heading", "You have been registered on PseudoTeam.");
-            mailData.append("message", `We’re excited to have you as part of the PseudoTeam.
+            mailData.append("message", `We’re excited to have you as an Authorised Service Partner of PseudoTeam.
 
                         Here’s what you can do next:
                     🔹 Explore your dashboard
-                    🔹 Update your first project/task
-                    🔹 Find projects of your interest
+                    🔹 Upload your first project/task
+                    🔹 Track your progress in real-time
                     🔹 Reach out for any support – we’re here to help!
 
                       Your account is all set up, and you’re ready to go

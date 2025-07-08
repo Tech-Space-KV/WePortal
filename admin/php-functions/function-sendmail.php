@@ -139,7 +139,7 @@ function generateMailBody($heading, $message, $linkurl)
           <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
           <br>
           <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>
-          <p>Thanks for choosing [Your Company Name]. We look forward to growing together!</p>
+          <p>Thanks for choosing us. We look forward to growing together!</p>
           
         </div>
         <div class="footer">
