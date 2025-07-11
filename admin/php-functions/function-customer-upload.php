@@ -15,6 +15,7 @@ try {
     $pown_name = $_POST['pown_name'] ?? '';
     $pown_username = $_POST['pown_username'] ?? '';
     $pown_user_type = $_POST['pown_user_type'] ?? '';
+    $pown_user_type2 = 'customer';
     $pown_country = $_POST['pown_country'] ?? '';
     $pown_state = $_POST['pown_state'] ?? '';
     $pown_address = $_POST['pown_address'] ?? '';
@@ -58,7 +59,7 @@ try {
 
 
     mysqli_query($con,"INSERT INTO `users` (`name`, `email`, `contact`, `user_type`) 
-                  VALUES ('$pown_name', '$pown_email', '$pown_contact', '$pown_user_type')");
+                  VALUES ('$pown_name', '$pown_email', '$pown_contact', '$pown_user_type2')");
 
     
     $sql = "INSERT INTO project_owners (

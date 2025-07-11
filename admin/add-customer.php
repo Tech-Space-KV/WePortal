@@ -1,7 +1,7 @@
 <?php require('header.php');
 function generatePassword($length = 12)
 {
-  return bin2hex(random_bytes($length / 2)); 
+  return bin2hex(random_bytes($length / 2));
 }
 
 $generatedPassword = generatePassword();
@@ -102,7 +102,7 @@ $hashedPassword = sha1($generatedPassword);
 
     <div class="mb-3">
       <label for="pown_verified" class="form-label">Verified</label>
-      <select class="form-select" id="pown_verified" name="pown_verified" >
+      <select class="form-select" id="pown_verified" name="pown_verified">
         <option value="1">True</option>
         <option value="0">False</option>
       </select>
@@ -191,7 +191,7 @@ $hashedPassword = sha1($generatedPassword);
   <script>
     document.getElementById("insert_operation").addEventListener("click", function(event) {
       event.preventDefault();
-
+      var mailtoemail = document.getElementById("pown_email").value;
       let formData = new FormData(document.querySelector("form"));
 
       fetch("php-functions/function-customer-upload.php", {
@@ -202,6 +202,41 @@ $hashedPassword = sha1($generatedPassword);
         .then(data => {
           if (data.status === "success") {
             alert(data.message);
+
+            
+            let mailData = new FormData();
+            mailData.append("heading", "You have been registered on PseudoTeam.");
+            mailData.append("message", `We’re excited to have you as part of the PseudoTeam.
+
+                        Here’s what you can do next:
+                    🔹 Explore your dashboard
+                    🔹 Upload your first project/task
+                    🔹 Track your progress in real-time
+                    🔹 Reach out for any support – we’re here to help!
+
+                      Your account is all set up, and you’re ready to go
+                            `);
+            mailData.append("mailto", mailtoemail);
+            // mailData.append("mailtocust","");
+            // mailData.append("mailtosp","");
+            mailData.append("link", "www.pseudoteam.com");
+
+
+            fetch("php-functions/function-sendmail.php", {
+                method: "POST",
+                body: mailData
+              })
+              .then(response => response.text()) // Assuming it returns plain text
+              .then(mailResponse => {
+                console.log("Mail Response:", mailResponse);
+                alert(mailResponse);
+                // You may show a success message or do further actions here
+              })
+              .catch(mailError => {
+                console.error("Mail Sending Failed:", mailError);
+                alert(mailError);
+              });
+
             window.location.href = "add-customer.php?success=1";
           } else {
             alert("Error: " + data.message);
@@ -214,36 +249,35 @@ $hashedPassword = sha1($generatedPassword);
         });
     });
   </script>
-  
+
   <script>
-      function checkUsername() {
-          let username = document.getElementById("pown_username").value;
-          let statusIndicator = document.getElementById("username_status");
+    function checkUsername() {
+      let username = document.getElementById("pown_username").value;
+      let statusIndicator = document.getElementById("username_status");
 
-          if (username.length < 3) {
-              statusIndicator.innerHTML = "Too short";
-              statusIndicator.style.color = "red";
-              return;
-          }
-
-          fetch("php-functions/function-check-customer-username.php?username=" + encodeURIComponent(username))
-              .then(response => response.json())
-              .then(data => {
-                  if (data.status === "exists") {
-                      statusIndicator.innerHTML = "Username already taken";
-                      statusIndicator.style.color = "red";
-                  } else {
-                      statusIndicator.innerHTML = "Username available";
-                      statusIndicator.style.color = "green";
-                  }
-              })
-              .catch(error => {
-                  console.error("Error checking username:", error);
-              });
+      if (username.length < 3) {
+        statusIndicator.innerHTML = "Too short";
+        statusIndicator.style.color = "red";
+        return;
       }
 
-      document.getElementById("pown_username").addEventListener("input", checkUsername);
-    
+      fetch("php-functions/function-check-customer-username.php?username=" + encodeURIComponent(username))
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "exists") {
+            statusIndicator.innerHTML = "Username already taken";
+            statusIndicator.style.color = "red";
+          } else {
+            statusIndicator.innerHTML = "Username available";
+            statusIndicator.style.color = "green";
+          }
+        })
+        .catch(error => {
+          console.error("Error checking username:", error);
+        });
+    }
+
+    document.getElementById("pown_username").addEventListener("input", checkUsername);
   </script>
 
   <br><br>

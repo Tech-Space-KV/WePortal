@@ -17,6 +17,32 @@ header("Content-Type: application/json");
 // Get POST parameters
 $heading = isset($_POST['heading']) ? $_POST['heading'] : '';
 $message = isset($_POST['message']) ? $_POST['message'] : '';
+$linkurl = isset($_POST['link']) ? $_POST['link'] : '';
+$sendto = isset($_POST['mailto']) ? $_POST['mailto'] : '';
+// $sendtocust = isset($_POST['mailtocust']) ? $_POST['mailtocust'] : '';
+// $sendtosp = isset($_POST['mailtosp']) ? $_POST['mailtosp'] : '';
+
+if(isset($_POST['mailtocust']))
+{
+   $query="SELECT `pown_email` from `project_owners`
+              WHERE `pown_id` = ".$_POST['mailtocust']." ";
+							$result=mysqli_query($con,$query);
+							while( $row=mysqli_fetch_assoc($result))
+							{
+                  $sendto = $row['pown_email'];
+              }
+}
+
+// if(!empty($sendtosp))
+// {
+//    $query="SELECT `sprov_email` from `service_providers`
+//               WHERE `sprov_id` = ".$_POST['mailtosp']." ";
+// 							$result=mysqli_query($con,$query);
+// 							while( $row=mysqli_fetch_assoc($result))
+// 							{
+//                   $sendto = $row['sprov_email'];
+//               }
+// }
 
 // Validation
 if (empty($heading) || empty($message)) {
@@ -37,19 +63,19 @@ if (empty($heading) || empty($message)) {
         $mail->SMTPAuth = true;
         $mail->Username = 'notification@pseudoteam.com';
         $mail->Password = 'ASDFasdf1234';  // no space
-        $mail->SMTPSecure = 'tls'; // or 'ssl' if needed
+        $mail->SMTPSecure = 'auto'; // or 'ssl' if needed
         $mail->Port = 587; // or 465 for SSL
 
 
         // Recipients
         $mail->setFrom('notification@pseudoteam.com', 'PseudoTeam');
-        $mail->addAddress('kunalmanocha.1996@gmail.com');
+        $mail->addAddress($sendto);
 
         // Mail Content
-        $bodyContent = generateMailBody($heading, $message);
+        $bodyContent = generateMailBody($heading, $message, $linkurl);
 
         $mail->isHTML(true);
-        $mail->Subject = 'Project Notification';
+        $mail->Subject = 'PseudoTeam Notification';
         $mail->Body    = $bodyContent;
         $mail->AltBody = strip_tags($message);
 
@@ -71,7 +97,7 @@ if (empty($heading) || empty($message)) {
 
 
 <?php
-function generateMailBody($heading, $message)
+function generateMailBody($heading, $message, $linkurl)
 {
     return '
     <!DOCTYPE html>
@@ -110,7 +136,11 @@ function generateMailBody($heading, $message)
           <h1>🌟 ' . htmlspecialchars($heading) . '</h1>
           <p>Hello User,</p>
           <p>' . nl2br(htmlspecialchars($message)) . '</p>
-          <a href="www.pseudoteam.com" style="color:#fff" class="button">View Project Dashboard</a>
+          <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
+          <br>
+          <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>
+          <p>Thanks for choosing us. We look forward to growing together!</p>
+          
         </div>
         <div class="footer">
           © 2025 Pseudoteam. All rights reserved. <br>

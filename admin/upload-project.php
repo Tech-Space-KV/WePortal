@@ -198,6 +198,9 @@
 
 <script>
     function insert_data() {
+
+        var mailtoemail = document.getElementById("mySelect").value;
+
         let form = document.querySelector("form");
 
         // Store each form field value in variables
@@ -259,9 +262,24 @@
                     // document.getElementById("failbox").style.display = "none";
                     // document.getElementById("successbox").textContent = "Project uploaded.";
 
+
                     let mailData = new FormData();
-                    mailData.append("heading", "New Project Uploaded");
-                    mailData.append("message", `A new project titled "${title}" has been uploaded.`);
+                    mailData.append("heading", "Your project has been uploaded on PseudoTeam.");
+                    mailData.append("message", `Your project '`+title+`' has been uploaded successfully.
+
+                        Here’s what you can do next:
+                    🔹 Explore your dashboard
+                    🔹 Track your progress in real-time
+                    🔹 Reach out for any support – we’re here to help!
+
+                      Your account is all set up, and you’re ready to go
+                            `);
+                    mailData.append("mailtocust", mailtoemail);
+                    // mailData.append("mailtocust","");
+                    // mailData.append("mailtosp","");
+                    mailData.append("link", "www.pseudoteam.com");
+
+
                     fetch("php-functions/function-sendmail.php", {
                             method: "POST",
                             body: mailData
@@ -269,10 +287,12 @@
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
                             console.log("Mail Response:", mailResponse);
+                            alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
                             console.error("Mail Sending Failed:", mailError);
+                            alert(mailError);
                         });
 
                 } else {
