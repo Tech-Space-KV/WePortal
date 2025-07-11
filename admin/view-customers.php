@@ -101,10 +101,10 @@ function getPlaceholder($data, $field) {
       </select>
     </div>
 
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="pown_password" class="form-label">Password</label>
       <input type="text" class="form-control" id="pown_password" name="pown_password" value="<?= htmlspecialchars($customerData['pown_password'] ?? $generatedPassword); ?>">
-    </div>
+    </div> -->
 
     <div class="mb-3">
       <label for="pown_login_flag" class="form-label">Login Flag</label>

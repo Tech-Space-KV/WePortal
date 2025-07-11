@@ -1,16 +1,16 @@
- <?php
-    require('../session-management.php');
-    require('../../required/db-connection/connection.php');
+<?php
+require('../session-management.php');
+require('../../required/db-connection/connection.php');
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-    require 'PHPMailer/src/PHPMailer.php';
-    require 'PHPMailer/src/SMTP.php';
-    require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
 
-    
-    // Allow CORS if needed
+
+// Allow CORS if needed
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
@@ -20,60 +20,60 @@ $message = isset($_POST['message']) ? $_POST['message'] : '';
 
 // Validation
 if (empty($heading) || empty($message)) {
-    echo json_encode([
-        "status" => "error",
-        "message" => "Missing heading or message."
-    ]);
-    exit;
+  echo json_encode([
+    "status" => "error",
+    "message" => "Missing heading or message."
+  ]);
+  exit;
 }
 
 
-    $mail = new PHPMailer(true);
+$mail = new PHPMailer(true);
 
-    try {
-        // SMTP Configuration
-        $mail->isSMTP();
-        $mail->Host = 'mail.pseudoteam.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'notification@pseudoteam.com';
-        $mail->Password = 'ASDFasdf1234';  // no space
-        $mail->SMTPSecure = 'tls'; // or 'ssl' if needed
-        $mail->Port = 587; // or 465 for SSL
+try {
+  // SMTP Configuration
+  $mail->isSMTP();
+  $mail->Host = 'mail.pseudoteam.com';
+  $mail->SMTPAuth = true;
+  $mail->Username = 'notification@pseudoteam.com';
+  $mail->Password = 'ASDFasdf1234';  // no space
+  $mail->SMTPSecure = 'tls'; // or 'ssl' if needed
+  $mail->Port = 587; // or 465 for SSL
 
 
-        // Recipients
-        $mail->setFrom('notification@pseudoteam.com');
-        $mail->addAddress('kunalmanocha.1996@gmail.com');
+  // Recipients
+  $mail->setFrom('notification@pseudoteam.com');
+  $mail->addAddress('kunalmanocha.1996@gmail.com');
 
-        // Mail Content
-        $bodyContent = generateMailBody($heading, $message);
+  // Mail Content
+  $bodyContent = generateMailBody($heading, $message);
 
-        $mail->isHTML(true);
-        $mail->Subject = 'Project Notification';
-        $mail->Body    = $bodyContent;
-        $mail->AltBody = strip_tags($message);
+  $mail->isHTML(true);
+  $mail->Subject = 'Project Notification';
+  $mail->Body = $bodyContent;
+  $mail->AltBody = strip_tags($message);
 
-        // Send email
-        $mail->send();
-        echo json_encode([
-        "status" => "success",
-        "message" => "Mail sent successfully!"
-    ]);
+  // Send email
+  $mail->send();
+  echo json_encode([
+    "status" => "success",
+    "message" => "Mail sent successfully!"
+  ]);
 
-    } catch (Exception $e) {
-       echo json_encode([
-        "status" => "error",
-        "message" => "Mail could not be sent. Error: {$mail->ErrorInfo}"
-    ]);
-    }
+} catch (Exception $e) {
+  echo json_encode([
+    "status" => "error",
+    "message" => "Mail could not be sent. Error: {$mail->ErrorInfo}"
+  ]);
+}
 
-    ?>
+?>
 
 
 <?php
 function generateMailBody($heading, $message)
 {
-    return '
+  return '
     <!DOCTYPE html>
     <html>
     <head>

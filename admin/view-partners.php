@@ -68,10 +68,10 @@ function getFieldValue($data, $field) {
             </select>
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <label for="sprv_password" class="form-label">Password</label>
             <input type="text" class="form-control" id="sprv_password" name="sprv_password" value="<?= htmlspecialchars($providerData['sprov_password'] ?? generatePassword()) ?>" readonly>
-        </div>
+        </div> -->
 
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

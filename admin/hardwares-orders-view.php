@@ -156,7 +156,7 @@
                                 <a class="btn btn-sm btn-secondary ms-2"
                                     href="hardwares-orders-view.php?hw-id=<?php echo urlencode($row['hardware_id']); ?>&order_no=<?php echo urlencode($row['order_no']); ?>">Back</a>
                             </div> -->
-                        </div>
+                        </div> 
                     </div>
 
 
