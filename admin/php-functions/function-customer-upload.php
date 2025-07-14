@@ -29,7 +29,8 @@ try {
     $pown_adhaar = $_POST['pown_adhaar'] ?? '';
     $pown_body = $_POST['pown_user_type'] ?? '';
     $pown_verified = intval($_POST['pown_verified'] ?? 0);
-    $pown_password = sha1($_POST['pown_password'] ?? '');
+    // $pown_password = sha1($_POST['pown_password'] ?? '');
+    $pown_password = password_hash($_POST['pown_password'], PASSWORD_BCRYPT);
     $pown_login_flag = intval($_POST['pown_login_flag'] ?? 0);
     $pown_profile_completion_flag = intval($_POST['pown_profile_completion_flag'] ?? 0);
     $pown_refered_by = $_POST['pown_refered_by'] ?? '';
