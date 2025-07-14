@@ -68,7 +68,7 @@ if (empty($heading) || empty($message)) {
 
 
         // Recipients
-        $mail->setFrom('notification@pseudoteam.com', 'PseudoTeam');
+        $mail->setFrom('notification@pseudoteam.com');
         $mail->addAddress($sendto);
 
         // Mail Content
@@ -130,12 +130,12 @@ function generateMailBody($heading, $message, $linkurl)
     <body>
       <div class="container">
         <div class="header">
-          <img src="https://pseudoteam.com/homepage/home/logo.png" alt="Pseudoteam Logo">
+         
         </div>
         <div class="content">
-          <h1>🌟 ' . htmlspecialchars($heading) . '</h1>
+          <h1>'.$heading.'</h1>
           <p>Hello User,</p>
-          <p>' . nl2br(htmlspecialchars($message)) . '</p>
+          <p>'.$message.'</p>
           <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
           <br>
           <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>
@@ -143,7 +143,7 @@ function generateMailBody($heading, $message, $linkurl)
           
         </div>
         <div class="footer">
-          © 2025 Pseudoteam. All rights reserved. <br>
+          &copy; 2025 Pseudoteam. All rights reserved. <br>
           You are receiving this email because you are a valued customer.
         </div>
       </div>
