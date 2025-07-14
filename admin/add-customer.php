@@ -206,7 +206,16 @@ $hashedPassword = sha1($generatedPassword);
             
             let mailData = new FormData();
             mailData.append("heading", "You have been registered on PseudoTeam.");
-            mailData.append("message", "We`re excited to have you as part of the PseudoTeam.<br>Here`s what you can do next:<br>Explore your dashboard<br>Upload your first project/task<br>Track your progress in real-time<br>Reach out for any support, we`re here to help!<br><br>Your account is all set up, and you`re ready to go");
+            mailData.append("message", `We’re excited to have you as part of the PseudoTeam.
+
+                        Here’s what you can do next:
+                    🔹 Explore your dashboard
+                    🔹 Upload your first project/task
+                    🔹 Track your progress in real-time
+                    🔹 Reach out for any support – we’re here to help!
+
+                      Your account is all set up, and you’re ready to go
+                            `);
             mailData.append("mailto", mailtoemail);
             // mailData.append("mailtocust","");
             // mailData.append("mailtosp","");

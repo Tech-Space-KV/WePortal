@@ -59,16 +59,16 @@ if (empty($heading) || empty($message)) {
     try {
         // SMTP Configuration
         $mail->isSMTP();
-        $mail->Host = 'mail.pseudoteam.com';
+        $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'notification@pseudoteam.com';
-        $mail->Password = 'ASDFasdf1234';  // no space
+        $mail->Username = 'pseudoservicesteam@gmail.com';
+        $mail->Password = 'xczisaoiycklvkmt';  // no space
         $mail->SMTPSecure = 'auto'; // or 'ssl' if needed
         $mail->Port = 587; // or 465 for SSL
 
 
         // Recipients
-        $mail->setFrom('notification@pseudoteam.com');
+        $mail->setFrom('pseudoservicesteam@gmail.com', 'PseudoTeam');
         $mail->addAddress($sendto);
 
         // Mail Content
@@ -130,12 +130,12 @@ function generateMailBody($heading, $message, $linkurl)
     <body>
       <div class="container">
         <div class="header">
-         
+          <img src="https://pseudoteam.com/homepage/home/logo.png" alt="Pseudoteam Logo">
         </div>
         <div class="content">
-          <h1>'.$heading.'</h1>
+          <h1>🌟 ' . htmlspecialchars($heading) . '</h1>
           <p>Hello User,</p>
-          <p>'.$message.'</p>
+          <p>' . nl2br(htmlspecialchars($message)) . '</p>
           <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
           <br>
           <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>
@@ -143,7 +143,7 @@ function generateMailBody($heading, $message, $linkurl)
           
         </div>
         <div class="footer">
-          &copy; 2025 Pseudoteam. All rights reserved. <br>
+          © 2025 Pseudoteam. All rights reserved. <br>
           You are receiving this email because you are a valued customer.
         </div>
       </div>
