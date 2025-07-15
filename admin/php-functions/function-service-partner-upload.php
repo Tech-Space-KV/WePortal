@@ -15,6 +15,7 @@ try {
     $sprov_name = $_POST['sprov_name'] ?? '';
     $sprov_username = $_POST['sprov_username'] ?? '';
     $sprov_user_type = $_POST['sprov_user_type'] ?? '';
+    $sprov_user_type2 = 'SP';
     $sprov_country = $_POST['sprov_country'] ?? '';
     $sprov_state = $_POST['sprov_state'] ?? '';
     $sprov_address = $_POST['sprov_address'] ?? '';
@@ -46,7 +47,7 @@ try {
 
 
     mysqli_query($con,"INSERT INTO `users` (`name`, `email`, `contact`, `user_type`) 
-                  VALUES ('$sprov_name', '$sprov_email', '$sprov_contact', '$sprov_user_type')");
+                  VALUES ('$sprov_name', '$sprov_email', '$sprov_contact', '$sprov_user_type2')");
 
     $sql = "INSERT INTO service_providers (
         sprov_username, sprov_name, sprov_user_type, sprov_country, sprov_state, 
