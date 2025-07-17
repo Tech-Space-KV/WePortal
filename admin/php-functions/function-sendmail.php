@@ -133,9 +133,9 @@ function generateMailBody($heading, $message, $linkurl)
           <img src="https://pseudoteam.com/homepage/home/logo.png" alt="Pseudoteam Logo">
         </div>
         <div class="content">
-          <h1>🌟 ' . htmlspecialchars($heading) . '</h1>
+          <h1>🌟 ' .$heading. '</h1>
           <p>Hello User,</p>
-          <p>' . nl2br(htmlspecialchars($message)) . '</p>
+          <p>' .$message. '</p>
           <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
           <br>
           <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>
