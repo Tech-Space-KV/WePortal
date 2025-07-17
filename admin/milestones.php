@@ -6,6 +6,27 @@ if (isset($_GET['search'])) {
   $search = '';
 }
 ?>
+
+
+<?php 
+  $stdate;
+if (isset($_GET['startdate'])) {
+  $stdate = $_GET['startdate']; // Get the value
+} else {
+  $stdate='';
+}
+?>
+
+<?php 
+  $eddate;
+if (isset($_GET['enddate'])) {
+  $eddate = $_GET['enddate']; // Get the value
+} else {
+   $eddate='';
+}
+?>
+
+
 <?php $location_id = $_GET['loc-id']; ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -59,7 +80,7 @@ if (isset($_GET['search'])) {
             </td>
             <td>
               <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="openviewmodal('<?php echo $row['pplnr_id']; ?>')">view</button>
-              <a class="btn btn-sm btn-primary ms-2" href="tasks?mil-id=<?php echo $row['pplnr_id']; ?>">expand</a>
+              <a class="btn btn-sm btn-primary ms-2" href="tasks?mil-id=<?php echo $row['pplnr_id']; ?>&startdate=<?php echo $stdate ; ?>&enddate=<?php echo $eddate ; ?>">expand</a>
             </td>
           </tr>
         <?php
