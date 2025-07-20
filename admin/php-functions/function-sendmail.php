@@ -19,6 +19,7 @@ $heading = isset($_POST['heading']) ? $_POST['heading'] : '';
 $message = isset($_POST['message']) ? $_POST['message'] : '';
 $linkurl = isset($_POST['link']) ? $_POST['link'] : '';
 $sendto = isset($_POST['mailto']) ? $_POST['mailto'] : '';
+$subject = isset($_POST['subject']) ? $_POST['subject'] : '';
 // $sendtocust = isset($_POST['mailtocust']) ? $_POST['mailtocust'] : '';
 // $sendtosp = isset($_POST['mailtosp']) ? $_POST['mailtosp'] : '';
 
@@ -75,7 +76,7 @@ if (empty($heading) || empty($message)) {
         $bodyContent = generateMailBody($heading, $message, $linkurl);
 
         $mail->isHTML(true);
-        $mail->Subject = 'PseudoTeam Notification';
+        $mail->Subject = $subject;
         $mail->Body    = $bodyContent;
         $mail->AltBody = strip_tags($message);
 
@@ -133,9 +134,9 @@ function generateMailBody($heading, $message, $linkurl)
           <img src="https://pseudoteam.com/homepage/home/logo.png" alt="Pseudoteam Logo">
         </div>
         <div class="content">
-          <h1>🌟 ' .$heading. '</h1>
+          <h1>' .$heading. '</h1>
           <p>Hello User,</p>
-          <p>' .$message. '</p>
+          <pre>' .$message. '</pre>
           <a href="'.$linkurl.'" style="color:#fff" class="button">Click Here</a>
           <br>
           <p>Need help getting started? Check out our quick start guide or reach out to our team anytime at support@pseudoteam.com</p>

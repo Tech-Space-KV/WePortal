@@ -47,7 +47,7 @@ if (isset($_GET['enddate'])) {
     <table class="table table-striped table-sm" id="dataTable">
       <thead>
         <tr>
-          <th scope="col">Milestones</th>
+          <th scope="col">Task</th>
           <th scope="col">Start Date</th>
           <th scope="col">End Date</th>
           <th scope="col">Created On</th>
@@ -256,6 +256,7 @@ if (isset($_GET['enddate'])) {
         .then(response => response.json())
         .then(data => {
           if (!data.error) {
+          alert(data);
             document.getElementById("pplnr_id").value = data.pptasks_planner_id;
             document.getElementById("name").value = data.pptasks_task_title;
             document.getElementById("description").value = data.pptasks_description;
