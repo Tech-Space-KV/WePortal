@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $endDate = date("d-m-Y", strtotime($_POST['endDate']));
         $sp_status = $_POST['sp_status'];
         $sp_id = $_POST['sp_id'];
-        $doc = date("d-m-Y", strtotime($_POST['doc']));
+        // $doc = date("d-m-Y", strtotime($_POST['doc']));
+        $doc = !empty($_POST['doc']) ? date("d-m-Y", strtotime($_POST['doc'])) : null;
         $mngr_status = $_POST['mngr_status'];
         $payment = $_POST['payment'];
         $pptasks_id = $_POST['pptasks_id'];

@@ -18,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $endDate = date("d-m-Y", strtotime($_POST['endDate']));
         $sp_status = trim($_POST['sp_status']);
         $sp_id = (int)$_POST['sp_id'];
-        $doc = date("d-m-Y", strtotime($_POST['doc']));
+        // $doc = date("d-m-Y", strtotime($_POST['doc']));
+        $doc = !empty($_POST['doc']) ? date("d-m-Y", strtotime($_POST['doc'])) : null;
         $mngr_status = trim($_POST['mngr_status']);
         $payment = (float)$_POST['payment'];
         $created = date("d-m-Y H:i:s");
