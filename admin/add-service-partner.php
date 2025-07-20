@@ -1,3 +1,4 @@
+
 <?php require('header.php');
 function generatePassword($length = 12)
 {
