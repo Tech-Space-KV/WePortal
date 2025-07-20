@@ -140,13 +140,13 @@ if (isset($_GET['enddate'])) {
           <!-- Start Date Field -->
           <div class="mb-3">
             <label for="startDate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
+            <input type="date" class="form-control" id="startDate" name="startDate"  min="<?php echo $stdate; ?>" max="<?php echo $eddate; ?>" required>
           </div>
 
           <!-- End Date Field -->
           <div class="mb-3">
             <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" required>
+            <input type="date" class="form-control" id="endDate" name="endDate"  min="<?php echo $stdate; ?>" max="<?php echo $eddate; ?>" required>
           </div>
 
 
