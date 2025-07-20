@@ -202,9 +202,10 @@ $hashedPassword = sha1($generatedPassword);
           if (data.status === "success") {
             alert(data.message);
 
-           let mailData = new FormData();
+            
+            let mailData = new FormData();
             mailData.append("heading", "You have been registered on PseudoTeam.");
-            mailData.append("message", `We’re excited to have you as an Authorised Service Partner of PseudoTeam.
+            mailData.append("message", `We’re excited to have you as part of the PseudoTeam.
 
                         Here’s what you can do next:
                     🔹 Explore your dashboard
@@ -217,7 +218,7 @@ $hashedPassword = sha1($generatedPassword);
             mailData.append("mailto", mailtoemail);
             // mailData.append("mailtocust","");
             // mailData.append("mailtosp","");
-            mailData.append("link", "www.pseudoteam.com/partner");
+            mailData.append("link", "www.pseudoteam.com");
 
 
             fetch("php-functions/function-sendmail.php", {
