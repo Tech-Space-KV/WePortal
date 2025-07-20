@@ -39,11 +39,11 @@ $stmt->close();
     <input type="hidden" name="ticket_id" value="<?= htmlspecialchars($row['tckt_id']) ?>">
 
     <!-- Project ID -->
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="project_id" class="form-label">Project ID</label>
       <input type="text" class="form-control" id="project_id" name="project_id"
              value="<?= htmlspecialchars($row['tckt_project_id']) ?>">
-    </div>
+    </div> -->
 
     <!-- Ticket Title -->
     <div class="mb-3">
