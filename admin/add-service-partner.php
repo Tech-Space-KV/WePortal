@@ -7,6 +7,18 @@ function generatePassword($length = 12)
 $generatedPassword = generatePassword();
 $hashedPassword = sha1($generatedPassword);
 
+
+$mail_message="We`re excited to have you as part of the PseudoTeam.
+
+Here`s what you can do next:
+Explore your dashboard
+Upload your first project/task
+Track your progress in real-time
+Reach out for any support, we`re here to help!
+
+Your account is all set up, and you`re ready to go";
+
+
 ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -204,17 +216,9 @@ $hashedPassword = sha1($generatedPassword);
 
            let mailData = new FormData();
             mailData.append("heading", "You have been registered on PseudoTeam.");
-            mailData.append("message", `We’re excited to have you as an Authorised Service Partner of PseudoTeam.
-
-                        Here’s what you can do next:
-                    🔹 Explore your dashboard
-                    🔹 Upload your first project/task
-                    🔹 Track your progress in real-time
-                    🔹 Reach out for any support – we’re here to help!
-
-                      Your account is all set up, and you’re ready to go
-                            `);
+            mailData.append("message",<?php echo $mail_message; ?>);
             mailData.append("mailto", mailtoemail);
+            mailData.append("subject", "Registration on PseudoTeam");
             // mailData.append("mailtocust","");
             // mailData.append("mailtosp","");
             mailData.append("link", "www.pseudoteam.com/partner");
