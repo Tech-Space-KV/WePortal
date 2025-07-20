@@ -19,21 +19,47 @@ $message = "";
 $subject = "";
 $linkurl = "";
 $sendto = "";
+$sendtosp = "";
+
+// mailData.append("messagefor","newtask");
+//                     mailData.append("mailto", mailtoemail);
+//                     mailData.append("mailtosp", mailtosp);
+//                     mailData.append("tasktitle", tasktitle);
 
 $messagefor = $_POST['messagefor'] ?? '';
 
-if ($messagefor == 'customerregistration') {
-  $sendto = $_POST['mailto'];
-  $heading = "You have been registered as a Customer on PseudoTeam.";
+if ($messagefor == 'newtask') {
+
+   $query = "SELECT `pown_email` from `project_owners`
+              JOIN project_list on plist_customer_id = pown_id
+              JOIN project_scope on pscope_project_id = plist_id
+              JOIN project_planner on pplnr_scope_id = pscope_id 
+              WHERE `pplnr_id` = " . $_POST['mailto'] . " ";
+  $result = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_assoc($result)) {
+    $sendto = $row['pown_email'];
+  }
+
+
+  $query = "SELECT `sprov_email` from `service_providers`
+              WHERE `sprov_id` = " . $_POST['mailtosp'] . " ";
+  $result = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_assoc($result)) {
+    $sendtosp = $row['sprov_email'];
+  }
+
+  $sendto = $sendto.",".$sendtosp;
+
+  $heading = "A Task has been Initiated – Update from PseudoTeam.";
   $linkurl = "https://www.pseudoteam.com";
-  $subject = "Welcome Onboard";
-  $message = "<p>We`re excited to have you as part of the PseudoTeam.</p>
+  $subject = "Task Initiated – Project Progress Update";
+  $message = "<p>We`re excited to inform you that a new task '".$tasktitle."' has been initiated as part of the project.</p>
 <br>
 <p>Here`s what you can do next:</p>
 <ul>
 <li>Explore your dashboard</li>
-<li>Upload your first project/task</li>
 <li>Track your progress in real-time</li>
+<li>Check progress on project/task</li>
 <li>Reach out for any support, we`re here to help!</li>
 <br>
 <p>Your account is all set up, and you`re ready to go</p>";
@@ -71,41 +97,6 @@ if ($messagefor == 'customerregistration') {
 <li>Explore your dashboard</li>
 <li>Upload projects</li>
 <li>Track your progress in real-time</li>
-<li>Reach out for any support, we`re here to help!</li>
-<br>
-<p>Your account is all set up, and you`re ready to go</p>";
-}elseif ($messagefor == 'newtask') {
-
-   $query = "SELECT `pown_email` from `project_owners`
-              JOIN project_list on plist_customer_id = pown_id
-              JOIN project_scope on pscope_project_id = plist_id
-              JOIN project_planner on pplnr_scope_id = pscope_id 
-              WHERE `pplnr_id` = " . $_POST['mailto'] . " ";
-  $result = mysqli_query($con, $query);
-  while ($row = mysqli_fetch_assoc($result)) {
-    $sendto = $row['pown_email'];
-  }
-
-    if(isset($_POST['mailtosp']) && $_POST['mailtosp'] != '' && $_POST['mailtosp'] != 0){
-      $query = "SELECT `sprov_email` from `service_providers`
-                  WHERE `sprov_id` = " . $_POST['mailtosp'] . " ";
-      $result = mysqli_query($con, $query);
-      while ($row = mysqli_fetch_assoc($result)) {
-        $sendtosp = $row['sprov_email'];
-      }
-     $sendto = "".$sendto.",".$sendtosp."";
-    }
-
-  $heading = "A Task has been Initiated, Update from PseudoTeam.";
-  $linkurl = "https://www.pseudoteam.com";
-  $subject = "Task Initiated, Project Progress Update";
-  $message = "<p>We`re excited to inform you that a new task '".$tasktitle."' has been initiated as part of the project.</p>
-<br>
-<p>Here`s what you can do next:</p>
-<ul>
-<li>Explore your dashboard</li>
-<li>Track your progress in real-time</li>
-<li>Check progress on project/task</li>
 <li>Reach out for any support, we`re here to help!</li>
 <br>
 <p>Your account is all set up, and you`re ready to go</p>";

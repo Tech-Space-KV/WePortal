@@ -156,6 +156,11 @@ if (isset($_GET['enddate'])) {
             <input type="text" class="form-control" id="sp_id" name="sp_id">
           </div>
 
+          <div class="mb-3">
+            <label for="" class="form-label">View Asp's</label>
+            <a href="list-of-asp.php" target="_blank">View</a>
+          </div>
+
 
           <!-- Date of Completion Field -->
           <div class="mb-3">
@@ -200,10 +205,6 @@ if (isset($_GET['enddate'])) {
             <p class="text-danger" id="pmt-not-done" style="display:none;"><i>Payment request not raised yet</i></p>
           </div>
 
-          <div class="mb-3">
-            <label for="" class="form-label">View Asp's</label>
-            <a href="list-of-asp.php" target="_blank">View</a>
-          </div>
 
           <div class="mb-3">
             <label for="endDate" class="form-label">Raise Payment Request</label>
@@ -245,7 +246,7 @@ if (isset($_GET['enddate'])) {
       myInput.focus();
     });
 
-    alert(stringdata);
+    // alert(stringdata);
     if (stringdata != 'nodata') {
               
       document.getElementById("insert_operation").style.display='none';
@@ -256,7 +257,7 @@ if (isset($_GET['enddate'])) {
         .then(response => response.json())
         .then(data => {
           if (!data.error) {
-          alert(data);
+          // alert(data);
             document.getElementById("pplnr_id").value = data.pptasks_planner_id;
             document.getElementById("name").value = data.pptasks_task_title;
             document.getElementById("description").value = data.pptasks_description;
@@ -309,6 +310,10 @@ if (isset($_GET['enddate'])) {
   // Handle form submission
   document.getElementById("insert_operation").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent default form submission
+    
+    var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("sp_id").value;
+    var tasktitle = document.getElementById("name").value;
 
     let formData = new FormData();
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
@@ -329,7 +334,28 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Task added successfully!", "success");
+            let mailData = new FormData();
+                    mailData.append("messagefor","newtask");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    mailData.append("tasktitle", tasktitle);
+
+
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                            alert(mailError);
+                        });
+          alert("Task added successfully!", "success");       
           location.reload();
         } else {
           alert("Failed to add task!", "error");

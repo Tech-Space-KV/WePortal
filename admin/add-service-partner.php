@@ -214,15 +214,9 @@ Your account is all set up, and you`re ready to go";
           if (data.status === "success") {
             alert(data.message);
 
-           let mailData = new FormData();
-            mailData.append("heading", "You have been registered on PseudoTeam.");
-            mailData.append("message",<?php echo $mail_message; ?>);
+            let mailData = new FormData();
+            mailData.append("messagefor","spregistration");
             mailData.append("mailto", mailtoemail);
-            mailData.append("subject", "Registration on PseudoTeam");
-            // mailData.append("mailtocust","");
-            // mailData.append("mailtosp","");
-            mailData.append("link", "www.pseudoteam.com/partner");
-
 
             fetch("php-functions/function-sendmail.php", {
                 method: "POST",

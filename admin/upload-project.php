@@ -200,6 +200,7 @@
     function insert_data() {
 
         var mailtoemail = document.getElementById("mySelect").value;
+        var projecttitle =  document.getElementById("title").value;
 
         let form = document.querySelector("form");
 
@@ -263,21 +264,11 @@
                     // document.getElementById("successbox").textContent = "Project uploaded.";
 
 
+                    
                     let mailData = new FormData();
-                    mailData.append("heading", "Your project has been uploaded on PseudoTeam.");
-                    mailData.append("message", `Your project '`+title+`' has been uploaded successfully.
-
-                        Here’s what you can do next:
-                    🔹 Explore your dashboard
-                    🔹 Track your progress in real-time
-                    🔹 Reach out for any support – we’re here to help!
-
-                      Your account is all set up, and you’re ready to go
-                            `);
-                    mailData.append("mailtocust", mailtoemail);
-                    // mailData.append("mailtocust","");
-                    // mailData.append("mailtosp","");
-                    mailData.append("link", "www.pseudoteam.com");
+                    mailData.append("messagefor","uploadproject");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("projecttitle", projecttitle);
 
 
                     fetch("php-functions/function-sendmail.php", {
@@ -294,6 +285,7 @@
                             console.error("Mail Sending Failed:", mailError);
                             alert(mailError);
                         });
+                        location.reload();
 
                 } else {
                     alert("Error: " + data.message); // Display error message

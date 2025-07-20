@@ -247,7 +247,7 @@ if (isset($_GET['enddate'])) {
       myInput.focus();
     });
 
-    alert(stringdata);
+    // alert(stringdata);
     if (stringdata != 'nodata') {
 
        document.getElementById("insert_operation").style.display='none';
