@@ -12,7 +12,7 @@ $stmt = $con->prepare("
          sp.sprov_email AS sprov_email
   FROM tickets t
   LEFT JOIN weusers wu ON t.tckt_asgnd_to_pt_id = wu.id
-  LEFT JOIN service_providers sp ON t.tckt_assigned_to_sp_id = sp.sprov_id
+  LEFT JOIN service_providers sp ON t.tckt_asgnd_to_sp_id = sp.sprov_id
   WHERE t.tckt_id = ?
 ");
 $stmt->bind_param("i", $id);
@@ -87,11 +87,11 @@ $stmt->close();
       <div class="col-md-4 mb-3">
         <label for="1mySelect" class="form-label">Assigned to SP</label>
         <select id="1mySelect" name="spId" class="form-select border border-2 border-primary">
-          <option value="None" <?= empty($row['tckt_assigned_to_sp_id']) ? 'selected' : '' ?>>None</option>
+          <option value="None" <?= empty($row['tckt_asgnd_to_sp_id']) ? 'selected' : '' ?>>None</option>
           <?php
           $resS = mysqli_query($con, "SELECT sprov_id, sprov_email FROM service_providers");
           while ($sp = mysqli_fetch_assoc($resS)) {
-              $sel = ($sp['sprov_id'] == $row['tckt_assigned_to_sp_id']) ? 'selected' : '';
+              $sel = ($sp['sprov_id'] == $row['tckt_asgnd_to_sp_id']) ? 'selected' : '';
               echo "<option value='{$sp['sprov_id']}' $sel>" . htmlspecialchars($sp['sprov_email']) . "</option>";
           }
           ?>
