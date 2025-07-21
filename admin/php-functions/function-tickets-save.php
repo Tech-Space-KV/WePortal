@@ -38,7 +38,7 @@ $stmt = $con->prepare(
          tckt_title       = ?,
          tckt_description = ?,
          tckt_asgnd_to_pt_id = ?,
-         tckt_asgnd_to_sp_id = ?,
+         tckt_assigned_to_sp_id = ?,
          tckt_status      = ?
      WHERE tckt_id = ?"
 );
@@ -48,7 +48,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param('ssssssi', $project_id, $title, $description, $tckt_asgnd_to_pt_id, $tckt_asgnd_to_sp_id, $status, $ticket_id);
+$stmt->bind_param('ssssssi', $project_id, $title, $description, $tckt_asgnd_to_pt_id, $tckt_assigned_to_sp_id, $status, $ticket_id);
 
 if ($stmt->execute()) {
     echo json_encode(['status' => 'success']);
