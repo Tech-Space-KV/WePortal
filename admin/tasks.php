@@ -348,12 +348,12 @@ if (isset($_GET['enddate'])) {
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
                             console.log("Mail Response:", mailResponse);
-                            alert(mailResponse);
+                            //alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
                             console.error("Mail Sending Failed:", mailError);
-                            alert(mailError);
+                           // alert(mailError);
                         });
           alert("Task added successfully!", "success");       
           location.reload();

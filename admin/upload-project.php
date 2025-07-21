@@ -121,12 +121,12 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="startDate" class="form-label" required>Start date</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date">
+                <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start date" required>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="endDate" class="form-label" required>End date</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" placeholder="End date">
+                <input type="date" class="form-control" id="endDate" name="endDate" placeholder="End date" required>
             </div>
         </div>
 
@@ -257,7 +257,7 @@
             .then(response => response.json()) // Expect JSON response
             .then(data => {
                 if (data.status === "success") {
-                    alert(data.message); // Display success message
+                   // alert(data.message); // Display success message
                     // location.reload(); // Refresh page after successful submission
                     // document.getElementById("successbox").style.display = "block";
                     // document.getElementById("failbox").style.display = "none";
@@ -278,17 +278,17 @@
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
                             console.log("Mail Response:", mailResponse);
-                            alert(mailResponse);
+                           // alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
                             console.error("Mail Sending Failed:", mailError);
-                            alert(mailError);
+                           // alert(mailError);
                         });
                         location.reload();
 
                 } else {
-                    alert("Error: " + data.message); // Display error message
+                   // alert("Error: " + data.message); // Display error message
                     // document.getElementById("successbox").style.display = "none";
                     // document.getElementById("failbox").style.display = "block";
                     // document.getElementById("failbox").textContent = "Error: Project upload failed.";
@@ -296,7 +296,7 @@
                 console.log(data); // Log full response
             })
             .catch(error => {
-                alert("Error uploading project. Please try again.");
+                //alert("Error uploading project. Please try again.");
                 console.error("Error:", error);
             });
     }
