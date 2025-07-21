@@ -8,11 +8,11 @@ $id = (int)($_GET['tckt-id'] ?? 0);
 // Fetch ticket + manager email + service provider email
 $stmt = $con->prepare("
   SELECT t.*,
-         wu.email   AS mgr_email,
+         wu.email AS mgr_email,
          sp.sprov_email AS sprov_email
   FROM tickets t
   LEFT JOIN weusers wu ON t.tckt_asgnd_to_pt_id = wu.id
-  LEFT JOIN service_providers sp ON t.tckt_asgnd_to_sp_id = sp.sprov_id
+  LEFT JOIN service_providers sp ON t.tckt_assigned_to_sp_id = sp.sprov_id
   WHERE t.tckt_id = ?
 ");
 $stmt->bind_param("i", $id);
