@@ -128,8 +128,7 @@
 
 <script>
   function copyAndNotify(strdata) {
-    const input = strdata;
-    const textToCopy = input.value;
+    const textToCopy = strdata;
 
     // Copy to clipboard
     navigator.clipboard.writeText(textToCopy).then(() => {
