@@ -1,4 +1,13 @@
 <?php require('header.php'); ?>
+ <?php
+
+    $hw_id = isset($_GET['hw-id']) ? $_GET['hw-id'] : null;
+    $order_no = isset($_GET['order_no']) ? $_GET['order_no'] : null;
+
+    $hw_id = intval($hw_id);
+    $order_no = htmlspecialchars($order_no);
+    
+    ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 position-relative overflow-hidden">
     <div
@@ -18,12 +27,6 @@
     </center>
 
     <?php
-
-    $hw_id = isset($_GET['hw-id']) ? $_GET['hw-id'] : null;
-    $order_no = isset($_GET['order_no']) ? $_GET['order_no'] : null;
-
-    $hw_id = intval($hw_id);
-    $order_no = htmlspecialchars($order_no);
 
     if ($hw_id && $order_no) {
         //     $stmt = mysqli_prepare($con, "

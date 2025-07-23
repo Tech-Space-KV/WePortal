@@ -36,6 +36,7 @@
                     <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
                     <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
                     </th> -->
+                    <th scope="col">ID</th>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
@@ -83,6 +84,7 @@
                 while ($row_cust = mysqli_fetch_assoc($result_cust)) {
                 ?>
                     <tr id="row-<?php echo $row_cust['user_id']; ?>">
+                        <td><?php echo $row_cust['user_id']; ?></td>
                         <td><?php echo $row_cust['title']; ?></td>
                         <td><?php echo $row_cust['username']; ?></td>
                         <td><?php echo $row_cust['name']; ?></td>

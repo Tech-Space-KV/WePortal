@@ -381,6 +381,9 @@ if (isset($_GET['enddate'])) {
 
   document.getElementById("save_operation").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent default form submission
+     var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("sp_id").value;
+    var tasktitle = document.getElementById("name").value;
 
     let formData = new FormData();
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
@@ -402,6 +405,27 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
+          let mailData = new FormData();
+                    mailData.append("messagefor","newtask");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    mailData.append("tasktitle", tasktitle);
+
+
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            //alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                           // alert(mailError);
+                        });
           alert("Task saved successfully!", "success");
           location.reload();
         } else {
