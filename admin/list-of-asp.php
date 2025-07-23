@@ -88,7 +88,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" id="copyInput" class="form-control form-control-sm" placeholder="Recipient's username"
                                     aria-label="Recipient's username" aria-describedby="button-addon2" value="<?php echo $row_cust['user_id']; ?>" readonly>
-                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2" onclick="copyToClipboard()">Copy</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2" onclick="copyAndNotify()">Copy</button>
                             </div>
                         </td>
                         <td><?php echo $row_cust['title']; ?></td>
@@ -127,15 +127,37 @@
 
 
 <script>
-  function copyToClipboard() {
-    const input = document.getElementById('copyInput');
-    input.select();
-    input.setSelectionRange(0, 99999); // for mobile devices
+  function copyAndNotify() {
+    const input = document.getElementById("copyInput");
+    const textToCopy = input.value;
 
-    navigator.clipboard.writeText(input.value).then(() => {
-      alert("Copied: " + input.value);
+    // Copy to clipboard
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      console.log("Copied to clipboard:", textToCopy);
+
+      // Request permission for notification
+      if (Notification.permission === "granted") {
+        showNotification(textToCopy);
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            showNotification(textToCopy);
+          } else {
+            alert("Copied, but notifications are blocked.");
+          }
+        });
+      } else {
+        alert("Copied, but notifications are blocked.");
+      }
     }).catch(err => {
       alert("Failed to copy text: " + err);
+    });
+  }
+
+  function showNotification(text) {
+    new Notification("✅ Copied!", {
+      body: `"${text}" copied to clipboard.`,
+      icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png"
     });
   }
 </script>
