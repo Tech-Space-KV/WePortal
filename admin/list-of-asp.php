@@ -88,7 +88,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" id="copyInput" class="form-control form-control-sm" placeholder="Recipient's username"
                                     aria-label="Recipient's username" aria-describedby="button-addon2" value="<?php echo $row_cust['user_id']; ?>" readonly>
-                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2" onclick="copyAndNotify()">Copy</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2" onclick="copyAndNotify(<?php echo $row_cust['user_id']; ?>)">Copy</button>
                             </div>
                         </td>
                         <td><?php echo $row_cust['title']; ?></td>
@@ -127,8 +127,8 @@
 
 
 <script>
-  function copyAndNotify() {
-    const input = document.getElementById("copyInput");
+  function copyAndNotify(strdata) {
+    const input = strdata;
     const textToCopy = input.value;
 
     // Copy to clipboard
