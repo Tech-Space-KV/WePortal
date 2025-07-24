@@ -140,13 +140,13 @@ if (isset($_GET['enddate'])) {
           <!-- Start Date Field -->
           <div class="mb-3">
             <label for="startDate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
+            <input type="date" class="form-control" id="startDate" name="startDate"  min="<?php echo $stdate; ?>" max="<?php echo $eddate; ?>" required>
           </div>
 
           <!-- End Date Field -->
           <div class="mb-3">
             <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" required>
+            <input type="date" class="form-control" id="endDate" name="endDate"  min="<?php echo $stdate; ?>" max="<?php echo $eddate; ?>" required>
           </div>
 
 
@@ -348,12 +348,12 @@ if (isset($_GET['enddate'])) {
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
                             console.log("Mail Response:", mailResponse);
-                            alert(mailResponse);
+                            //alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
                             console.error("Mail Sending Failed:", mailError);
-                            alert(mailError);
+                           // alert(mailError);
                         });
           alert("Task added successfully!", "success");       
           location.reload();
@@ -381,6 +381,9 @@ if (isset($_GET['enddate'])) {
 
   document.getElementById("save_operation").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent default form submission
+     var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("sp_id").value;
+    var tasktitle = document.getElementById("name").value;
 
     let formData = new FormData();
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
@@ -402,6 +405,27 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
+          let mailData = new FormData();
+                    mailData.append("messagefor","newtask");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    mailData.append("tasktitle", tasktitle);
+
+
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            //alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                           // alert(mailError);
+                        });
           alert("Task saved successfully!", "success");
           location.reload();
         } else {

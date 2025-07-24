@@ -1,6 +1,12 @@
 
   </div>
 </div>
+<script>
+  window.addEventListener('load', function () {
+    document.getElementById('loader-overlay').style.display = 'none';
+  });
+</script>
+
 
 <script>
     const rowsPerPage = 7; // Number of rows per page

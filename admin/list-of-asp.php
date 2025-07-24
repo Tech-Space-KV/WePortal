@@ -23,7 +23,7 @@
                 <tr>
                     <!-- <th scope="col">Category
                         <?php
-                            $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
+                        $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
                         ?>
 
                         <style>
@@ -36,6 +36,7 @@
                     <a href="users.php?filter=Customer" class="<?php echo ($filter == 'Customer') ? 'anchor-selected' : ''; ?>">(CUST)</a> /
                     <a href="users.php" class="<?php echo ($filter == '') ? 'anchor-selected' : ''; ?>">(All)</a>
                     </th> -->
+                    <th scope="col">ID</th>
                     <th scope="col">Username</th>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
@@ -73,7 +74,7 @@
                 //     ";
                 // }
 
-                 $query_asp = "
+                $query_asp = "
                         SELECT `sprov_id` as user_id, 'Partner' as title, `sprov_username` as username, `sprov_name` as name, `sprov_user_type` as type, `sprov_contact` as contact, `sprov_email` as email 
                         FROM `service_providers`
                     ";
@@ -83,6 +84,13 @@
                 while ($row_cust = mysqli_fetch_assoc($result_cust)) {
                 ?>
                     <tr id="row-<?php echo $row_cust['user_id']; ?>">
+                        <td>
+                            <div class="input-group mb-3">
+                                <input type="text" id="copyInput" class="form-control form-control-sm" placeholder="Recipient's username"
+                                    aria-label="Recipient's username" aria-describedby="button-addon2" value="<?php echo $row_cust['user_id']; ?>" readonly>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2" onclick="copyAndNotify(<?php echo $row_cust['user_id']; ?>)">Copy</button>
+                            </div>
+                        </td>
                         <td><?php echo $row_cust['title']; ?></td>
                         <td><?php echo $row_cust['username']; ?></td>
                         <td><?php echo $row_cust['name']; ?></td>
@@ -91,7 +99,7 @@
                         <td><?php echo $row_cust['email']; ?></td>
                         <td>
                             <?php
-                                $link = ($row_cust['title'] === 'Customer') ? 'view-customers' : 'view-partners';
+                            $link = ($row_cust['title'] === 'Customer') ? 'view-customers' : 'view-partners';
                             ?>
                             <a class="btn btn-sm btn-outline-primary" href="<?php echo $link; ?>?id=<?php echo $row_cust['user_id']; ?>">View</a>
                         </td>
@@ -102,20 +110,58 @@
             </tbody>
         </table>
         <div class="pagination" style="float:right;" hidden>
-    <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
-    <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
-  </div>
-      
-	  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center" id="pagination">
-      <!-- Page numbers will go here -->
-    </ul>
-  </nav>
+            <button id="prevBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(-1)" disabled>Prev</button>
+            <button id="nextBtn" class="btn btn-sm btn-outline-primary" onclick="changePage(1)">Next</button>
+        </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Page numbers will go here -->
+            </ul>
+        </nav>
 
     </div>
 </main>
 
 <?php require('footer.php'); ?>
+
+
+<script>
+  function copyAndNotify(strdata) {
+    const textToCopy = strdata;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      console.log("Copied to clipboard:", textToCopy);
+
+      // Request permission for notification
+      if (Notification.permission === "granted") {
+        showNotification(textToCopy);
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            showNotification(textToCopy);
+          } else {
+            alert("Copied, but notifications are blocked.");
+          }
+        });
+      } else {
+        alert("Copied, but notifications are blocked.");
+      }
+    }).catch(err => {
+      alert("Failed to copy text: " + err);
+    });
+  }
+
+  function showNotification(text) {
+    new Notification("✅ Copied!", {
+      body: `"${text}" copied to clipboard.`,
+      icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png"
+    });
+  }
+</script>
+
+
 <script>
     function searchTable() {
         const input = document.getElementById("tableSearch");
@@ -138,4 +184,4 @@
 
             tr[i].style.display = found ? "" : "none";
         }
-    }
+    }</script>
