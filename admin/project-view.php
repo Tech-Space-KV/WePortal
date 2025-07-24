@@ -296,10 +296,10 @@
                         }
                         ?>
                     </select>
-                </div>
 
-
-
+                    <input type="text" name="plist_emp_code" id="plist_emp_code" class="form-control mt-2"
+                        placeholder="Enter employee code if any" value="<?php echo $row['plist_emp_code']; ?>">
+                    </div>
 
             </div>
 
@@ -402,6 +402,7 @@
         formData.append("projectStatus", document.getElementsByName("projectStatus")[0].value);
         formData.append("statusDescription", document.getElementsByName("statusDescription")[0].value);
         formData.append("mngrId", document.getElementsByName("mngrId")[0].value);
+        formData.append("plist_emp_code" , document.getElementsByName("plist_emp_code")[0].value);
         formData.append("plistId", stringdata);
 
         fetch("php-functions/function-project-save.php", {
