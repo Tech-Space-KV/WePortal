@@ -301,17 +301,29 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Milestone added successfully!", "success");
-          location.reload();
+          // alert("Milestone added successfully!", "success");
+          // location.reload();
+          showNotification("✅Success","Milestone added successfully!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to add milestone!", "error");
-          location.reload();
+          // alert("Failed to add milestone!", "error");
+          // location.reload();
+          showNotification("❌Failed","Failed to add milestone!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("Error","Error in request!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -344,17 +356,29 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Milestone saved successfully!", "success");
-          location.reload();
+          // alert("Milestone saved successfully!", "success");
+          // location.reload();
+          showNotification("Success","Milestone saved successfully!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to save milestone!", "error");
-          location.reload();
+          // alert("Failed to save milestone!", "error");
+          // location.reload();
+          showNotification("Failed","Milestone not saved!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("Error","Error in request!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -384,17 +408,29 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Milestone deleted successfully!", "success");
-          location.reload();
+          // alert("Milestone deleted successfully!", "success");
+          // location.reload();
+          showNotification("Success","Milestone deleted successfully!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to delete milestone!", "error");
-          location.reload();
+          // alert("Failed to delete milestone!", "error");
+          // location.reload();
+          showNotification("Failed","Milestone not deleted!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("Error","Error in request!")
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission

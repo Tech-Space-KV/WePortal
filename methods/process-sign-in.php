@@ -24,8 +24,14 @@ if(isset($_POST['sign-in-btn']))
 				             $_SESSION['pt-admin-name']=$row['username'];
 							 $_SESSION['pt-admin-id']=$row['id'];
 				             $_SESSION['pt-admin-email']=$row['email'];
+				             $_SESSION['pt-admin-role']=$row['role'];
+				             $_SESSION['pt-admin-emp-code']=$row['emp_code'];
 							 $_SESSION['pt-admin-login-flag']='True';
-				             echo "<script>window.location.href = '../admin/index';</script>";
+
+							 if($_SESSION['pt-admin-role']=='viewer'){
+								echo "<script>window.location.href = '../admin/project-restricted-view';</script>";
+							 }
+							 else{ echo "<script>window.location.href = '../admin/index';</script>";}
 				        }
 					}
 					else{
