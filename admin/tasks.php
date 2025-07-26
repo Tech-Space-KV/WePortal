@@ -153,7 +153,8 @@ if (isset($_GET['enddate'])) {
           <!-- SP ID Field -->
           <div class="mb-3">
             <label for="sp_id" class="form-label">Service Partner ID</label>
-            <input type="text" class="form-control" id="sp_id" name="sp_id">
+            <input type="text" class="form-control" id="sp_id" name="sp_id" oninput="checkUsername()">
+            <span id="sp_id_indicator" class="sp_id_indicator"></span>
           </div>
 
           <div class="mb-3">
@@ -171,7 +172,7 @@ if (isset($_GET['enddate'])) {
           <!-- Proof of Completion -->
           <div class="mb-3">
             <label for="endDate" class="form-label">Proof of Completion</label>
-            <a href="#">View</a>
+            <a href="#" onclick="downloadFile()">View</a>
           </div>
 
           <!-- End Date Field -->
@@ -271,6 +272,7 @@ if (isset($_GET['enddate'])) {
             document.getElementById("pptasks_id").value = stringdata;
 
             console.log(data.pptasks_pt_status);
+            checkUsername();
 
             var pptasks_invoice_raised_flag = data.pptasks_invoice_raised_flag;
 
@@ -355,17 +357,29 @@ if (isset($_GET['enddate'])) {
                             console.error("Mail Sending Failed:", mailError);
                            // alert(mailError);
                         });
-          alert("Task added successfully!", "success");       
-          location.reload();
+          // alert("Task added successfully!", "success");       
+          // location.reload();
+          showNotification("Success","Task added successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to add task!", "error");
-          location.reload();
+          // alert("Failed to add task!", "error");
+          // location.reload();
+          showNotification("❌Failed","Task not added!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -426,17 +440,29 @@ if (isset($_GET['enddate'])) {
                             console.error("Mail Sending Failed:", mailError);
                            // alert(mailError);
                         });
-          alert("Task saved successfully!", "success");
-          location.reload();
+          // alert("Task saved successfully!", "success");
+          // location.reload();
+          showNotification("✅Success","Task saved successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to save task!", "error");
-          location.reload();
+          // alert("Failed to save task!", "error");
+          // location.reload();
+          showNotification("❌Failed","Failed to save task!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -466,17 +492,29 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Task deleted successfully!", "success");
-          location.reload();
+          // alert("Task deleted successfully!", "success");
+          // location.reload();
+           showNotification("✅Success","Task deleted successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to delete task!", "error");
-          location.reload();
+          // alert("Failed to delete task!", "error");
+          // location.reload();
+           showNotification(";❌Failed","Failed to delete task!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
+        // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+         showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -505,8 +543,12 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Invoice details updated!", "success");
-          location.reload();
+          // alert("Invoice details updated!", "success");
+          // location.reload();
+          showNotification("✅Success","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
           alert("Failed to update!", "error");
           location.reload();
@@ -597,5 +639,38 @@ if (isset($_GET['enddate'])) {
   }
 </script>
 
+
+ <script>
+    function checkUsername() {
+      let username = document.getElementById("sp_id").value;
+      let statusIndicator = document.getElementById("sp_id_indicator");
+
+
+      fetch("php-functions/function-check-sp-details.php?username=" + encodeURIComponent(username))
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "exists") {
+            statusIndicator.innerHTML = data.message;
+            statusIndicator.style.color = "green";
+          } else {
+            statusIndicator.innerHTML = data.message;
+            statusIndicator.style.color = "red";
+          }
+        })
+        .catch(error => {
+          console.error("Error checking username:", error);
+        });
+    }
+
+    document.getElementById("sp_id").addEventListener("input", checkUsername);
+
+  </script>
+
+<script>
+    function downloadFile() {
+      var doc = document.getElementById("pptasks_id").value
+        window.location.href = `php-functions/function-download-file-tasks.php?id=`+doc;
+    }
+</script>
 
 <?php require('footer.php'); ?>

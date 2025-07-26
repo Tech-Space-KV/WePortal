@@ -24,7 +24,7 @@ $hashedPassword = sha1($generatedPassword);
     <div class="mb-3">
       <label for="pown_username" class="form-label">User Name</label>
       <!-- <input type="text" class="form-control" id="pown_username" name="pown_username" required oninput="checkUsername()"> -->
-      <input type="text" class="form-control" id="pown_username" name="pown_username">
+      <input type="text" class="form-control" id="pown_username" name="pown_username" readonly>
       <span id="username_status"></span>
     </div>
 
