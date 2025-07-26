@@ -420,7 +420,7 @@ if (isset($_GET['enddate'])) {
       .then(data => {
         if (data.status === "success") {
           let mailData = new FormData();
-                    mailData.append("messagefor","newtask");
+                    mailData.append("messagefor","savetask");
                     mailData.append("mailto", mailtoemail);
                     mailData.append("mailtosp", mailtosp);
                     mailData.append("tasktitle", tasktitle);
@@ -531,6 +531,10 @@ if (isset($_GET['enddate'])) {
   // Handle payment submission
   document.getElementById("request_payment").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent default form submission
+    
+    var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("sp_id").value;
+    var tasktitle = document.getElementById("name").value;
 
     let formData = new FormData();
     formData.append("pptasks_id", document.getElementById("pptasks_id").value);
@@ -543,21 +547,52 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
+          
+          let mailData = new FormData();
+                    mailData.append("messagefor","raiseinvoice");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    mailData.append("tasktitle", tasktitle);
+
+
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            //alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                           // alert(mailError);
+                        });
+
           // alert("Invoice details updated!", "success");
           // location.reload();
-          showNotification("✅Success","Error in request!");
+          showNotification("✅Success","Invoice details sent to finance department!");
             setTimeout(function () {
              location.reload();
         }, 2000);
         } else {
-          alert("Failed to update!", "error");
-          location.reload();
+          // alert("Failed to update!", "error");
+          // location.reload();
+           showNotification("Failed","Invoice details failed to send to finance department!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
-        console.error("Error:", error);
-        location.reload();
+        // alert("Error in request!", "error");
+        // console.error("Error:", error);
+        // location.reload();
+         showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission
@@ -575,6 +610,10 @@ if (isset($_GET['enddate'])) {
   document.getElementById("request_cancel").addEventListener("click", function(event) {
     event.preventDefault(); // Prevent default form submission
 
+     var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("sp_id").value;
+    var tasktitle = document.getElementById("name").value;
+
     let formData = new FormData();
     formData.append("pptasks_id", document.getElementById("pptasks_id").value);
     formData.append("raise_invoice", 0);
@@ -586,17 +625,52 @@ if (isset($_GET['enddate'])) {
       .then(response => response.json()) // Expecting JSON response
       .then(data => {
         if (data.status === "success") {
-          alert("Invoice details updated!", "success");
-          location.reload();
+
+          let mailData = new FormData();
+                    mailData.append("messagefor","cancellinvoice");
+                    mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    mailData.append("tasktitle", tasktitle);
+
+
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            //alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                           // alert(mailError);
+                        });
+
+          // alert("Invoice details updated!", "success");
+          // location.reload();
+           showNotification("✅Success","Invoice cancellation details sent to finance department!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-          alert("Failed to update!", "error");
-          location.reload();
+          // alert("Failed to update!", "error");
+          // location.reload();
+           showNotification("❌Failed","Invoice cancellation details were not sent to finance department!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
       })
       .catch(error => {
-        alert("Error in request!", "error");
-        console.error("Error:", error);
-        location.reload();
+        // alert("Error in request!", "error");
+        // console.error("Error:", error);
+        // location.reload();
+         showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
       });
 
     // Close modal after submission

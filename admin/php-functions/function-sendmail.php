@@ -64,7 +64,7 @@ if ($messagefor == 'customerregistration') {
   $heading = "Your project has been uploaded successfully.";
   $linkurl = "https://www.pseudoteam.com";
   $subject = "Project Uploaded";
-  $message = "<p>Your project '".$_POST['projecttitle']."' has been uploaded successfully.</p>
+  $message = "<p>Your project '" . $_POST['projecttitle'] . "' has been uploaded successfully.</p>
 <br>
 <p>Here`s what you can do next:</p>
 <ul>
@@ -74,9 +74,9 @@ if ($messagefor == 'customerregistration') {
 <li>Reach out for any support, we`re here to help!</li>
 <br>
 <p>Your account is all set up, and you`re ready to go</p>";
-}elseif ($messagefor == 'newtask') {
+} elseif ($messagefor == 'newtask') {
 
-   $query = "SELECT `pown_email` from `project_owners`
+  $query = "SELECT `pown_email` from `project_owners`
               JOIN project_list on plist_customer_id = pown_id
               JOIN project_scope on pscope_project_id = plist_id
               JOIN project_planner on pplnr_scope_id = pscope_id 
@@ -86,20 +86,20 @@ if ($messagefor == 'customerregistration') {
     $sendto = $row['pown_email'];
   }
 
-    if(isset($_POST['mailtosp']) && $_POST['mailtosp'] != '' && $_POST['mailtosp'] != 0){
-      $query = "SELECT `sprov_email` from `service_providers`
+  if (isset($_POST['mailtosp']) && $_POST['mailtosp'] != '' && $_POST['mailtosp'] != 0) {
+    $query = "SELECT `sprov_email` from `service_providers`
                   WHERE `sprov_id` = " . $_POST['mailtosp'] . " ";
-      $result = mysqli_query($con, $query);
-      while ($row = mysqli_fetch_assoc($result)) {
-        $sendtosp = $row['sprov_email'];
-      }
-     $sendto = "".$sendto.",".$sendtosp."";
+    $result = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+      $sendtosp = $row['sprov_email'];
     }
+    $sendto = "" . $sendto . "," . $sendtosp . "";
+  }
 
   $heading = "A Task has been Initiated, Update from PseudoTeam.";
   $linkurl = "https://www.pseudoteam.com";
   $subject = "Task Initiated, Project Progress Update";
-  $message = "<p>We`re excited to inform you that a new task '".$tasktitle."' has been initiated as part of the project.</p>
+  $message = "<p>We`re excited to inform you that a new task '" . $_POST['tasktitle'] . "' has been initiated as part of the project.</p>
 <br>
 <p>Here`s what you can do next:</p>
 <ul>
@@ -109,40 +109,113 @@ if ($messagefor == 'customerregistration') {
 <li>Reach out for any support, we`re here to help!</li>
 <br>
 <p>Your account is all set up, and you`re ready to go</p>";
-}else{}
+} elseif ($messagefor == 'savetask') {
 
+  $query = "SELECT `pown_email` from `project_owners`
+              JOIN project_list on plist_customer_id = pown_id
+              JOIN project_scope on pscope_project_id = plist_id
+              JOIN project_planner on pplnr_scope_id = pscope_id 
+              WHERE `pplnr_id` = " . $_POST['mailto'] . " ";
+  $result = mysqli_query($con, $query);
+  while ($row = mysqli_fetch_assoc($result)) {
+    $sendto = $row['pown_email'];
+  }
 
-$mail = new PHPMailer(true);
+  if (isset($_POST['mailtosp']) && $_POST['mailtosp'] != '' && $_POST['mailtosp'] != 0) {
+    $query = "SELECT `sprov_email` from `service_providers`
+                  WHERE `sprov_id` = " . $_POST['mailtosp'] . " ";
+    $result = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+      $sendtosp = $row['sprov_email'];
+    }
+    $sendto = "" . $sendto . "," . $sendtosp . "";
+  }
+
+  $heading = "A Task has been updated, Update from PseudoTeam.";
+  $linkurl = "https://www.pseudoteam.com";
+  $subject = "Task Updated, Project Progress Update";
+  $message = "<p>We`re excited to inform you that a task '" . $_POST['tasktitle'] . "' has been updated as part of the project.</p>
+<br>
+<p>Here`s what you can do next:</p>
+<ul>
+<li>Explore your dashboard</li>
+<li>Track your progress in real-time</li>
+<li>Check progress on project/task</li>
+<li>Reach out for any support, we`re here to help!</li>
+<br>
+<p>Your account is all set up, and you`re ready to go</p>";
+} elseif ($messagefor == 'raiseinvoice') {
+
+  $sendto = "finance@pseudoteam.com";
+
+  $heading = "A Task has been Initiated, Update from PseudoTeam.";
+  $linkurl = "https://www.pseudoteam.com";
+  $subject = "Task Initiated, Project Progress Update";
+  $message = "<p>We`re excited to inform you that a new task '" . $_POST['tasktitle'] . "' has been initiated as part of the project.</p>
+<br>
+<p>Here`s what you can do next:</p>
+<ul>
+<li>Explore your dashboard</li>
+<li>Track your progress in real-time</li>
+<li>Check progress on project/task</li>
+<li>Reach out for any support, we`re here to help!</li>
+<br>
+<p>Your account is all set up, and you`re ready to go</p>";
+} elseif ($messagefor == 'cancellinvoice') {
+
+  $sendto = "finance@pseudoteam.com";
+
+  $heading = "A Task has been Initiated, Update from PseudoTeam.";
+  $linkurl = "https://www.pseudoteam.com";
+  $subject = "Task Initiated, Project Progress Update";
+  $message = "<p>We`re excited to inform you that a new task '" . $_POST['tasktitle'] . "' has been initiated as part of the project.</p>
+<br>
+<p>Here`s what you can do next:</p>
+<ul>
+<li>Explore your dashboard</li>
+<li>Track your progress in real-time</li>
+<li>Check progress on project/task</li>
+<li>Reach out for any support, we`re here to help!</li>
+<br>
+<p>Your account is all set up, and you`re ready to go</p>";
+} else {
+}
+
 
 try {
   // SMTP Configuration
-  $mail->isSMTP();
-  $mail->Host = 'smtp.gmail.com';
-  $mail->SMTPAuth = true;
-  $mail->Username = 'pseudoservicesteam@gmail.com';
-  $mail->Password = 'xczisaoiycklvkmt'; // App-specific password
-  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-  $mail->Port = 587;
 
-  // Sender
-  $mail->setFrom('pseudoservicesteam@gmail.com', 'PseudoTeam');
 
   // Add multiple recipients
   $recipients = explode(',', $sendto);
   foreach ($recipients as $email) {
     $email = trim($email);
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $mail = new PHPMailer(true);
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'pseudoservicesteam@gmail.com';
+      $mail->Password = 'xczisaoiycklvkmt'; // App-specific password
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 587;
+
+      // Sender
+      $mail->setFrom('pseudoservicesteam@gmail.com', 'PseudoTeam');
+
       $mail->addAddress($email);
+
+
+      $mail->isHTML(true);
+      $mail->Subject = $subject;
+      $mail->Body    = generateMailBody($heading, $message, $linkurl);
+      $mail->AltBody = strip_tags($message);
+
+      $mail->send();
     }
   }
 
   // Mail Content
-  $mail->isHTML(true);
-  $mail->Subject = $subject;
-  $mail->Body    = generateMailBody($heading, $message, $linkurl);
-  $mail->AltBody = strip_tags($message);
-
-  $mail->send();
   echo json_encode([
     "status" => "success",
     "message" => "Mail sent successfully!"
@@ -188,13 +261,13 @@ function generateMailBody($heading, $message, $linkurl)
     <body>
       <div class="container">
         <div class="header">
-          <img src="https://pseudoteam.com/homepage/home/logo.png" alt="Pseudoteam Logo">
+          <img src="https://pseudoteam.com/PseudoTeam2024/public/images/logopt.png" alt="Pseudoteam Logo">
         </div>
         <div class="content">
-          <h1>' . $heading . '</h1>
+          <h1>'.$heading.'</h1>
           <p>Hello User,</p>
-          ' . $message . '
-          <a href="' . $linkurl . '" class="button">Click Here</a>
+          '.$message.'
+          <a href="'.$linkurl.'" class="button" style="text-decoration:none;color:white;">Click Here</a>
           <p>Need help getting started? Reach out to us at support@pseudoteam.com</p>
           <p>Thanks for choosing us. We look forward to growing together!</p>
         </div>
