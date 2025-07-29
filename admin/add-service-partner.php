@@ -212,7 +212,7 @@ Your account is all set up, and you`re ready to go";
         .then(response => response.json())
         .then(data => {
           if (data.status === "success") {
-            alert(data.message);
+            //alert(data.message);
 
             let mailData = new FormData();
             mailData.append("messagefor","spregistration");
@@ -225,23 +225,40 @@ Your account is all set up, and you`re ready to go";
               .then(response => response.text()) // Assuming it returns plain text
               .then(mailResponse => {
                 console.log("Mail Response:", mailResponse);
-                alert(mailResponse);
+                //alert(mailResponse);
                 // You may show a success message or do further actions here
               })
               .catch(mailError => {
                 console.error("Mail Sending Failed:", mailError);
-                alert(mailError);
+                //alert(mailError);
               });
 
-            window.location.href = "add-service-partner.php?success=1";
+               showNotification("✅Success","ASP added successfully!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
+
+            //window.location.href = "add-service-partner.php?success=1";
           } else {
-            alert("Error: " + data.message);
+            //alert("Error: " + data.message);
+             showNotification("❌Failed","ASP not added!");
+             setTimeout(function () {
+             location.reload();
+        }, 2000);
+          // location.reload();
+           
           }
 
         })
         .catch(error => {
           console.error("Error:", error);
-          alert("Error uploading. Please try again.");
+          //alert("Error uploading. Please try again.");
+          showNotification("⚠️Error","Error in request!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
         });
     });
   </script>

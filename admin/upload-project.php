@@ -249,6 +249,8 @@
         formData.append("notificationEmail", notificationEmail);
         formData.append("coupon", coupon);
 
+        showLoader();
+
         // Send data using fetch()
         fetch("php-functions/function-project-upload.php", {
                 method: "POST",

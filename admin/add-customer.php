@@ -196,6 +196,8 @@ $hashedPassword = sha1($generatedPassword);
       var mailtoemail = document.getElementById("pown_email").value;
       let formData = new FormData(document.querySelector("form"));
 
+      showLoader();
+
       fetch("php-functions/function-customer-upload.php", {
           method: "POST",
           body: formData
@@ -203,7 +205,7 @@ $hashedPassword = sha1($generatedPassword);
         .then(response => response.json())
         .then(data => {
           if (data.status === "success") {
-            alert(data.message);
+            //alert(data.message);
 
             
             let mailData = new FormData();
@@ -217,23 +219,40 @@ $hashedPassword = sha1($generatedPassword);
               .then(response => response.text()) // Assuming it returns plain text
               .then(mailResponse => {
                 console.log("Mail Response:", mailResponse);
-                alert(mailResponse);
+                //alert(mailResponse);
                 // You may show a success message or do further actions here
               })
               .catch(mailError => {
                 console.error("Mail Sending Failed:", mailError);
-                alert(mailError);
+                //alert(mailError);
               });
 
-            window.location.href = "add-customer.php?success=1";
+               showNotification("✅Success","Customer added successfully!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
+
+            // window.location.href = "add-customer.php?success=1";
           } else {
-            alert("Error: " + data.message);
+            // alert("Error: " + data.message);
+            showNotification("❌Failed","Customer not added!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
+          // location.reload();
+           
           }
 
         })
         .catch(error => {
           console.error("Error:", error);
-          alert("Error uploading. Please try again.");
+          // alert("Error uploading. Please try again.");
+          showNotification("⚠️Error","Error in request!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
         });
     });
   </script>

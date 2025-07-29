@@ -5,7 +5,35 @@
   window.addEventListener('load', function () {
     document.getElementById('loader-overlay').style.display = 'none';
   });
+
+   function showLoader() {
+    const loader = document.getElementById('loader-overlay');
+    loader.style.display = 'block'; // Show loader during processing
+   }
+
 </script>
+
+
+<!-- <script>
+  window.addEventListener('popstate', function (event) {
+    event.preventDefault();
+
+    const confirmation = confirm("This will log you out.\nClick OK to log out, Cancel to stay on this page.");
+
+    if (confirmation) {
+      // Redirect to logout page to destroy session
+      window.location.href = 'php-functions/function-sign-out.php';
+    } else {
+      // Push the same state again to prevent back navigation
+      history.pushState(null, document.title, location.href);
+    }
+  });
+
+  // Add a dummy history state so we can intercept back
+  window.addEventListener('load', function () {
+    history.pushState(null, document.title, location.href);
+  });
+</script> -->
 
 
 <!-- 

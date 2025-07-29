@@ -403,6 +403,9 @@
         formData.append("statusDescription", document.getElementsByName("statusDescription")[0].value);
         formData.append("mngrId", document.getElementsByName("mngrId")[0].value);
         formData.append("plist_emp_code" , document.getElementsByName("plist_emp_code")[0].value);
+
+        showLoader();
+
         formData.append("plistId", stringdata);
 
         fetch("php-functions/function-project-save.php", {
@@ -412,13 +415,25 @@
             .then(response => response.json()) // Expect JSON response
             .then(data => {
                 if (data.status === "success") {
-                    alert(data.message); // Display success message
+                    showNotification("✅Saved","Project updated successfully!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
+                    // alert(data.message);
+                     // Display success message
                     // location.reload(); // Refresh page after successful submission
                     // document.getElementById("successbox").style.display = "block";
                     // document.getElementById("failbox").style.display = "none";
                     // document.getElementById("successbox").textContent = "Project uploaded.";
                 } else {
-                    alert("Error: " + data.message); // Display error message
+                    showNotification("❌Failed","Failed to save!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
+                    // alert("Error: " + data.message);
+                     // Display error message
                     // document.getElementById("successbox").style.display = "none";
                     // document.getElementById("failbox").style.display = "block";
                     // document.getElementById("failbox").textContent = "Error: Project upload failed.";
@@ -426,7 +441,12 @@
                 console.log(data); // Log full response
             })
             .catch(error => {
-                alert("Error uploading project. Please try again.");
+                // alert("Error uploading project. Please try again.");
+                showNotification("⚠️Error","Error in request!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
                 console.error("Error:", error);
             });
 

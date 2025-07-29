@@ -178,7 +178,7 @@
   </style>
 
 
-  <style>
+  <!-- <style>
     #loader-overlay {
       position: fixed;
       top: 0;
@@ -210,8 +210,38 @@
         transform: rotate(360deg);
       }
     }
-  </style>
+  </style> -->
 
+  <style>
+  #loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 9999;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
 
 
   <!-- Custom styles for this template -->
@@ -455,8 +485,8 @@ if($_SESSION['pt-admin-role'] != 'viewer'){$style_display = 'style="display:bloc
 
             <hr class="my-3">
 
-            <ul class="nav flex-column mb-auto" <?php echo $style_display;?>>
-              <li class="nav-item">
+            <ul class="nav flex-column mb-auto">
+              <li class="nav-item" <?php echo $style_display;?>>
                 <a class="nav-link d-flex align-items-center gap-2" href="#">
                   <svg class="bi">
                     <use xlink:href="#gear-wide-connected" />
@@ -464,7 +494,7 @@ if($_SESSION['pt-admin-role'] != 'viewer'){$style_display = 'style="display:bloc
                   Settings
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" <?php echo $style_display;?>>
                 <a class="nav-link d-flex align-items-center gap-2" href="#">
                   <svg class="bi">
                     <use xlink:href="#gear-wide-connected" />
