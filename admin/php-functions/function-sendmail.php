@@ -148,19 +148,10 @@ if ($messagefor == 'customerregistration') {
 
   $sendto = "finance@pseudoteam.com";
 
-  $heading = "A Task has been Initiated, Update from PseudoTeam.";
+  $heading = "Raise Invoice.";
   $linkurl = "https://www.pseudoteam.com";
-  $subject = "Task Initiated, Project Progress Update";
-  $message = "<p>We`re excited to inform you that a new task '" . $_POST['tasktitle'] . "' has been initiated as part of the project.</p>
-<br>
-<p>Here`s what you can do next:</p>
-<ul>
-<li>Explore your dashboard</li>
-<li>Track your progress in real-time</li>
-<li>Check progress on project/task</li>
-<li>Reach out for any support, we`re here to help!</li>
-<br>
-<p>Your account is all set up, and you`re ready to go</p>";
+  $subject = "Raise Invoice";
+  $message = "<p>You have recieved a request from Project manager to raise an invoice against '" . $_POST['tasktitle'] . "' which was initiated as part of the project.</p>";
 } elseif ($messagefor == 'cancellinvoice') {
 
   $sendto = "finance@pseudoteam.com";
@@ -168,7 +159,25 @@ if ($messagefor == 'customerregistration') {
   $heading = "A Task has been Initiated, Update from PseudoTeam.";
   $linkurl = "https://www.pseudoteam.com";
   $subject = "Task Initiated, Project Progress Update";
-  $message = "<p>We`re excited to inform you that a new task '" . $_POST['tasktitle'] . "' has been initiated as part of the project.</p>
+   $message = "<p>You have recieved a request from Project manager to cancel an invoice against '" . $_POST['tasktitle'] . "' which was initiated as part of the project.</p>";
+
+} elseif ($messagefor == 'ticketupdated') {
+
+  if (isset($_POST['mailtosp']) && $_POST['mailtosp'] != '' && $_POST['mailtosp'] != 0) {
+    $query = "SELECT `sprov_email` from `service_providers`
+                  WHERE `sprov_id` = " . $_POST['mailtosp'] . " ";
+    $result = mysqli_query($con, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+      $sendtosp = $row['sprov_email'];
+    }
+    
+  }
+
+  $heading = "A Ticket has been assigned, Update from PseudoTeam.";
+  $linkurl = "https://www.pseudoteam.com/partner";
+  $subject = "Task Updated, Project Progress Update";
+  $message = "<p>A Ticket has been assigned to you by a Pseudo-Manager.</p>
+  <p>Please take a look at dashboard, we await your feedback.</p>
 <br>
 <p>Here`s what you can do next:</p>
 <ul>
@@ -179,6 +188,7 @@ if ($messagefor == 'customerregistration') {
 <br>
 <p>Your account is all set up, and you`re ready to go</p>";
 } else {
+  
 }
 
 

@@ -131,10 +131,45 @@ $stmt->close();
   });
 
   function update_data() {
+
+    //  var mailtoemail = document.getElementById("pplnr_id").value;
+    var mailtosp = document.getElementById("1mySelect").value;
+    // var tasktitle = document.getElementById("name").value;
+
+
     const form = new FormData(document.getElementById('ticketForm'));
     fetch('php-functions/function-tickets-save.php', { method: 'POST', body: form })
       .then(r => r.json())
       .then(res => {
+
+        if(res.status === 'success'){
+           let mailData = new FormData();
+                    mailData.append("messagefor","ticketupdated");
+                    // mailData.append("mailto", mailtoemail);
+                    mailData.append("mailtosp", mailtosp);
+                    // mailData.append("tasktitle", tasktitle);
+                    
+                    fetch("php-functions/function-sendmail.php", {
+                            method: "POST",
+                            body: mailData
+                        })
+                        .then(response => response.text()) // Assuming it returns plain text
+                        .then(mailResponse => {
+                            console.log("Mail Response:", mailResponse);
+                            //alert(mailResponse);
+                            // You may show a success message or do further actions here
+                        })
+                        .catch(mailError => {
+                            console.error("Mail Sending Failed:", mailError);
+                           // alert(mailError);
+                        });
+          // alert("Task added successfully!", "success");       
+          // location.reload();
+          showNotification("Success","Task added successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
+        }
         alert(res.status === 'success' ? 'Ticket updated successfully.' : 'Update failed: ' + res.message);
       }).catch(() => alert('Something went wrong.'));
   }

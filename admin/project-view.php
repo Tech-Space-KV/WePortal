@@ -252,7 +252,7 @@
                 <div class="col-md-4 mb-3" id="deliveryDateContainer" style="display: none;">
                     <label for="deliveredOn" class="form-label fw-bold">Delivered On</label>
                     <input type="date" class="form-control border border-2 border-success" id="deliveredOn"
-                        name="plist_delivered_on">
+                        name="plist_delivered_on" value="<?php echo date("Y-m-d", strtotime($row['plist_delivered_on'])); ?>">
                 </div>
 
                 <div class="col-md-4 mb-3">
