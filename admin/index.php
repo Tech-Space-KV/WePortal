@@ -251,4 +251,21 @@ setInterval(loadDashboardCounts, 5000);
 </script>
 
 
+
+<script>
+    window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            // showNotification("Thanks!", "You're now subscribed to notifications.");
+          }
+        });
+      } else if (Notification.permission === 'granted') {
+        // showNotification("Welcome back!", "Notifications are active.");
+      }
+    }, 2000); // 2 seconds delay to simulate user gesture
+  });
+</script>
+
 <?php require('footer.php'); ?>

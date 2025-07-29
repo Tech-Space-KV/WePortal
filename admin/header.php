@@ -4,7 +4,7 @@
 <html lang="en" data-bs-theme="auto">
 
 <head>
-  <script src="../assets/js/color-modes.js"></script>
+  <!-- <script src="../assets/js/color-modes.js"></script> -->
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -178,34 +178,40 @@
   </style>
 
 
-<style>
-  #loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  <style>
+    #loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-  }
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-</style>
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
 
 
   <!-- Custom styles for this template -->
@@ -216,9 +222,14 @@
 
 <body>
 
-<div id="loader-overlay">
-  <div class="spinner"></div>
-</div>
+<?php 
+$style_display = 'style="display:block;"';
+if($_SESSION['pt-admin-role'] != 'viewer'){$style_display = 'style="display:block;"';} else{$style_display = 'style="display:none;"';} 
+?>
+
+  <div id="loader-overlay">
+    <div class="spinner"></div>
+  </div>
 
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="check2" viewBox="0 0 16 16">
@@ -327,10 +338,10 @@
   </header>
 
 
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <div class="row">
       <!-- Sidebar -->
-      <div class="sidebar border-end col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed vh-100">
+      <div class="sidebar border-end col-md-3 col-lg-2 p-0 bg-body-tertiary position-fixed vh-100" >
         <div class="offcanvas-md offcanvas-start bg-body-tertiary vh-100 overflow-auto pe-3" tabindex="-1"
           id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
           <div class="offcanvas-header d-md-none">
@@ -338,7 +349,7 @@
             <button type="button" class="btn-close d-md-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-            <ul class="nav flex-column">
+            <ul class="nav flex-column" <?php echo $style_display;?>>
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="index">
                   <svg class="bi">
@@ -406,7 +417,7 @@
                 </svg>
               </a>
             </h6>
-            <ul class="nav flex-column mb-auto">
+            <ul class="nav flex-column mb-auto" <?php echo $style_display;?>>
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="table-notification">
                   <svg class="bi">
@@ -444,7 +455,7 @@
 
             <hr class="my-3">
 
-            <ul class="nav flex-column mb-auto">
+            <ul class="nav flex-column mb-auto" <?php echo $style_display;?>>
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="#">
                   <svg class="bi">
@@ -473,57 +484,58 @@
           </div>
         </div>
       </div>
+   
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-      <script>
-        // This ensures body class changes to move content
-        document.addEventListener('DOMContentLoaded', function() {
-          var sidebar = document.getElementById('sidebarMenu');
-          sidebar.addEventListener('show.bs.offcanvas', function() {
-            document.body.classList.add('offcanvas-open');
-          });
-          sidebar.addEventListener('hidden.bs.offcanvas', function() {
-            document.body.classList.remove('offcanvas-open');
-          });
-        });
-      </script>
+  <script>
+    // This ensures body class changes to move content
+    document.addEventListener('DOMContentLoaded', function() {
+      var sidebar = document.getElementById('sidebarMenu');
+      sidebar.addEventListener('show.bs.offcanvas', function() {
+        document.body.classList.add('offcanvas-open');
+      });
+      sidebar.addEventListener('hidden.bs.offcanvas', function() {
+        document.body.classList.remove('offcanvas-open');
+      });
+    });
+  </script>
 
 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
-        $(document).ready(function() {
-          function loadHWOrderCount() {
-            $.ajax({
-              url: 'php-functions/function-get-count-hardware-orders.php',
-              type: 'GET',
-              success: function(data) {
-                $('.hw-badge').text(data);
-              },
-              error: function() {
-                $('.hw-badge').text('Error');
-              }
-            });
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      function loadHWOrderCount() {
+        $.ajax({
+          url: 'php-functions/function-get-count-hardware-orders.php',
+          type: 'GET',
+          success: function(data) {
+            $('.hw-badge').text(data);
+          },
+          error: function() {
+            $('.hw-badge').text('Error');
           }
-
-          function loadNotificationCount() {
-            $.ajax({
-              url: 'php-functions/function-get-count-notifications.php',
-              type: 'GET',
-              success: function(data) {
-                $('.ntfn-badge').text(data);
-              },
-              error: function() {
-                $('.ntfn-badge').text('Error');
-              }
-            });
-          }
-
-          loadHWOrderCount(); // Initial load
-          loadNotificationCount(); // Initial load
-
-          // Optional: Refresh every 10 seconds
-          setInterval(loadHWOrderCount, 5000);
-          setInterval(loadNotificationCount, 3000);
         });
-      </script>
+      }
+
+      function loadNotificationCount() {
+        $.ajax({
+          url: 'php-functions/function-get-count-notifications.php',
+          type: 'GET',
+          success: function(data) {
+            $('.ntfn-badge').text(data);
+          },
+          error: function() {
+            $('.ntfn-badge').text('Error');
+          }
+        });
+      }
+
+      loadHWOrderCount(); // Initial load
+      loadNotificationCount(); // Initial load
+
+      // Optional: Refresh every 10 seconds
+      setInterval(loadHWOrderCount, 5000);
+      setInterval(loadNotificationCount, 3000);
+    });
+  </script>

@@ -7,7 +7,7 @@ if ($_GET['pptasks_id']) {
         $pptasks_id = $_GET['pptasks_id'];
 
         // Fetch data from project_scope table
-        $query = "SELECT * FROM project_planner_tasks WHERE pptasks_id = ?";
+        $query = "SELECT `pptasks_id`, `pptasks_task_title`, `pptasks_description`, `pptasks_start_date`, `pptasks_end_date`, `pptasks_sp_id`, `pptasks_date_of_completion`, `pptasks_sp_status`, `pptasks_pt_status`, `pptasks_invoice_raised_flag`, `pptasks_payment`, `pptasks_planner_id`, `created_at`, `updated_at` FROM project_planner_tasks WHERE pptasks_id = ?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $pptasks_id);
         $stmt->execute();

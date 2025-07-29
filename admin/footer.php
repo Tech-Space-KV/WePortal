@@ -8,6 +8,67 @@
 </script>
 
 
+<!-- 
+<script>
+  function requestNotification(strdata) {
+    const textToCopy = strdata;
+
+    console.log("Notification says:", textToCopy);
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      console.log("Notification says:", textToCopy);
+
+      // Request permission for notification
+      if (Notification.permission === "granted") {
+        showRequestNotification(textToCopy);
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") {
+            showRequestNotification(textToCopy);
+          } else {
+            alert("Notifications are blocked.");
+          }
+        });
+      } else {
+        alert("Notifications are blocked.");
+      }
+    }).catch(err => {
+      alert("Failed to show notification: " + err);
+    });
+  }
+
+  function showRequestNotification(text) {
+    new Notification("PseudoTeam Notification", {
+      body: `"${text}"`
+    });
+  }
+</script> -->
+
+<script>
+  // Register the service worker once for all pages
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log("SW registered"))
+      .catch(err => console.error("SW failed:", err));
+  }
+
+  // Ask for permission after short delay on load
+
+  function showNotification(title, message) {
+    navigator.serviceWorker.ready.then(reg => {
+      reg.showNotification(title, {
+        body: message,
+        icon: 'https://via.placeholder.com/128',
+        tag: 'site-wide',
+        renotify: true
+      });
+    });
+  }
+</script>
+
+
+
 <script>
     const rowsPerPage = 7; // Number of rows per page
     let currentPage = 1;

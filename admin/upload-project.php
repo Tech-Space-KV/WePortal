@@ -200,7 +200,7 @@
     function insert_data() {
 
         var mailtoemail = document.getElementById("mySelect").value;
-        var projecttitle =  document.getElementById("title").value;
+        var projecttitle = document.getElementById("title").value;
 
         let form = document.querySelector("form");
 
@@ -257,16 +257,16 @@
             .then(response => response.json()) // Expect JSON response
             .then(data => {
                 if (data.status === "success") {
-                   // alert(data.message); // Display success message
+                    // alert(data.message); // Display success message
                     // location.reload(); // Refresh page after successful submission
                     // document.getElementById("successbox").style.display = "block";
                     // document.getElementById("failbox").style.display = "none";
                     // document.getElementById("successbox").textContent = "Project uploaded.";
 
 
-                    
+
                     let mailData = new FormData();
-                    mailData.append("messagefor","uploadproject");
+                    mailData.append("messagefor", "uploadproject");
                     mailData.append("mailto", mailtoemail);
                     mailData.append("projecttitle", projecttitle);
 
@@ -278,17 +278,24 @@
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
                             console.log("Mail Response:", mailResponse);
-                           // alert(mailResponse);
+                            // alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
                             console.error("Mail Sending Failed:", mailError);
-                           // alert(mailError);
+                            // alert(mailError);
                         });
+                    showNotification("✅Success", "Project Uploaded!");
+                    setTimeout(function() {
                         location.reload();
+                    }, 2000);
 
                 } else {
-                   // alert("Error: " + data.message); // Display error message
+                    showNotification("❌Failed", "Failed to upload project!");
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                    // alert("Error: " + data.message); // Display error message
                     // document.getElementById("successbox").style.display = "none";
                     // document.getElementById("failbox").style.display = "block";
                     // document.getElementById("failbox").textContent = "Error: Project upload failed.";
@@ -298,6 +305,10 @@
             .catch(error => {
                 //alert("Error uploading project. Please try again.");
                 console.error("Error:", error);
+                showNotification("⚠️Error", "Error in request!");
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
             });
     }
 </script>

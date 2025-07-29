@@ -253,17 +253,29 @@ if (isset($_GET['enddate'])) {
     .then(response => response.json()) // Expecting JSON response
     .then(data => {
         if (data.status === "success") {
-          alert("Location added successfully!", "success");
-          location.reload();
+          // alert("Location added successfully!", "success");
+          showNotification("✅Success","Location added successfully!");
+          // location.reload();
+           setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-            alert("Failed to add location!", "error");
-            location.reload();
+            // alert("Failed to add location!", "error");
+            showNotification("❌Failed","Failed to add location!");
+            // location.reload();
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
     })
     .catch(error => {
-      alert("Error in request!", "error");
+      // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+         showNotification("⚠️Error","Error in Request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
     });
 
        // Close modal after submission
@@ -297,17 +309,29 @@ document.getElementById("save_operation").addEventListener("click", function (ev
     .then(response => response.json()) // Expecting JSON response
     .then(data => {
         if (data.status === "success") {
-          alert("Location saved successfully!", "success");
-          location.reload();
+          // alert("Location saved successfully!", "success");
+          // location.reload();
+          showNotification("✅Success","Location saved successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-            alert("Failed to save location!", "error");
-            location.reload();
+            // alert("Failed to save location!", "error");
+            // location.reload();
+            showNotification("❌Failed","Location not saved!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
     })
     .catch(error => {
-      alert("Error in request!", "error");
+      // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
     });
 
        // Close modal after submission
@@ -337,17 +361,29 @@ document.getElementById("delete_operation").addEventListener("click", function (
     .then(response => response.json()) // Expecting JSON response
     .then(data => {
         if (data.status === "success") {
-          alert("Location deleted successfully!", "success");
-          location.reload();
+          // alert("Location deleted successfully!", "success");
+          // location.reload();
+          showNotification("✅Success","Location deleted successfully!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         } else {
-            alert("Failed to delete location!", "error");
-            location.reload();
+            // alert("Failed to delete location!", "error");
+            // location.reload();
+            showNotification("❌Failed","Location not deleted!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
         }
     })
     .catch(error => {
-      alert("Error in request!", "error");
+      // alert("Error in request!", "error");
         console.error("Error:", error);
-        location.reload();
+        // location.reload();
+        showNotification("⚠️Error","Error in request!");
+            setTimeout(function () {
+             location.reload();
+        }, 2000);
     });
 
        // Close modal after submission
