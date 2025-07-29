@@ -4,7 +4,7 @@ $custId = isset($_GET['cust-id']) ? (int) $_GET['cust-id'] : 0;
 
 $query = "SELECT plist_final_price, plist_delivered_on 
           FROM project_list 
-          WHERE plist_customer_id = $custId";
+          WHERE plist_customer_id = $custId And plist_status = 'Delivered'"; 
 $result = mysqli_query($con, $query);
 
 $yearlyData = [];
