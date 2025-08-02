@@ -24,7 +24,6 @@
           <th scope="col">Tittle</th>
           <th scope="col">Status</th>
           <th scope="col">Customer_Id</th>
-          <th scope="col">Service Partner</th>
           <th scope="col">Created_At</th>
         </tr>
       </thead>
