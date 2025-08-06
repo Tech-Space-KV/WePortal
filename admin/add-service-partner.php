@@ -205,6 +205,8 @@ Your account is all set up, and you`re ready to go";
       var mailtoemail = document.getElementById("sprov_email").value;
       let formData = new FormData(document.querySelector("form"));
 
+      showLoader();
+      
       fetch("php-functions/function-service-partner-upload.php", {
           method: "POST",
           body: formData
@@ -218,7 +220,7 @@ Your account is all set up, and you`re ready to go";
             mailData.append("messagefor","spregistration");
             mailData.append("mailto", mailtoemail);
 
-            fetch("php-functions/function-sendmail.php", {
+            fetch("php-functions/sendmail-add-sp.php", {
                 method: "POST",
                 body: mailData
               })

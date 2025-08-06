@@ -134,10 +134,14 @@ $stmt->close();
 
     //  var mailtoemail = document.getElementById("pplnr_id").value;
     var mailtosp = document.getElementById("1mySelect").value;
-    // var tasktitle = document.getElementById("name").value;
+    var tasktitle = document.getElementById("title").value;
 
 
     const form = new FormData(document.getElementById('ticketForm'));
+
+        showLoader();
+
+        
     fetch('php-functions/function-tickets-save.php', { method: 'POST', body: form })
       .then(r => r.json())
       .then(res => {
@@ -147,9 +151,9 @@ $stmt->close();
                     mailData.append("messagefor","ticketupdated");
                     // mailData.append("mailto", mailtoemail);
                     mailData.append("mailtosp", mailtosp);
-                    // mailData.append("tasktitle", tasktitle);
+                    mailData.append("tasktitle", tasktitle);
                     
-                    fetch("php-functions/function-sendmail.php", {
+                    fetch("php-functions/sendmail-update-ticket.php", {
                             method: "POST",
                             body: mailData
                         })

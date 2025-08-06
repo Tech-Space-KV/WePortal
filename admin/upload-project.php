@@ -268,23 +268,23 @@
 
 
                     let mailData = new FormData();
-                    mailData.append("messagefor", "uploadproject");
+                    // mailData.append("messagefor", "uploadproject");
                     mailData.append("mailto", mailtoemail);
                     mailData.append("projecttitle", projecttitle);
 
 
-                    fetch("php-functions/function-sendmail.php", {
+                    fetch("php-functions/sendmail-upload-project.php", {
                             method: "POST",
                             body: mailData
                         })
                         .then(response => response.text()) // Assuming it returns plain text
                         .then(mailResponse => {
-                            console.log("Mail Response:", mailResponse);
+                            alert("Mail Response:", mailResponse);
                             // alert(mailResponse);
                             // You may show a success message or do further actions here
                         })
                         .catch(mailError => {
-                            console.error("Mail Sending Failed:", mailError);
+                            alert("Mail Sending Failed:", mailError);
                             // alert(mailError);
                         });
                     showNotification("✅Success", "Project Uploaded!");

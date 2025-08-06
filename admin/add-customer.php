@@ -212,7 +212,7 @@ $hashedPassword = sha1($generatedPassword);
             mailData.append("messagefor","customerregistration");
             mailData.append("mailto", mailtoemail);
 
-            fetch("php-functions/function-sendmail.php", {
+            fetch("php-functions/sendmail-add-customer.php", {
                 method: "POST",
                 body: mailData
               })

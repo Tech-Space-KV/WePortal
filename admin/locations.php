@@ -246,6 +246,8 @@ if (isset($_GET['enddate'])) {
     formData.append("address", document.getElementById("address").value);
     formData.append("status", document.getElementById("status").value);
 
+    showLoader();
+    
     fetch("php-functions/function-location-upload.php", {
         method: "POST",
         body: formData
@@ -302,6 +304,8 @@ document.getElementById("save_operation").addEventListener("click", function (ev
     formData.append("status", document.getElementById("status").value);
     formData.append("pscope_id", document.getElementById("pscope_id").value);
 
+showLoader();
+
     fetch("php-functions/function-location-save.php", {
         method: "POST",
         body: formData
@@ -353,6 +357,8 @@ document.getElementById("delete_operation").addEventListener("click", function (
     let formData = new FormData();
     formData.append("project_id", document.getElementById("project_id").value);
     formData.append("pscope_id", document.getElementById("pscope_id").value);
+
+showLoader();
 
     fetch("php-functions/function-location-delete.php", {
         method: "POST",

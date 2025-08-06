@@ -294,6 +294,8 @@ if (isset($_GET['enddate'])) {
     formData.append("endDate", document.getElementById("endDate").value);
     formData.append("status", document.getElementById("status").value);
 
+    showLoader();
+    
     fetch("php-functions/function-milestone-upload.php", {
         method: "POST",
         body: formData
@@ -349,6 +351,8 @@ if (isset($_GET['enddate'])) {
     formData.append("status", document.getElementById("status").value);
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
 
+    showLoader();
+
     fetch("php-functions/function-milestone-save.php", {
         method: "POST",
         body: formData
@@ -401,6 +405,8 @@ if (isset($_GET['enddate'])) {
     formData.append("pscope_id", document.getElementById("pscope_id").value);
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
 
+    showLoader();
+    
     fetch("php-functions/function-milestone-delete.php", {
         method: "POST",
         body: formData

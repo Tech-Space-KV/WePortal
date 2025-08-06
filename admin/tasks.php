@@ -241,6 +241,7 @@ if (isset($_GET['enddate'])) {
   var myModal = document.getElementById('exampleModal');
   var myInput = document.getElementById('country');
   var alertnm;
+  var oldsp;
 
   function openviewmodal(stringdata) {
     myModal.addEventListener('shown.bs.modal', function() {
@@ -270,6 +271,8 @@ if (isset($_GET['enddate'])) {
             document.getElementById("mngr_status").value = data.pptasks_pt_status;
             document.getElementById("payment").value = data.pptasks_payment;
             document.getElementById("pptasks_id").value = stringdata;
+
+            oldsp = data.pptasks_sp_id;
 
             console.log(data.pptasks_pt_status);
             checkUsername();
@@ -329,6 +332,8 @@ if (isset($_GET['enddate'])) {
     formData.append("mngr_status", document.getElementById("mngr_status").value);
     formData.append("payment", document.getElementById("payment").value);
 
+    showLoader();
+
     fetch("php-functions/function-tasks-upload.php", {
         method: "POST",
         body: formData
@@ -343,7 +348,7 @@ if (isset($_GET['enddate'])) {
                     mailData.append("tasktitle", tasktitle);
 
 
-                    fetch("php-functions/function-sendmail.php", {
+                    fetch("php-functions/sendmail-add-task.php", {
                             method: "POST",
                             body: mailData
                         })
@@ -412,6 +417,8 @@ if (isset($_GET['enddate'])) {
     formData.append("payment", document.getElementById("payment").value);
     formData.append("pptasks_id", document.getElementById("pptasks_id").value);
 
+    showLoader();
+
     fetch("php-functions/function-tasks-save.php", {
         method: "POST",
         body: formData
@@ -423,10 +430,11 @@ if (isset($_GET['enddate'])) {
                     mailData.append("messagefor","savetask");
                     mailData.append("mailto", mailtoemail);
                     mailData.append("mailtosp", mailtosp);
+                    mailData.append("mailtooldsp", oldsp);
                     mailData.append("tasktitle", tasktitle);
 
 
-                    fetch("php-functions/function-sendmail.php", {
+                    fetch("php-functions/sendmail-save-task.php", {
                             method: "POST",
                             body: mailData
                         })
@@ -485,6 +493,8 @@ if (isset($_GET['enddate'])) {
     formData.append("pptasks_id", document.getElementById("pptasks_id").value);
     formData.append("pplnr_id", document.getElementById("pplnr_id").value);
 
+    showLoader();
+    
     fetch("php-functions/function-tasks-delete.php", {
         method: "POST",
         body: formData
