@@ -45,14 +45,14 @@
           $user_q->close();
         }
         // If comment made by customer
-        elseif (!empty($row['tconv_comment_by_cust_id'])) {
-          $cust_id = $row['tconv_comment_by_cust_id'];
-          $cust_q = $con->prepare("SELECT pown_name FROM project_owners WHERE pown_id = ?");
+        elseif (!empty($row['tconv_comment_by_sp_id'])) {
+          $cust_id = $row['tconv_comment_by_sp_id'];
+          $cust_q = $con->prepare("SELECT sprov_name FROM service_providers WHERE sprov_id = ?");
           $cust_q->bind_param("i", $cust_id);
           $cust_q->execute();
           $cust_res = $cust_q->get_result();
           if ($c = $cust_res->fetch_assoc()) {
-            $username = htmlspecialchars($c['pown_name']);
+            $username = htmlspecialchars($c['sprov_name']);
           }
           $cust_q->close();
         }

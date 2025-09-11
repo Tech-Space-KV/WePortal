@@ -1,11 +1,16 @@
 <?php require('header.php'); ?>
  <?php
 
-    $hw_id = isset($_GET['hw-id']) ? $_GET['hw-id'] : null;
-    $order_no = isset($_GET['order_no']) ? $_GET['order_no'] : null;
+    // $hw_id = isset($_GET['hw-id']) ? $_GET['hw-id'] : null;
+    // $order_no = isset($_GET['order_no']) ? $_GET['order_no'] : null;
 
-    $hw_id = intval($hw_id);
-    $order_no = htmlspecialchars($order_no);
+    // $hw_id = intval($hw_id);
+    // $order_no = htmlspecialchars($order_no);
+
+
+     $hw_id = $_GET['hw-id'];
+    $order_no = $_GET['order_no'];
+
     
     ?>
 
@@ -39,9 +44,9 @@
         $stmt = mysqli_prepare($con, "
         SELECT op.*, h.*, sp.*, po.*
         FROM orders_placed op
-        INNER JOIN hardwares h ON op.ordplcd_hw_id = h.hrdws_id
-        INNER JOIN service_providers sp ON h.hrdws_sp_id = sp.sprov_id
-        INNER JOIN project_owners po ON op.ordplcd_customer_id = po.pown_id
+        LEFT JOIN hardwares h ON op.ordplcd_hw_id = h.hrdws_id
+        LEFT JOIN service_providers sp ON h.hrdws_sp_id = sp.sprov_id
+        LEFT JOIN project_owners po ON op.ordplcd_customer_id = po.pown_id
         WHERE op.ordplcd_hw_id = ? And op.ordplcd_order_no = ?
     ");
 
@@ -190,9 +195,10 @@
                                     <label class="form-label">Status</label>
                                     <!-- <input type="text" class="form-control" value="<?php echo $row['pown_contact']; ?>" readonly> -->
                                     <select name="ordplcd_status" id="" class="form-control">
-                                        <option value="Pending" selected="<?php echo ($row['ordplcd_status'] == 'Pending') ? 'selected' : ''; ?>">Pending</option>
-                                        <option value="Placed" selected="<?php echo ($row['ordplcd_status'] == 'Placed') ? 'selected' : ''; ?>">Placed</option>
-                                        <option value="Cancelled" selected="<?php echo ($row['ordplcd_status'] == 'Cancelled') ? 'selected' : ''; ?>">Cancelled</option>
+                                        <option value="Pending" <?= $row['ordplcd_status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
+                                        <option value="Placed" <?= $row['ordplcd_status'] == 'Placed' ? 'selected' : '' ?>>Placed</option>
+                                        <option value="Cancelled" <?= $row['ordplcd_status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                        
                                     </select>
                                 </div>
                                 <div>
