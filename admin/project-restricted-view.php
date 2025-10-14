@@ -91,8 +91,8 @@ if (isset($_GET['condn'])) {
 							        </td>
 							        <td>
                       <!-- <a class="btn btn-sm btn-primary" href="project-view?project_key=<?php echo $row['plist_id'] ;?>">view</a> -->
-                      <a class="btn btn-sm btn-primary" href="project-restricted-tree?project_key=<?php echo $row['plist_id'] ;?>">timeline</a>
-                      <!-- <a class="btn btn-sm btn-primary" href="locations?proj-id=<?php echo $row['plist_id'] ;?>">expand</a> -->
+                      <!-- <a class="btn btn-sm btn-primary" href="project-restricted-tree?project_key=<?php echo $row['plist_id'] ;?>">timeline</a> -->
+                      <a class="btn btn-sm btn-primary" href="project-restricted-location?proj-id=<?php echo $row['plist_id'] ;?>">expand</a>
 							        </td>
 							    </tr>
 							    <?php
