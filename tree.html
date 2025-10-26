@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Project Tree Structure (Vertical Tasks Only)</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  background: #f5f7fa;
+  margin-top: 40px;
+}
+
+/* Tree container */
+.tree {
+  text-align: center;
+  position: relative;
+}
+
+/* The tree branches (unordered lists) */
+.tree ul {
+  padding-top: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Vertical line down from parent to children group */
+.tree ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #000;
+  height: 20px;
+  transform: translateX(-50%);
+}
+
+/* Remove the top line for root */
+.tree > ul::before {
+  display: none;
+}
+
+/* Individual nodes */
+.tree li {
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+  text-align: center;
+}
+
+/* Horizontal lines between sibling nodes */
+.tree li::before,
+.tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  border-top: 2px solid #000;
+  width: 50%;
+  height: 20px;
+}
+
+.tree li::before { left: -50%; }
+.tree li::after { right: -50%; }
+
+/* Remove connectors for single children */
+.tree li:only-child::before,
+.tree li:only-child::after {
+  display: none;
+}
+
+/* Remove left connector for first child */
+.tree li:first-child::before { border: none; }
+
+/* Remove right connector for last child */
+.tree li:last-child::after { border: none; }
+
+/* Node box styling */
+.tree li div {
+  border: 2px solid #0056b3;
+  background: #007bff;
+  color: white;
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  min-width: 120px;
+  position: relative;
+}
+
+/* Vertical line connecting parent to child box */
+.tree li div::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  border-left: 2px solid #000;
+  height: 20px;
+  transform: translateX(-50%);
+}
+
+/* Remove vertical connector for root node */
+.tree > ul > li > div::before {
+  display: none;
+}
+
+/* ====== ONLY TASKS DISPLAY VERTICALLY ====== */
+/* Tasks are 4th level items → inside ul ul ul ul */
+.tree ul ul ul ul {
+  display: block;         /* stack tasks vertically */
+  padding-left: 0;
+  text-align: center;
+}
+
+/* Remove horizontal lines between tasks */
+.tree ul ul ul ul li::before,
+.tree ul ul ul ul li::after {
+  border: none;
+  width: 0;
+}
+
+/* Keep vertical connector lines for tasks */
+.tree ul ul ul ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #000;
+  height: 20px;
+  transform: translateX(-50%);
+}
+</style>
+</head>
+<body>
+  <div class="tree" id="tree"></div>
+
+<script>
+/* ====== SAMPLE DATA STRUCTURE ====== */
+const projectData = {
+  name: "Project Alpha",
+  locations: Array.from({ length: 3 }, (_, i) => ({
+    name: `Location ${i + 1}`,
+    milestones: Array.from({ length: 3 }, (_, j) => ({
+      name: `Milestone ${j + 1}`,
+      tasks: Array.from({ length: 4 }, (_, k) => `Task ${j + 1}.${k + 1}`)
+    }))
+  }))
+};
+
+/* ====== FUNCTION TO BUILD THE TREE ====== */
+function createNode(name, children) {
+  const li = document.createElement("li");
+  const div = document.createElement("div");
+  div.textContent = name;
+  li.appendChild(div);
+
+  if (children && children.length) {
+    const ul = document.createElement("ul");
+    children.forEach(child => ul.appendChild(child));
+    li.appendChild(ul);
+  }
+  return li;
+}
+
+function buildTree(data) {
+  // Build tasks under each milestone
+  const locationNodes = data.locations.map(location => {
+    const milestoneNodes = location.milestones.map(milestone => {
+      const taskNodes = milestone.tasks.map(task => createNode(task, []));
+      return createNode(milestone.name, taskNodes);
+    });
+    return createNode(location.name, milestoneNodes);
+  });
+
+  const projectNode = createNode(data.name, locationNodes);
+  const rootUl = document.createElement("ul");
+  rootUl.appendChild(projectNode);
+  return rootUl;
+}
+
+/* ====== RENDER TREE ====== */
+document.getElementById("tree").appendChild(buildTree(projectData));
+</script>
+</body>
+</html>

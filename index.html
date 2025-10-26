@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Tree Structure</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  background: #f5f7fa;
+  margin-top: 40px;
+}
+
+/* Tree container */
+.tree {
+  text-align: center;
+  position: relative;
+}
+
+/* Branches (unordered lists) */
+.tree ul {
+  padding-top: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Draw vertical line from parent to children */
+.tree ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #000;
+  height: 20px;
+  transform: translateX(-50%);
+}
+
+/* ❌ Remove the topmost vertical line (above Project) */
+.tree > ul::before {
+  display: none;
+}
+
+/* Each node container */
+.tree li {
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+  text-align: center;
+}
+
+/* Horizontal connector lines between siblings */
+.tree li::before, .tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  border-top: 2px solid #000;
+  width: 50%;
+  height: 20px;
+}
+
+.tree li::before { left: -50%; }
+.tree li::after { right: -50%; }
+
+/* Remove connectors for single child */
+.tree li:only-child::before,
+.tree li:only-child::after {
+  display: none;
+}
+
+/* Remove left connector for first child */
+.tree li:first-child::before { border: none; }
+
+/* Remove right connector for last child */
+.tree li:last-child::after { border: none; }
+
+/* Box (node) styling */
+.tree li div {
+  border: 2px solid #0056b3;
+  background: #007bff;
+  color: white;
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  min-width: 120px;
+  position: relative;
+}
+
+/* Vertical line connecting parent to child */
+.tree li div::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  border-left: 2px solid #000;
+  height: 20px;
+  transform: translateX(-50%);
+}
+
+/* Remove vertical connector for root node */
+.tree > ul > li > div::before {
+  display: none;
+}
+</style>
+</head>
+<body>
+  <div class="tree">
+    <ul>
+      <li>
+        <div>Project</div>
+        <ul>
+          <li>
+            <div>Location</div>
+            <ul>
+              <li>
+                <div>Milestone</div>
+                <ul>
+                  <li><div>Task</div></li>
+                  <li><div>Task</div></li>
+                </ul>
+              </li>
+              <li>
+                <div>Milestone</div>
+                <ul>
+                  <li><div>Task</div></li>
+                  <li><div>Task</div></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div>Location</div>
+            <ul>
+              <li>
+                <div>Milestone</div>
+                <ul>
+                  <li><div>Task</div></li>
+                  <li><div>Task</div></li>
+                </ul>
+              </li>
+              <li>
+                <div>Milestone</div>
+                <ul>
+                  <li><div>Task</div></li>
+                  <li><div>Task</div></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
